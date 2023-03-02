@@ -6,12 +6,20 @@
 <body>
 <h1>Webify</h1>
 <h4>Товары со всей России!</h4>
+<form action="/" method="get">
+    Поиск по названию объявления: <input type="text" name="title"> <br>
+    <input type="submit" value="Поиск" >
+</form>
+
 {{#products}}
     <div>
         <p>
-            <b>{{title}}</b> <br>
-            <b>{{description}}</b> <br>
-            <b>{{price}}</b> | <a href="/product/{{id}}">Подробнее</a>
+            <b>Название: {{title}}</b> <br>
+            <b>Описание: {{description}}</b> <br>
+            <b>Цена: {{price}}</b> <br>
+            <b>Город: {{city}}</b> <br>
+            | <a href="/product/{{id}}">Подробнее |</a>
+        <!-- else Товаров нет  -->
         </p>
     </div>
 {{/products}}

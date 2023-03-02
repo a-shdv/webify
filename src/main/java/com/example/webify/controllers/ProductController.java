@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,9 +19,9 @@ public class ProductController {
 
     // Model - чтобы передавать данные в шаблонизатор
     @GetMapping("/")
-    public String products(Model model) {
+    public String products(@RequestParam(name="title", required = false) String title, Model model) {
         // Теперь на html-странице мы сможем обрабатывать данные из списка продуктов
-        model.addAttribute("products", productService.getProducts()); // ключ => значение
+        model.addAttribute("products", productService.getProducts(title)); // ключ => значение
         return "products";
     }
 
