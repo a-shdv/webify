@@ -25,8 +25,8 @@ public class Category {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Column(name = "image_path")
-    private String imagePath;
+    @Column(name = "image")
+    private String image;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "category")
     private List<Product> productList = new ArrayList<>();
