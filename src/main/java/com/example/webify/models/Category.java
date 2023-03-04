@@ -5,33 +5,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name="products")
+@Table(name = "categories")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name="name")
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "image")
+    private String image;
 
-    @Column(name = "price")
-    private int price;
-
-    @Column(name = "image_path")
-    private String imagePath;
-
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private Category category;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "category")
+    private List<Product> productList = new ArrayList<>();
 }

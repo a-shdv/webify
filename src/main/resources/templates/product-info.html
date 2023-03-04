@@ -6,13 +6,13 @@
 <body>
 <h1>Webify</h1>
 <h4>Подробная информация о товаре</h4>
-{{#product}}
-    <b>Название товара: {{title}}</b><br>
-    <b>Описание товара: {{description}}</b><br>
-    <b>Цена: {{price}}</b><br>
-    <b>Город: {{city}}</b><br>
-    <b>Автор: {{author}}</b><br>
-{{/product}}
+<!--{{#product}}-->
+<!--    <b>Название товара: {{name}}</b><br>-->
+<!--    <b>Описание товара: {{description}}</b><br>-->
+<!--    <b>Город: {{city}}</b><br>-->
+<!--    <b>Цена: {{price}}</b><br>-->
+<!--    <b>Автор: {{category}}</b><br>-->
+<!--{{/product}}-->
 <h3>Удалить товар</h3>
 <form action="/product/delete/{{id}}" method="post">
     <input type="submit" value="Удалить товар">
