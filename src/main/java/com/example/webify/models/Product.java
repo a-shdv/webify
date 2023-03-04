@@ -1,7 +1,8 @@
 package com.example.webify.models;
 
-import lombok.*;
-import org.hibernate.annotations.Columns;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
