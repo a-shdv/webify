@@ -12,15 +12,20 @@
 </form>
 
 <div>
-    <tbody>
+
+
     <tr th:each="product: ${products}">
         <td th:text="${product.name}">Название</td>
+        <br>
         <td th:text="${product.description}">Описание</td>
+        <br>
         <td th:text="${product.city}">Город</td>
+        <br>
         <td th:text="${product.price}">Цена</td>
+        <br>
         <td th:text="${product.category}">Категория</td>
+        <br>
     </tr>
-    </tbody>
 
 <!--    <p th:each="">-->
 <!--        <b>Название: ${product.name}</b> <br>-->
