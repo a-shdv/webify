@@ -19,28 +19,7 @@
             <p class="fs-5 text-muted">Здесь вы найдете нужные товары по самым привлекательным ценам!</p>
         </div>
     </header>
-
-    <main>
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            <tr th:each="category: ${categories}">
-                <div class="col">
-                    <div class="card mb-4 rounded-3 shadow-sm">
-                        <div class="card-header py-3 text-bg-dark">
-                            <h4 class="my-0 fw-normal"><p th:text="${category.name}"></p></h4>
-                        </div>
-                        <div class="card-body">
-                            <img th:src="@{${category.image}}" alt="Unable to load image" width="294" height="264">
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li><p th:text="${category.description}"></p></li>
-                            </ul>
-                            <a th:href="@{/categories/{id}(id=${category.id})}" class="w-100 btn btn-lg btn-warning">Перейти</a>
-                        </div>
-                    </div>
-                </div>
-            </tr>
-        </div>
-    </main>
-
 </div>
+<div th:insert="blocks/categories-cards :: categories-cards"></div>
 </body>
 </html>
