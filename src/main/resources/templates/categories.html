@@ -15,8 +15,8 @@
 <div class="container py-3">
     <header>
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 fw-normal">Pricing</h1>
-            <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+            <h1 class="display-4 fw-normal">Каталог товаров</h1>
+            <p class="fs-5 text-muted">Здесь вы найдете нужные товары по самым привлекательным ценам!</p>
         </div>
     </header>
 
@@ -33,7 +33,7 @@
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li><p th:text="${category.description}"></p></li>
                             </ul>
-                            <a th:href="@{/category/{id}(id=${category.id})}" class="w-100 btn btn-lg btn-warning">Перейти</a>
+                            <a th:href="@{/categories/{id}(id=${category.id})}" class="w-100 btn btn-lg btn-warning">Перейти</a>
                         </div>
                     </div>
                 </div>

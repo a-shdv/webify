@@ -22,7 +22,7 @@ public class CategoryController {
         return "categories";
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/categories/{id}")
     public String category(@PathVariable Long id, Model model) {
         model.addAttribute("products", categoryService.getProductListByCategoryId(id));
         return "category-info";
