@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Webify</title>
 </head>
 <body>
 <h1>Webify</h1>
 <h4>Подробная информация о товаре</h4>
+<p th:text="${product.name}"></p>
 <!--{{#product}}-->
 <!--    <b>Название товара: {{name}}</b><br>-->
 <!--    <b>Описание товара: {{description}}</b><br>-->

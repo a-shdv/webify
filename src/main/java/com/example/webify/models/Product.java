@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -23,14 +23,14 @@ public class Product {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Column(name = "city")
-    private String city;
-
     @Column(name = "price")
     private int price;
 
-    @Column(name = "image_path")
-    private String imagePath;
+    @Column(name="code")
+    private String code;
+
+    @Column(name = "image")
+    private String image;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Category category;

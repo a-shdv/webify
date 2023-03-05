@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     @Column(name = "id")
     private Long id;
 
@@ -24,6 +24,9 @@ public class Category {
 
     @Column(name = "description", columnDefinition = "text")
     private String description;
+
+    @Column(name="code")
+    private String code;
 
     @Column(name = "image")
     private String image;
