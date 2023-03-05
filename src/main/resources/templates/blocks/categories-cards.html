@@ -9,8 +9,7 @@
                         </div>
                         <div class="card-body">
                             <img th:src="@{${category.image}}" alt="Unable to load image" width="200" height="200">
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li><p th:text="${category.description}"></p></li>
+                            <ul class="list-unstyled mt-5 mb-4">
                             </ul>
                             <a th:href="@{/categories/{id}(id=${category.id})}" class="w-100 btn btn-lg btn-warning">Перейти</a>
                         </div>

@@ -10,7 +10,9 @@
                         <div class="card-body">
                             <img th:src="@{${product.image}}" alt="Unable to load image" width="225" height="200">
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li><p th:text="${product.price} + ' руб.'"></p></li>
+                                <b>
+                                    <li><p th:text="${product.price} + ' руб.'"></p></li>
+                                </b>
                             </ul>
                             <a th:href="@{/product/{id}(id=${product.id})}" class="w-100 btn btn-lg btn-warning">Подробнее</a>
                         </div>
