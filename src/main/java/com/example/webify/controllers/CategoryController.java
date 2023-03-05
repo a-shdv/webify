@@ -21,6 +21,13 @@ public class CategoryController {
         model.addAttribute("categories", categoryService.getCategories());
         return "categories";
     }
+
+    @GetMapping("/category/{id}")
+    public String category(@PathVariable Long id, Model model) {
+        model.addAttribute("products", categoryService.getProductListByCategoryId(id));
+        return "category-info";
+    }
+
 //
 //    @GetMapping("/product/{id}")
 //    public String productInfo(@PathVariable Long id, Model model) {

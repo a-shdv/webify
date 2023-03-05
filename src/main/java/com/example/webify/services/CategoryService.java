@@ -25,6 +25,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public List<Product> getProductListByCategoryId(Long id) {
+        return categoryRepository.getById(id).getProductList();
+    }
+
     public Category getCategoryById(Long id) {
         return categoryRepository.getById(id);
     }
