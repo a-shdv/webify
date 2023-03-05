@@ -25,9 +25,6 @@ public class Category {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @Column(name="code")
-    private String code;
-
     @Column(name = "image")
     private String image;
 

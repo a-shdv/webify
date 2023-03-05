@@ -26,9 +26,6 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @Column(name="code")
-    private String code;
-
     @Column(name = "image")
     private String image;
 
