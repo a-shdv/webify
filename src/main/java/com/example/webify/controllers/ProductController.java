@@ -18,7 +18,7 @@ public class ProductController {
 
 
     // Model - чтобы передавать данные в шаблонизатор
-    @GetMapping("/")
+    @GetMapping("/products")
     public String products(@RequestParam(name="name", required = false) String name, Model model) {
         // Теперь на html-странице мы сможем обрабатывать данные из списка продуктов
         model.addAttribute("products", productService.getProducts(name)); // ключ => значение

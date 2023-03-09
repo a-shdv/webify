@@ -3,7 +3,7 @@ package com.example.webify.controllers;
 import com.example.webify.models.Role;
 import com.example.webify.models.User;
 import com.example.webify.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Collections;
 
 @Controller
+@RequiredArgsConstructor
 public class RegistrationController {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/registration")
     public String registration() {
