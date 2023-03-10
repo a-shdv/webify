@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,20 +10,23 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
+
 <div th:insert="blocks/header :: header"></div>
 
-<form th:action="@{/}" method="post"><br> <br>
-    Название поста: <input type="text" name="tag"><br> <br>
-    Описание поста: <input type="text" name="text"> <br> <br>
+You are now logged in as: <span sec:authentication="name"></span>
+
+<form th:action="@{/post/create}" method="post"><br> <br>
+    Название поста: <input type="text" name="header"><br> <br>
+    Описание поста: <input type="text" name="description"> <br> <br>
     <input type="submit" value="Добавить пост">
 </form>
 
 <div>
     <tr th:each="post: ${posts}">
         <p>
-        <td th:text="'Тэг: ' + ${post.tag}"></td>
+        <td th:text="'Тэг: ' + ${post.header}"></td>
         </p>
-        <td th:text="'Описание: ' + ${post.text}"></td>
+        <td th:text="'Описание: ' + ${post.description}"></td>
         <b><p th:text="'Автор: ' + ${post.getUsername()}"></p></b>
     </tr>
 </div>

@@ -18,23 +18,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
     private final PostService postService;
+    private final UserService userService;
+
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("posts", postService.getPosts()); // ключ => значение
+        model.addAttribute("posts", postService.getPosts());
         return "index";
     }
 
-    @PostMapping("/")
-    public String add(
+    @PostMapping("/post/create")
+    public String createPost(
             @AuthenticationPrincipal User user,
-            @RequestParam String tag,
+            @RequestParam String header,
             @RequestParam String text,
             Model model
     ) {
-        Post post = new Post(tag, text, user);
+        Post post = new Post(header, text, user);
         postService.savePost(post);
         model.addAttribute("posts", postService.getPosts());
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/filter")
@@ -42,7 +44,7 @@ public class MainController {
         List<Post> posts;
 
         if (filter != null && !filter.isEmpty()) {
-            posts = postService.getPostByTag(filter);
+            posts = postService.getPostByHeader(filter);
         } else {
             posts = postService.getPosts();
         }

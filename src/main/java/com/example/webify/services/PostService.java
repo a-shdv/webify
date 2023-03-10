@@ -16,9 +16,9 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getPostByTag(String tag) {
-        if (tag != null)
-            return postRepository.findByTag(tag);
+    public List<Post> getPostByHeader(String header) {
+        if (header != null)
+            return postRepository.findByHeader(header);
         return postRepository.findAll();
     }
 
