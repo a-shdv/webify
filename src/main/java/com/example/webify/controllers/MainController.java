@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 public class MainController {
@@ -30,25 +28,24 @@ public class MainController {
     public String createPost(
             @AuthenticationPrincipal User user,
             @RequestParam String header,
-            @RequestParam String text,
-            Model model
+            @RequestParam String description
     ) {
-        Post post = new Post(header, text, user);
+        Post post = new Post(header, description, user);
         postService.savePost(post);
-        model.addAttribute("posts", postService.getPosts());
+//        model.addAttribute("posts", postService.getPosts());
         return "redirect:/";
     }
 
-    @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Model model) {
-        List<Post> posts;
-
-        if (filter != null && !filter.isEmpty()) {
-            posts = postService.getPostByHeader(filter);
-        } else {
-            posts = postService.getPosts();
-        }
-        model.addAttribute("posts", posts);
-        return "index";
-    }
+//    @PostMapping("/filter")
+//    public String filter(@RequestParam String filter, Model model) {
+//        List<Post> posts;
+//
+//        if (filter != null && !filter.isEmpty()) {
+//            posts = postService.getPostByHeader(filter);
+//        } else {
+//            posts = postService.getPosts();
+//        }
+//        model.addAttribute("posts", posts);
+//        return "index";
+//    }
 }

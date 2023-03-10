@@ -12,9 +12,6 @@
 <body>
 
 <div th:insert="blocks/header :: header"></div>
-
-You are now logged in as: <span sec:authentication="name"></span>
-
 <form th:action="@{/post/create}" method="post"><br> <br>
     Название поста: <input type="text" name="header"><br> <br>
     Описание поста: <input type="text" name="description"> <br> <br>
@@ -23,11 +20,12 @@ You are now logged in as: <span sec:authentication="name"></span>
 
 <div>
     <tr th:each="post: ${posts}">
-        <p>
-        <td th:text="'Тэг: ' + ${post.header}"></td>
-        </p>
+        <td th:text="'Заголовок: ' + ${post.header}"></td>
+        <br>
         <td th:text="'Описание: ' + ${post.description}"></td>
-        <b><p th:text="'Автор: ' + ${post.getUsername()}"></p></b>
+        <br>
+        <td th:text="'Автор: ' + ${post.getUsername()}"></td>
+        <br>
     </tr>
 </div>
 <div>Список сообщений</div>
@@ -35,14 +33,6 @@ You are now logged in as: <span sec:authentication="name"></span>
     <input type="text" name="filter">
     <button type="submit">Найти</button>
 </form>
-
-
-<div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-</div>
-
 <div th:insert="blocks/footer :: footer"></div>
 </body>
 </html>
