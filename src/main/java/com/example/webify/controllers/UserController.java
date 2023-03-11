@@ -7,13 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collections;
 
 @Controller
 @RequiredArgsConstructor
-public class RegistrationController {
+public class UserController {
     private final UserRepository userRepository;
 
     @GetMapping("/registration")
@@ -21,10 +22,16 @@ public class RegistrationController {
         return "registration";
     }
 
+    @GetMapping("/user/{user}")
+    public String userInfo(@PathVariable("user") User user, Model model) {
+        model.addAttribute("user", userRepository.getById(user.getId()));
+        return "user-info";
+    }
+
     @PostMapping("/registration")
-    public String addUser(User user, Model model) {
+    public String createUser(User user, Model model) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
-        if ( userFromDb != null) {
+        if (userFromDb != null) {
             model.addAttribute("errorMessage", "Пользователь с именем " + user.getUsername() + " уже существует!");
             return "registration";
         }

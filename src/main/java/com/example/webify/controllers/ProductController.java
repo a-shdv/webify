@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class ProductController {
@@ -19,7 +21,7 @@ public class ProductController {
 
     // Model - чтобы передавать данные в шаблонизатор
     @GetMapping("/products")
-    public String products(@RequestParam(name="name", required = false) String name, Model model) {
+    public String products(@RequestParam(name = "name", required = false) String name, Model model) {
         // Теперь на html-странице мы сможем обрабатывать данные из списка продуктов
         model.addAttribute("products", productService.getProducts(name)); // ключ => значение
         return "products";
@@ -32,8 +34,8 @@ public class ProductController {
     }
 
     @PostMapping("/product/create")
-    public String createProduct(Product product) {
-        productService.saveProduct(product);
+    public String createProduct(Product product, Principal principal) {
+        productService.saveProduct(principal, product);
         return "redirect:/";
     }
 

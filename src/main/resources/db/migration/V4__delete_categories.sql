@@ -1,2 +1,3 @@
 alter table categories
-drop column description;
+drop
+column description;

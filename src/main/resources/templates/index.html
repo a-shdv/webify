@@ -12,6 +12,31 @@
 <body>
 
 <div th:insert="blocks/header :: header"></div>
+
+
+<div sec:authorize="isAuthenticated()">
+    <div>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                <span sec:authentication="name"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Мой профиль</a></li>
+                <li><a class="dropdown-item" href="#">Мои посты</a></li>
+                <li><a class="dropdown-item" href="#">Мои товары</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-light">Выйти</button>
+                </form>
+            </ul>
+        </li>
+    </div>
+</div>
+
+
 <form th:action="@{/post/create}" method="post"><br> <br>
     Название поста: <input type="text" name="header"><br> <br>
     Описание поста: <input type="text" name="description"> <br> <br>

@@ -15,16 +15,19 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "header")
     private String header;
+
     @Column(name = "description")
     private String description;
+
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     public String getUsername() {
-        return user != null ?  user.getUsername() : "<none>";
+        return user != null ? user.getUsername() : "<none>";
     }
 
     public Post(String header, String description, User user) {
