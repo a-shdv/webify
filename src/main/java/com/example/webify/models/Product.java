@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Product {
     @Id

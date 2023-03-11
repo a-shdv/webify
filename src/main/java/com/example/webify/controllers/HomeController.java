@@ -32,7 +32,6 @@ public class HomeController {
     ) {
         Post post = new Post(header, description, user);
         postService.savePost(post);
-//        model.addAttribute("posts", postService.getPosts());
         return "redirect:/";
     }
 
