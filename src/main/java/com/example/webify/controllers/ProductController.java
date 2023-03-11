@@ -2,6 +2,7 @@ package com.example.webify.controllers;
 
 import com.example.webify.models.Product;
 import com.example.webify.services.ProductService;
+import com.example.webify.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.security.Principal;
 public class ProductController {
     // final - чтобы Spring при создании бина сразу этот бин инжектил
     private final ProductService productService;
+
 
 
     // Model - чтобы передавать данные в шаблонизатор

@@ -18,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
     private final PostService postService;
-    private final UserService userService;
 
     @GetMapping("/")
     public String index(Model model) {

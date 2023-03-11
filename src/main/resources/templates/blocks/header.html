@@ -32,26 +32,23 @@
                 </div>
 
                 <div sec:authorize="isAuthenticated()">
-                    <div>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                <span sec:authentication="name"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Мой профиль</a></li>
-                                <li><a class="dropdown-item" href="#">Мои посты</a></li>
-                                <li><a class="dropdown-item" href="#">Мои товары</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
+                    <div class="dropdown text-end">
+                        <a class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img th:src="@{/images/avatar.png}" alt="?" class="rounded-circle" width="32" height="32">
+                        </a>
+                        <ul class="dropdown-menu text-small" style="">
+                            <li><a class="dropdown-item" href="#">Мой профиль</a></li>
+                            <li><a class="dropdown-item" href="#">Мои посты</a></li>
+                            <li><a class="dropdown-item" href="#">Мои покупки</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
                                 <form th:action="@{/logout}" method="post">
-                                    <button type="submit" class="btn btn-light">Выйти</button>
+                                    <a type="submit" class="dropdown-item">Выйти</a>
                                 </form>
-                            </ul>
-                        </li>
+
+                            </li>
+                        </ul>
                     </div>
-                </div>
 
 
             </div>
