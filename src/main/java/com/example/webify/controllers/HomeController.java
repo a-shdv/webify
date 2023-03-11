@@ -3,6 +3,7 @@ package com.example.webify.controllers;
 import com.example.webify.models.Post;
 import com.example.webify.models.User;
 import com.example.webify.services.PostService;
+import com.example.webify.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,18 +19,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeController {
     private final PostService postService;
+    private final UserService userService;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
         model.addAttribute("posts", postService.getPosts());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "home";
     }
 
     @PostMapping("/post/create")
-    public String createPost(
-            Post post,
-            Principal principal
-    ) {
+    public String createPost(Post post, Principal principal) {
         postService.savePost(post, principal);
         return "redirect:/";
     }

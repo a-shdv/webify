@@ -16,20 +16,21 @@ import java.security.Principal;
 @Controller
 @RequiredArgsConstructor
 public class ProductController {
-    // final - чтобы Spring при создании бина сразу этот бин инжектил
     private final ProductService productService;
+    private final UserService userService;
 
-    // Model - чтобы передавать данные в шаблонизатор
     @GetMapping("/products")
-    public String products(@RequestParam(name = "name", required = false) String name, Model model) {
-        // Теперь на html-странице мы сможем обрабатывать данные из списка продуктов
-        model.addAttribute("products", productService.getProducts(name)); // ключ => значение
+    public String products(@RequestParam(name = "name", required = false) String name, Model model,
+                           Principal principal) {
+        model.addAttribute("products", productService.getProducts(name));
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "products";
     }
 
     @GetMapping("/product/{id}")
-    public String productInfo(@PathVariable Long id, Model model) {
+    public String productInfo(@PathVariable Long id, Model model, Principal principal) {
         model.addAttribute("product", productService.getProductById(id));
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "product-info";
     }
 

@@ -1,5 +1,6 @@
 package com.example.webify.services;
 
+import com.example.webify.models.Product;
 import com.example.webify.models.Role;
 import com.example.webify.models.User;
 import com.example.webify.repositories.UserRepository;
@@ -22,6 +23,12 @@ public class UserService implements UserDetailsService {
         user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
     }
+
+    public User getUserByPrincipal(Principal principal) {
+        if (principal == null) return new User();
+        return userRepository.findByUsername(principal.getName());
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

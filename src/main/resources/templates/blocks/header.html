@@ -19,7 +19,30 @@
                            aria-label="Search">
                 </form>
 
-
+                <div sec:authorize="isAuthenticated()">
+                    <div class="dropdown text-end">
+                        <a class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img th:src="@{/images/avatar.png}" alt="?" class="rounded-circle" width="32" height="32">
+                        </a>
+                        <ul class="dropdown-menu text-small" style="">
+                            <li><a class="dropdown-item" th:href="@{/user/{user}(user=${user.id})}">Мой
+                                профиль</a></li>
+                            <li><a class="dropdown-item" th:href="@{/user/{user}/posts(user=${user.id})}">Мои
+                                посты</a></li>
+                            <li><a class="dropdown-item" th:href="@{/user/{user}/products(user=${user.id})}">Мои
+                                товары</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form th:action="@{/logout}" method="post">
+                                    <button type="submit" class="btn">Выйти</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div sec:authorize="!isAuthenticated()">
                     <div class="text-end">
                         <a href="/login" style="text-decoration:none">
@@ -30,26 +53,6 @@
                         </a>
                     </div>
                 </div>
-
-                <div sec:authorize="isAuthenticated()">
-                    <div class="dropdown text-end">
-                        <a class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img th:src="@{/images/avatar.png}" alt="?" class="rounded-circle" width="32" height="32">
-                        </a>
-                        <ul class="dropdown-menu text-small" style="">
-<!--                            <li><a class="dropdown-item" th:href="@{/user/{user}(user=${user.username})}">Мой профиль</a></li>-->
-<!--                            <li><a class="dropdown-item" th:href="@{/user/{user}/posts(user=${user.username})}">Мои посты</a></li>-->
-<!--                            <li><a class="dropdown-item" th:href="@{/user/{user}/products(user=${user.username})}">Мои товары</a></li>-->
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form th:action="@{/logout}" method="post">
-                                    <button type="submit" class="btn">Выйти</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-
-
             </div>
         </div>
     </header>

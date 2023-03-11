@@ -9,13 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/login")
+    public String login(Model model, Principal principal) {
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "login";
+    }
+
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model, Principal principal) {
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "registration";
     }
 
@@ -44,6 +53,7 @@ public class UserController {
             model.addAttribute("errorMessage", "Пользователь с именем " + user.getUsername() + " уже существует!");
             return "registration";
         }
+        model.addAttribute("user", user);
         userService.saveUser(user);
         return "redirect:/login";
     }
