@@ -3,7 +3,6 @@ package com.example.webify.controllers;
 import com.example.webify.models.Post;
 import com.example.webify.models.User;
 import com.example.webify.services.PostService;
-import com.example.webify.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,13 +15,13 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class HomeController {
     private final PostService postService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String home(Model model) {
         model.addAttribute("posts", postService.getPosts());
-        return "index";
+        return "home";
     }
 
     @PostMapping("/post/create")
@@ -47,6 +46,6 @@ public class MainController {
             posts = postService.getPosts();
         }
         model.addAttribute("posts", posts);
-        return "index";
+        return "home";
     }
 }

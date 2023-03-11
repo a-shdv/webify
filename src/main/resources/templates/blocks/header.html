@@ -37,9 +37,9 @@
                             <img th:src="@{/images/avatar.png}" alt="?" class="rounded-circle" width="32" height="32">
                         </a>
                         <ul class="dropdown-menu text-small" style="">
-                            <li><a class="dropdown-item" href="#">Мой профиль</a></li>
-                            <li><a class="dropdown-item" href="#">Мои посты</a></li>
-                            <li><a class="dropdown-item" href="#">Мои покупки</a></li>
+<!--                            <li><a class="dropdown-item" th:href="@{/user/{user}(user=${user.username})}">Мой профиль</a></li>-->
+<!--                            <li><a class="dropdown-item" th:href="@{/user/{user}/posts(user=${user.username})}">Мои посты</a></li>-->
+<!--                            <li><a class="dropdown-item" th:href="@{/user/{user}/products(user=${user.username})}">Мои товары</a></li>-->
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form th:action="@{/logout}" method="post">

@@ -1,11 +1,16 @@
 package com.example.webify.services;
 
+import com.example.webify.models.Post;
+import com.example.webify.models.Product;
 import com.example.webify.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

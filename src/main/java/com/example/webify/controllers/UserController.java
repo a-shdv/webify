@@ -24,8 +24,20 @@ public class UserController {
 
     @GetMapping("/user/{user}")
     public String userInfo(@PathVariable("user") User user, Model model) {
-        model.addAttribute("user", userRepository.getById(user.getId()));
+        model.addAttribute("user", user);
         return "user-info";
+    }
+
+    @GetMapping("/user/{user}/posts")
+    public String userInfoPosts(@PathVariable("user") User user, Model model) {
+        model.addAttribute("user", user);
+        return "user-info-posts";
+    }
+
+    @GetMapping("/user/{user}/products")
+    public String userInfoProducts(@PathVariable("user") User user, Model model) {
+        model.addAttribute("user", user);
+        return "user-info-products";
     }
 
     @PostMapping("/registration")

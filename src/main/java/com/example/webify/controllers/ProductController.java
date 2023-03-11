@@ -19,8 +19,6 @@ public class ProductController {
     // final - чтобы Spring при создании бина сразу этот бин инжектил
     private final ProductService productService;
 
-
-
     // Model - чтобы передавать данные в шаблонизатор
     @GetMapping("/products")
     public String products(@RequestParam(name = "name", required = false) String name, Model model) {
