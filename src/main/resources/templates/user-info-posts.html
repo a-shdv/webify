@@ -17,28 +17,7 @@
 </head>
 <body>
 <div th:insert="blocks/header :: header"></div>
-<div class="container py-3">
-    <main>
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            <tr th:each="post: ${user.postList}">
-                <div class="col">
-                    <div class="card mb-4 rounded-3 shadow-sm">
-                        <div class="card-header py-3 text-bg-dark">
-                            <h4 class="my-0 fw-normal"><p th:text="${post.header}"></p></h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <b>
-                                    <li><p th:text="${post.description}"></p></li>
-                                </b>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </tr>
-        </div>
-    </main>
-</div>
+<div th:insert="blocks/user-posts :: user-posts"></div>
 <div th:insert="blocks/footer :: footer"></div>
 </body>
 </html>
