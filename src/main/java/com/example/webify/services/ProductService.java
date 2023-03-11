@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-
     private final UserRepository userRepository;
 
     public List<Product> getProducts(String name) {

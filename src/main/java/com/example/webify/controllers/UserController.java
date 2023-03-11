@@ -1,8 +1,7 @@
 package com.example.webify.controllers;
 
-import com.example.webify.models.Role;
 import com.example.webify.models.User;
-import com.example.webify.repositories.UserRepository;
+import com.example.webify.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Collections;
-
 @Controller
 @RequiredArgsConstructor
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/registration")
     public String registration() {
@@ -42,14 +39,12 @@ public class UserController {
 
     @PostMapping("/registration")
     public String createUser(User user, Model model) {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
+        User userFromDb = (User) userService.loadUserByUsername(user.getUsername());
         if (userFromDb != null) {
             model.addAttribute("errorMessage", "Пользователь с именем " + user.getUsername() + " уже существует!");
             return "registration";
         }
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
+        userService.saveUser(user);
         return "redirect:/login";
     }
 }
