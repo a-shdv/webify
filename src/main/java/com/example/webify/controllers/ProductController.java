@@ -35,7 +35,7 @@ public class ProductController {
 
     @PostMapping("/product/create")
     public String createProduct(Product product, Principal principal) {
-        productService.saveProduct(principal, product);
+        productService.saveProduct(product, principal);
         return "redirect:/";
     }
 

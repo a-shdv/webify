@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -26,12 +27,10 @@ public class HomeController {
 
     @PostMapping("/post/create")
     public String createPost(
-            @AuthenticationPrincipal User user,
-            @RequestParam String header,
-            @RequestParam String description
+            Post post,
+            Principal principal
     ) {
-        Post post = new Post(header, description, user);
-        postService.savePost(post);
+        postService.savePost(post, principal);
         return "redirect:/";
     }
 

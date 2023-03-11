@@ -24,7 +24,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void saveProduct(Principal principal, Product product) {
+    public void saveProduct(Product product, Principal principal) {
         product.setUser(getUserByPrincipal(principal));
         productRepository.save(product);
     }
