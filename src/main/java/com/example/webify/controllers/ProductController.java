@@ -27,20 +27,20 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/products/{id}")
     public String productInfo(@PathVariable Long id, Model model, Principal principal) {
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "product-info";
     }
 
-    @PostMapping("/product/create")
+    @PostMapping("/products/create")
     public String createProduct(Product product, Principal principal) {
         productService.saveProduct(product, principal);
         return "redirect:/";
     }
 
-    @PostMapping("/product/delete/{id}")
+    @PostMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/";

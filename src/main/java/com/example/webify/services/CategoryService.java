@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final ProductRepository productRepository;
 
     public void saveCategory(Category category) {
         categoryRepository.save(category);
@@ -28,7 +27,6 @@ public class CategoryService {
     }
 
     public List<Product> getProductListByCategoryId(Long id) {
-        if (categoryRepository.getById(id).getName().equals("Все товары")) return productRepository.findAll();
         return categoryRepository.getById(id).getProductList();
     }
 

@@ -28,10 +28,16 @@ public class HomeController {
         return "home";
     }
 
-    @PostMapping("/post/create")
+    @GetMapping("about")
+    public String about(Model model, Principal principal) {
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "about";
+    }
+
+    @PostMapping("/user/{user}/posts/post/create")
     public String createPost(Post post, Principal principal) {
         postService.savePost(post, principal);
-        return "redirect:/";
+        return "redirect:/user/{user}/posts";
     }
 
     @PostMapping("/filter")
