@@ -35,15 +35,16 @@ public class HomeController {
     }
 
     @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Model model) {
+    public String filter(@RequestParam String filter, Model model, Principal principal) {
         List<Post> posts;
 
         if (filter != null && !filter.isEmpty()) {
-            posts = postService.getPostByHeader(filter);
+            posts = postService.getPostByHeader(filter.trim());
         } else {
             posts = postService.getPosts();
         }
         model.addAttribute("posts", posts);
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "home";
     }
 }

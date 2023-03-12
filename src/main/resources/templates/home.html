@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,13 +18,14 @@
 <body>
 
 <div th:insert="blocks/header :: header"></div>
-<h3>Создать новый пост</h3>
-<form th:action="@{/post/create}" method="post"><br> <br>
-    Название поста: <input type="text" name="header"><br> <br>
-    Описание поста: <input type="text" name="description"> <br> <br>
-    <input type="submit" value="Добавить пост">
+
+<hr>
+<form th:action="@{/filter}" method="post" >
+    <input type="text" name="filter" placeholder="Поиск по заголовку...">
+    <button type="submit">Найти</button>
 </form>
 <hr>
+<h1>Все посты</h1>
 <div>
     <tr th:each="post: ${posts}">
         <td th:text="'Заголовок: ' + ${post.header}"></td>
@@ -36,11 +37,6 @@
     </tr>
 </div>
 <hr>
-<div>Список сообщений</div>
-<form method="post" th:action="@{/filter}">
-    <input type="text" name="filter">
-    <button type="submit">Найти</button>
-</form>
 <div th:insert="blocks/footer :: footer"></div>
 </body>
 </html>

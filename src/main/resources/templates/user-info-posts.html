@@ -17,6 +17,12 @@
 </head>
 <body>
 <div th:insert="blocks/header :: header"></div>
+<h3>Создать новый пост</h3>
+<form th:action="@{/post/create}" method="post"><br> <br>
+    Название поста: <input type="text" name="header"><br> <br>
+    Описание поста: <input type="text" name="description"> <br> <br>
+    <input type="submit" value="Добавить пост">
+</form>
 <div th:insert="blocks/user-posts :: user-posts"></div>
 <div th:insert="blocks/footer :: footer"></div>
 </body>
