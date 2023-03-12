@@ -1,8 +1,7 @@
 package com.example.webify.services;
 
-import com.example.webify.models.Product;
-import com.example.webify.models.Role;
-import com.example.webify.models.User;
+import com.example.webify.entities.Role;
+import com.example.webify.entities.User;
 import com.example.webify.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

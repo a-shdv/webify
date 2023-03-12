@@ -1,4 +1,4 @@
-package com.example.webify.models;
+package com.example.webify.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 

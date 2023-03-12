@@ -1,11 +1,9 @@
 package com.example.webify.controllers;
 
-import com.example.webify.models.Post;
-import com.example.webify.models.User;
+import com.example.webify.entities.Post;
 import com.example.webify.services.PostService;
 import com.example.webify.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

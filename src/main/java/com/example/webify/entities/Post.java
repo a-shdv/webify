@@ -1,9 +1,7 @@
-package com.example.webify.models;
+package com.example.webify.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 

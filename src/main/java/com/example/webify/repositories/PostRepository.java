@@ -1,6 +1,6 @@
 package com.example.webify.repositories;
 
-import com.example.webify.models.Post;
+import com.example.webify.entities.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

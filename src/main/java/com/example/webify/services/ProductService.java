@@ -1,7 +1,7 @@
 package com.example.webify.services;
 
-import com.example.webify.models.Product;
-import com.example.webify.models.User;
+import com.example.webify.entities.Product;
+import com.example.webify.entities.User;
 import com.example.webify.repositories.ProductRepository;
 import com.example.webify.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

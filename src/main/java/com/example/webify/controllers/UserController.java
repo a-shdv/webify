@@ -1,6 +1,6 @@
 package com.example.webify.controllers;
 
-import com.example.webify.models.User;
+import com.example.webify.entities.User;
 import com.example.webify.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

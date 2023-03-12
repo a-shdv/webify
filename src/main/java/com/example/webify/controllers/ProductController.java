@@ -1,6 +1,6 @@
 package com.example.webify.controllers;
 
-import com.example.webify.models.Product;
+import com.example.webify.entities.Product;
 import com.example.webify.services.ProductService;
 import com.example.webify.services.UserService;
 import lombok.RequiredArgsConstructor;
