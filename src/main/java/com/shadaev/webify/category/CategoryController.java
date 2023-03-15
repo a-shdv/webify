@@ -1,8 +1,6 @@
-package com.example.webify.controllers;
+package com.shadaev.webify.category;
 
-import com.example.webify.repositories.UserRepository;
-import com.example.webify.services.CategoryService;
-import com.example.webify.services.UserService;
+import com.shadaev.webify.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

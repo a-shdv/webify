@@ -1,5 +1,6 @@
-package com.example.webify.entities;
+package com.shadaev.webify.category;
 
+import com.shadaev.webify.product.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

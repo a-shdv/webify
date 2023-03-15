@@ -1,8 +1,8 @@
-package com.example.webify.repositories;
+package com.shadaev.webify.user;
 
-import com.example.webify.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
 }

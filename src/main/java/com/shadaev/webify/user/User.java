@@ -1,5 +1,7 @@
-package com.example.webify.entities;
+package com.shadaev.webify.user;
 
+import com.shadaev.webify.post.Post;
+import com.shadaev.webify.product.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
@@ -29,10 +31,10 @@ public class User implements UserDetails {
     @Column(name = "active")
     private boolean active;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles = new HashSet<>();
+    private Set<UserRole> userRoles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)
@@ -44,7 +46,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return getUserRoles();
     }
 
     @Override

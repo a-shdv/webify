@@ -1,9 +1,7 @@
-package com.example.webify.services;
+package com.shadaev.webify.post;
 
-import com.example.webify.entities.Post;
-import com.example.webify.entities.User;
-import com.example.webify.repositories.PostRepository;
-import com.example.webify.repositories.UserRepository;
+import com.shadaev.webify.user.User;
+import com.shadaev.webify.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

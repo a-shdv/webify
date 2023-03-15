@@ -1,8 +1,8 @@
-package com.example.webify.entities;
+package com.shadaev.webify.user;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
+public enum UserRole implements GrantedAuthority {
     USER, ADMIN;
 
     @Override

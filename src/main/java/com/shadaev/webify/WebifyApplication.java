@@ -1,4 +1,4 @@
-package com.example.webify;
+package com.shadaev.webify;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

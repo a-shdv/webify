@@ -1,6 +1,6 @@
-package com.example.webify.configurations;
+package com.shadaev.webify;
 
-import com.example.webify.services.UserService;
+import com.shadaev.webify.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
 
     @Override

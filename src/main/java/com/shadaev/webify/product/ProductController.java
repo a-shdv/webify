@@ -1,8 +1,6 @@
-package com.example.webify.controllers;
+package com.shadaev.webify.product;
 
-import com.example.webify.entities.Product;
-import com.example.webify.services.ProductService;
-import com.example.webify.services.UserService;
+import com.shadaev.webify.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

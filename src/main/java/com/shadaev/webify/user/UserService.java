@@ -1,8 +1,5 @@
-package com.example.webify.services;
+package com.shadaev.webify.user;
 
-import com.example.webify.entities.Role;
-import com.example.webify.entities.User;
-import com.example.webify.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +16,7 @@ public class UserService implements UserDetailsService {
 
     public void saveUser(User user) {
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setUserRoles(Collections.singleton(UserRole.USER));
         userRepository.save(user);
     }
 
