@@ -24,7 +24,7 @@ public class CategoryController {
 
     @GetMapping("/categories/{id}")
     public String category(@PathVariable Long id, Model model, Principal principal) {
-        model.addAttribute("products", categoryService.getProductListByCategoryId(id));
+        model.addAttribute("products", categoryService.getProductsByCategoryId(id));
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "category-info";
     }

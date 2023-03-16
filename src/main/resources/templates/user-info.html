@@ -21,8 +21,8 @@
 <hr>
 <h4 th:text="'Имя пользователя: ' + ${user.username}"></h4>
 <h4 th:text="'Роль: ' + ${user.getUserRoles}"></h4>
-<h4 th:text="'Количество постов: ' + ${user.postList.size()}"></h4>
-<h4 th:text="'Количество товаров: ' + ${user.productList.size()}"></h4>
+<h4 th:text="'Количество постов: ' + ${user.posts.size()}"></h4>
+<h4 th:text="'Количество товаров: ' + ${user.products.size()}"></h4>
 <div th:insert="blocks/footer :: footer"></div>
 </body>
 </html>

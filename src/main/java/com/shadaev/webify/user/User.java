@@ -1,7 +1,10 @@
 package com.shadaev.webify.user;
 
+import com.shadaev.webify.cart.Cart;
 import com.shadaev.webify.post.Post;
 import com.shadaev.webify.product.Product;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
@@ -14,8 +17,10 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
+@Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     @Column(name = "id")
@@ -31,18 +36,17 @@ public class User implements UserDetails {
     @Column(name = "active")
     private boolean active;
 
-    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Post> postList = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private Cart cart;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Product> productList = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
