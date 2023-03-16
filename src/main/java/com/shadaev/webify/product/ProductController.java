@@ -33,8 +33,8 @@ public class ProductController {
     }
 
     @PostMapping("/products/create")
-    public String createProduct(Product product, Principal principal) {
-        productService.saveProduct(product, principal);
+    public String createProduct(Product product) {
+        productService.saveProduct(product);
         return "redirect:/";
     }
 

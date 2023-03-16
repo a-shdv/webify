@@ -22,14 +22,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void saveProduct(Product product, Principal principal) {
-        product.setUser(getUserByPrincipal(principal));
+    public void saveProduct(Product product) {
         productRepository.save(product);
-    }
-
-    public User getUserByPrincipal(Principal principal) {
-        if (principal == null) return new User();
-        return userRepository.findByUsername(principal.getName());
     }
 
     public void deleteProduct(Long id) {

@@ -23,8 +23,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public List<Product> getProductListByCategoryId(Long id) {
-        return categoryRepository.getById(id).getProductList();
+    public List<Product> getProductsByCategoryId(Long id) {
+        return categoryRepository.getById(id).getProducts();
     }
 
     public Category getCategoryById(Long id) {

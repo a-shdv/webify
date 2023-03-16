@@ -25,5 +25,5 @@ public class Category {
     private String image;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "category")
-    private List<Product> productList = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 }
