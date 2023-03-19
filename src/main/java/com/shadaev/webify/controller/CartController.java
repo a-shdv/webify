@@ -48,7 +48,7 @@ public class CartController {
     @GetMapping("/user/{user}/cart/checkout")
     public String checkout() {
 
-        cartService.purchase();
+//        cartService.purchase();
 
         return "redirect:/user/{user}/cart";
     }

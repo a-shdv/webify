@@ -29,9 +29,6 @@ public class Product {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;

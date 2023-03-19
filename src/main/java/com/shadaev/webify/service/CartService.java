@@ -12,7 +12,6 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductRepository productRepository;
     private final Map<Product, Integer> products = new HashMap<>();
 
     public void add(Product product) {
@@ -33,18 +32,18 @@ public class CartService {
         }
     }
 
-    public void purchase() {
-        products.forEach((product, cartQuantity) -> productRepository.findById(product.getId())
-                .map(Product::getQuantity)
-                .ifPresent(quantity -> product.setQuantity(quantity - cartQuantity))
-        );
-
-        productRepository.saveAll(
-                products.keySet()
-        );
-
-        products.clear();
-    }
+//    public void purchase() {
+//        products.forEach((product, cartQuantity) -> productRepository.findById(product.getId())
+//                .map(Product::getQuantity)
+//                .ifPresent(quantity -> product.setQuantity(quantity - cartQuantity))
+//        );
+//
+//        productRepository.saveAll(
+//                products.keySet()
+//        );
+//
+//        products.clear();
+//    }
 
     public BigDecimal getTotalPrice() {
         return products.entrySet().stream()
