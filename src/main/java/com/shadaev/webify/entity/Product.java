@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
@@ -23,7 +24,7 @@ public class Product {
     private String description;
 
     @Column(name = "price")
-    private int price;
+    private BigDecimal price;
 
     @Column(name = "image")
     private String image;

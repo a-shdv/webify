@@ -31,7 +31,9 @@
         <p th:text="${product.description}"></p></p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
             <a class="btn btn-outline-secondary btn-lg px-4" href="javascript:history.back()">Назад</a>
-            <button type="button" class="btn btn-warning btn-lg px-4 me-sm-3">Купить</button>
+            <a th:href="@{/user/{user}/cart/add/{id}(user=${user.id}, id=${product.id})}">
+                <button type="button" class="btn btn-warning btn-lg px-4 me-sm-3">Добавить в корзину</button>
+            </a>
         </div>
     </div>
 </div>
