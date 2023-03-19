@@ -25,6 +25,13 @@
                                 Каталог
                             </a>
                         </li>
+                        <li>
+                            <a th:href="@{/user/{user}/cart(user=${user.id})}" class="nav-link text-white">
+                                <img class="bi d-block mx-auto mb-1" width="24" height="24"
+                                     src="/images/header/cart.png">
+                                Корзина
+                            </a>
+                        </li>
                         <div sec:authorize="isAuthenticated()">
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
@@ -35,7 +42,7 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" th:href="@{/user/{user}(user=${user.id})}">Моя страница</a>
                                         <a class="dropdown-item" th:href="@{/user/{user}/posts(user=${user.id})}">Мои посты</a>
-                                        <a class="dropdown-item" th:href="@{/user/{user}/products(user=${user.id})}">Мои покупки</a>
+                                        <a class="dropdown-item" th:href="@{/user/{user}/products(user=${user.id})}">Мои заказы</a>
                                         <hr class="dropdown-divider">
                                         <form th:action="@{/logout}" method="post">
                                             <button type="submit" class="btn">Выйти</button>
@@ -67,4 +74,3 @@
         </div>
     </header>
 </div>
-
