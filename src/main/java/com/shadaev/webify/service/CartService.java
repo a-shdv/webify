@@ -6,12 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final Map<Product, Integer> products;
+    private final ProductRepository productRepository;
+    private final Map<Product, Integer> products = new HashMap<>();
 
     public void add(Product product) {
         products.computeIfPresent(
@@ -31,20 +33,20 @@ public class CartService {
         }
     }
 
-//    public void checkout() {
-//        products.forEach((product, cartQuantity) -> productRepository.findById(product.getId())
-//                .map(Product::getQuantity)
-//                .ifPresent(quantity -> product.setQuantity(quantity - cartQuantity))
-//        );
-//
-//        productRepository.saveAll(
-//                products.keySet()
-//        );
-//
-//        products.clear();
-//    }
+    public void purchase() {
+        products.forEach((product, cartQuantity) -> productRepository.findById(product.getId())
+                .map(Product::getQuantity)
+                .ifPresent(quantity -> product.setQuantity(quantity - cartQuantity))
+        );
 
-    public BigDecimal getTotalAmount() {
+        productRepository.saveAll(
+                products.keySet()
+        );
+
+        products.clear();
+    }
+
+    public BigDecimal getTotalPrice() {
         return products.entrySet().stream()
                 .map(x -> x.getKey().getPrice().multiply(BigDecimal.valueOf(x.getValue())))
                 .reduce(BigDecimal::add)

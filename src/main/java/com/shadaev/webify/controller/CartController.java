@@ -1,7 +1,6 @@
 package com.shadaev.webify.controller;
 
 import com.shadaev.webify.entity.Product;
-import com.shadaev.webify.repository.UserRepository;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
@@ -22,9 +21,9 @@ public class CartController {
 
     @GetMapping("/user/{user}/cart")
     public String cart(Model model, Principal principal) {
-        model.addAttribute("products", cartService.getProducts());
-        model.addAttribute("total", cartService.getTotalAmount());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
+        model.addAttribute("products", cartService.getProducts());
+        model.addAttribute("total", cartService.getTotalPrice());
         return "cart";
     }
 
@@ -46,11 +45,11 @@ public class CartController {
         return "redirect:/user/{user}/cart";
     }
 
-//    @GetMapping("/checkout")
-//    public String checkout() {
-//
-//        cartService.checkout();
-//
-//        return "cart";
-//    }
+    @GetMapping("/user/{user}/cart/checkout")
+    public String checkout() {
+
+        cartService.purchase();
+
+        return "redirect:/user/{user}/cart";
+    }
 }

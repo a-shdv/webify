@@ -18,26 +18,26 @@
 <body>
 <div th:replace="/blocks/header :: header"/>
 <div class="container">
-    <!--  <h1>-->
-    <!--    <span th:text="${#authentication.getName()}"/>'s cart-->
-    <!--  </h1>-->
+      <h1>
+        <span th:text="'Корзина ' + ${user.username}"/>
+      </h1>
 
 
     <div class="card" th:each="product : ${products}">
         <div class="card-header">
+            <img th:src="@{${product.getKey().getImage()}}" alt="Unable to load image" width="150" height="150">
             <h1 th:text="${product.getKey().getName()}"/>
-            <h3 th:text="${product.getKey().getDescription()}"/>
         </div>
         <div class="row card-body">
             <div class="col-md-2" th:inline="text">
-                Price: [[${product.getKey().getPrice()}]] руб
+                Цена: [[${product.getKey().getPrice()}]] руб
             </div>
             <div class="col-md-9" th:inline="text">
-                Quantity: [[${product.getValue()}]]
+                Количество: [[${product.getValue()}]]
             </div>
             <a class="col-md-1" th:href="@{/user/{user}/cart/remove/{id}(user=${user.id}, id = ${product.getKey().getId()})}">
-                <button class="btn btn-dark" type="button">
-                    Remove
+                <button class="btn btn-danger" type="button">
+                    Удалить
                 </button>
             </a>
         </div>
@@ -45,13 +45,13 @@
     </div>
     <div class="row card-body">
         <h2 class="col-md-11" th:inline="text">
-            Всего: [[${total}]] руб.
+            Общая стоимость: [[${total}]] руб.
         </h2>
-        <!--    <a class="col-md-1" th:href="@{'/cart/checkout'}">-->
-        <!--      <button class="btn btn-danger" type="button">-->
-        <!--        Checkout-->
-        <!--      </button>-->
-        <!--    </a>-->
+            <a class="col-md-1" th:href="@{/user/{user}/cart/checkout(user=${user.id})}">
+              <button class="btn btn-warning" type="button">
+                Купить
+              </button>
+            </a>
     </div>
 </div>
 <div th:replace="/blocks/footer :: footer"/>
