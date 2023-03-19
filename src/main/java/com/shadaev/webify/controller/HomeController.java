@@ -1,8 +1,8 @@
-package com.shadaev.webify;
+package com.shadaev.webify.controller;
 
-import com.shadaev.webify.post.Post;
-import com.shadaev.webify.post.PostService;
-import com.shadaev.webify.user.UserService;
+import com.shadaev.webify.entity.Post;
+import com.shadaev.webify.service.PostService;
+import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,15 +15,15 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class IndexController {
+public class HomeController {
     private final PostService postService;
     private final UserService userService;
 
     @GetMapping("/")
-    public String index(Model model, Principal principal) {
+    public String home(Model model, Principal principal) {
         model.addAttribute("posts", postService.getPosts());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "index";
+        return "home";
     }
 
     @GetMapping("about")
@@ -49,6 +49,6 @@ public class IndexController {
         }
         model.addAttribute("posts", posts);
         model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "index";
+        return "home";
     }
 }

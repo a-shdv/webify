@@ -1,5 +1,6 @@
-package com.shadaev.webify.product;
+package com.shadaev.webify.repository;
 
+import com.shadaev.webify.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.shadaev.webify;
+package com.shadaev.webify.config;
 
-import com.shadaev.webify.user.UserService;
+import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

@@ -1,7 +1,5 @@
-package com.shadaev.webify.cart;
+package com.shadaev.webify.entity;
 
-import com.shadaev.webify.product.Product;
-import com.shadaev.webify.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

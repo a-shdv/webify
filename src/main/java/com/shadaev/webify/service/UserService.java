@@ -1,5 +1,8 @@
-package com.shadaev.webify.user;
+package com.shadaev.webify.service;
 
+import com.shadaev.webify.entity.User;
+import com.shadaev.webify.entity.UserRole;
+import com.shadaev.webify.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

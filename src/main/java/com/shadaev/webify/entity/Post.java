@@ -1,6 +1,5 @@
-package com.shadaev.webify.post;
+package com.shadaev.webify.entity;
 
-import com.shadaev.webify.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

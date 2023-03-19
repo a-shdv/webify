@@ -1,4 +1,4 @@
-package com.shadaev.webify.cart;
+package com.shadaev.webify.service;
 
 import org.springframework.stereotype.Service;
 

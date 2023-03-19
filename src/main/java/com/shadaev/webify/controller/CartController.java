@@ -1,4 +1,4 @@
-package com.shadaev.webify.cart;
+package com.shadaev.webify.controller;
 
 import org.springframework.stereotype.Controller;
 

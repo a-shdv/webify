@@ -1,4 +1,4 @@
-package com.shadaev.webify.user;
+package com.shadaev.webify.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

@@ -1,6 +1,8 @@
-package com.shadaev.webify.category;
+package com.shadaev.webify.service;
 
-import com.shadaev.webify.product.Product;
+import com.shadaev.webify.entity.Category;
+import com.shadaev.webify.entity.Product;
+import com.shadaev.webify.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

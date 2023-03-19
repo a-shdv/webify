@@ -1,4 +1,4 @@
-package com.shadaev.webify.post;
+package com.shadaev.webify.controller;
 
 import org.springframework.stereotype.Controller;
 
