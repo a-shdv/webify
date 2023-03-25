@@ -1,55 +1,139 @@
 package com.shadaev.webify.controller;
 
-import com.shadaev.webify.entity.Product;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 public class CartController {
-    private final CartService cartService;
-    private final ProductService productService;
     private final UserService userService;
 
-    @GetMapping("/user/{user}/cart")
+    @RequestMapping(value = {"/user/{user}/cart"}, method = RequestMethod.GET)
     public String cart(Model model, Principal principal) {
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
-        model.addAttribute("products", cartService.getProducts());
-        model.addAttribute("total", cartService.getTotalPrice());
+        User user = userService.getUserByPrincipal(principal);
+
+        model.addAttribute("user", user);
+        model.addAttribute("cart", user.getCart());
+//        model.addAttribute("cartItems", user.getCart().getItems());
+
         return "cart";
     }
+//
+//    @RequestMapping(value = {"/cart/delete/{id}"}, method = RequestMethod.GET)
+//    public ModelAndView deleteItem(@PathVariable(value = "id") Integer id) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userName = authentication.getName();
+//
+//        User user = userService.getUserByLogin(userName);
+//        Cart cart = user.getCart();
+//        Item item = cart.getItem(id);
+//
+//        Double itemsSum = item.getGood().getPrice() * item.getCount();
+//        cart.setSum(cart.getSum() - itemsSum);
+//
+//        if (cart.getItems().remove(item))
+//            cartService.updateCart(cart);
+//
+//        return cart();
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping(value = {"/cart/calculate"})
+//    public String cartCalculate(@RequestBody Map<String, String> json) {
+//
+//        Integer id = Integer.valueOf(json.get("id"));
+//        Boolean isPlus = Boolean.valueOf(json.get("isPlus"));
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userName = authentication.getName();
+//
+//        User user = userService.getUserByLogin(userName);
+//        Cart cart = user.getCart();
+//        Item item = cart.getItem(id);
+//
+//        if (isPlus) {
+//            item.setCount(item.getCount() + 1);
+//            cart.setSum(cart.getSum() + item.getGood().getPrice());
+//        } else {
+//            if (item.getCount() > 1) {
+//                item.setCount(item.getCount() - 1);
+//                cart.setSum(cart.getSum() - item.getGood().getPrice());
+//            }
+//        }
+//        cartService.updateCart(cart);
+//
+//        Map<String, Object> objects = new HashMap<>();
+//        objects.put("count", item.getCount());
+//        objects.put("sum", cart.getSum());
+//
+//        return getJson(objects);
+//    }
+//
+//    @ResponseBody
+//    @RequestMapping(value = {"/cart/buy"})
+//    public String buyGood(@RequestBody String id) {
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userName = authentication.getName();
+//
+//        User user = userService.getUserByLogin(userName);
+//        Good good = productService.getGoodById(Integer.valueOf(id), true);
+//
+//        Cart cart = user.getCart();
+//        addItemInCart(good, cart);
+//        cartService.updateCart(cart);
+//
+//        return getJson("<b>" + good.getTitle() + "</b> been successfully added in your cart!");
+//    }
+//
+//    // Метод для преобразования Java объекта в JavaScript объект или строку
+//    private String getJson(Object object) {
+//        ObjectMapper mapper = new ObjectMapper();
+//        String result = null;
+//        try {
+//            result = mapper.writeValueAsString(object);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
+//
+//    // Метод добавляет Item в указанную корзину
+//    private void addItemInCart(Good good, Cart cart) {
+//        Set<Item> items = cart.getItems();
+//        boolean flag = true;
+//        for (Item item : items) {
+//            if (item.getGood().equals(good)) {
+//                item.setCount(item.getCount() + 1);
+//                cart.setSum(cart.getSum() + good.getPrice());
+//                flag = false;
+//            }
+//        }
+//        if (flag) {
+//            Item newItem = new Item();
+//            newItem.setGood(good);
+//            newItem.setCart(cart);
+//            newItem.setCount(1);
+//            cart.setSum(cart.getSum() + good.getPrice());
+//            cart.addItem(newItem);
+//        }
+//    }
 
-    @GetMapping("/user/{user}/cart/add/{id}")
-    public String add(@PathVariable("id") Long id) {
-        Product product = productService.getProductById(id);
-        if (product != null)
-            cartService.add(product);
-
-        return "redirect:/products/{id}";
-    }
-
-    @GetMapping("/user/{user}/cart/remove/{id}")
-    public String remove(@PathVariable("id") Long id) {
-        Product product = productService.getProductById(id);
-        if (product != null)
-            cartService.remove(product);
-
-        return "redirect:/user/{user}/cart";
-    }
-
-    @GetMapping("/user/{user}/cart/checkout")
-    public String checkout() {
-
-//        cartService.purchase();
-
-        return "redirect:/user/{user}/cart";
-    }
 }

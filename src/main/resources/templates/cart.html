@@ -17,43 +17,81 @@
 </head>
 <body>
 <div th:replace="/blocks/header :: header"/>
+
+
 <div class="container">
-      <h1>
-        <span th:text="'Корзина ' + ${user.username}"/>
-      </h1>
 
+    <h2 style="margin-top: 30px">My cart</h2>
 
-    <div class="card" th:each="product : ${products}">
-        <div class="card-header">
-            <img th:src="@{${product.getKey().getImage()}}" alt="Unable to load image" width="150" height="150">
-            <h1 th:text="${product.getKey().getName()}"/>
-        </div>
-        <div class="row card-body">
-            <div class="col-md-2" th:inline="text">
-                Цена: [[${product.getKey().getPrice()}]] руб
-            </div>
-            <div class="col-md-9" th:inline="text">
-                Количество: [[${product.getValue()}]]
-            </div>
-            <a class="col-md-1" th:href="@{/user/{user}/cart/remove/{id}(user=${user.id}, id = ${product.getKey().getId()})}">
-                <button class="btn btn-danger" type="button">
-                    Удалить
-                </button>
-            </a>
-        </div>
-        <br/>
-    </div>
-    <div class="row card-body">
-        <h2 class="col-md-11" th:inline="text">
-            Общая стоимость: [[${total}]] руб.
-        </h2>
-            <a class="col-md-1" th:href="@{/user/{user}/cart/checkout(user=${user.id})}">
-              <button class="btn btn-warning" type="button">
-                Купить
-              </button>
-            </a>
-    </div>
+<!--    <div th:if="!${#lists.isEmpty(cartItems)}">-->
+<!--        <div class="row" style="margin-top: 20px">-->
+
+<!--            <div class="col-sm-12 row-eq-height" th:each="item : ${items}">-->
+
+<!--                <div class="card" style="margin-bottom: 10px">-->
+<!--                    <div class="card-block" style="padding-bottom: 10px; padding-top: 10px;">-->
+<!--                        <a th:href="@{/good/detail/{id}(id=${item.good.id})}">-->
+<!--                            <h3 th:text="${item.good.title}" class="card-title"></h3>-->
+<!--                        </a>-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-3">-->
+<!--                                <a th:href="@{/good/detail/{id}(id=${item.good.id})}">-->
+<!--                                    <img style="max-height: 100px !important;" th:src="${item.good.smallImageLink}"-->
+<!--                                         alt="#"/>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6">-->
+<!--                                <div class="card-text"-->
+<!--                                     th:text="${#strings.substring(item.good.description, 0, 100).concat('...')}">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-3">-->
+
+<!--                                <a style="position: absolute; right: 0; top:-40px;"-->
+<!--                                   class="btn btn-default" th:href="@{/cart/delete/{id}(id=${item.id})}"><i-->
+<!--                                        class="material-icons md-18">delete_forever</i></a>-->
+
+<!--                                <div class="card-text">-->
+<!--                                    <ul class="list-group list-group-flush">-->
+<!--                                        <li class="list-group-item price">-->
+<!--                                            Price:&nbsp;<span th:text="${item.good.price}">Price</span>&nbsp;RUB-->
+<!--                                        </li>-->
+<!--                                        <li class="list-group-item price">-->
+<!--                                            <div class="row">-->
+<!--                                                <button th:attr="data-id=${item.id}"-->
+<!--                                                        class="btn btn-default good-calc good-calc-up"><i-->
+<!--                                                        class="material-icons">keyboard_arrow_up</i></button>-->
+<!--                                                <span class="good-count" style="margin: 0 5px"-->
+<!--                                                      th:text="${item.count}"></span>-->
+<!--                                                <button th:attr="data-id=${item.id}"-->
+<!--                                                        class="btn btn-default good-calc"><i-->
+<!--                                                        class="material-icons md-18">keyboard_arrow_down</i></button>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-4">-->
+<!--                <h3>-->
+<!--                    SUM <span th:text="${cart.sum}"></span> RUB-->
+<!--                </h3>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--&lt;!&ndash;        <a style="margin-top: 20px" class="btn btn-success" th:href="@{/order/create}">Buy all...</a>&ndash;&gt;-->
+<!--    </div>-->
+
+<!--    <div th:if="${#lists.isEmpty(items)}">-->
+<!--        <p class="alert alert-info">Your cart empty!</p>-->
+<!--    </div>-->
+
 </div>
+
 <div th:replace="/blocks/footer :: footer"/>
 </body>
 </html>

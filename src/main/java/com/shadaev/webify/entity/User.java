@@ -38,6 +38,10 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Post> posts = new ArrayList<>();
