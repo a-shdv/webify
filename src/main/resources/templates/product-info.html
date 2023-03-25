@@ -32,9 +32,11 @@
         <p th:text="${product.description}"></p></p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
             <a class="btn btn-outline-secondary btn-lg px-4" href="javascript:history.back()">Назад</a>
-            <a th:href="@{/user/{user}/cart/add/{id}(user=${user.id}, id=${product.id})}">
-                <button type="button" class="btn btn-warning btn-lg px-4 me-sm-3">Добавить в корзину</button>
-            </a>
+            <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}" method="post"><br> <br>
+                <a style="text-decoration:none">
+                    <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину</button>
+                </a>
+            </form>
         </div>
         <small class="text-muted"><p th:text="'Количество товара на складе: ' + ${product.quantity}"></p></small>
     </div>

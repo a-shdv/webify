@@ -14,7 +14,16 @@
                                     <li><p th:text="${product.price} + ' руб.'"></p></li>
                                 </b>
                             </ul>
-                            <a th:href="@{/products/{id}(id=${product.id})}" class="w-100 btn btn-lg btn-warning">Подробнее</a>
+                            <a th:href="@{/products/{id}(id=${product.id})}" class="w-100 btn btn-lg btn-dark">Подробнее</a>
+
+                            <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}" method="post"><br> <br>
+
+                                <a style="text-decoration:none">
+                                    <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину</button>
+                                </a>
+                            </form>
+
+<!--                            <a th:href="@{/user/{user}/cart/add_to_cart/{product}(user=${user.id}, product=${product.id})}" class="w-100 btn btn-lg btn-warning">Добавить в корзину</a>-->
                         </div>
                     </div>
                 </div>

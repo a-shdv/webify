@@ -1,40 +1,64 @@
 package com.shadaev.webify.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shadaev.webify.entity.Cart;
+import com.shadaev.webify.entity.CartItem;
+import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 public class CartController {
+    private final CartService cartService;
     private final UserService userService;
 
-    @RequestMapping(value = {"/user/{user}/cart"}, method = RequestMethod.GET)
+    @GetMapping("/user/{user}/cart")
     public String cart(Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
 
         model.addAttribute("user", user);
         model.addAttribute("cart", user.getCart());
-//        model.addAttribute("cartItems", user.getCart().getItems());
+        model.addAttribute("items", user.getCart().getItems());
 
         return "cart";
     }
+
+    @PostMapping("/user/{user}/cart/{cart}/add/{product}")
+    public String addToCart(Cart cart, Product product) {
+        Set<CartItem> items = cart.getItems();
+        boolean flag = true;
+        for (CartItem item : items) {
+            if (item.getProduct().equals(product)) {
+                item.setCount(item.getCount() + 1);
+                cart.setSum(cart.getSum() + product.getPrice());
+                flag = false;
+            }
+        }
+        if (flag) {
+            CartItem newItem = new CartItem();
+            newItem.setProduct(product);
+            newItem.setCart(cart);
+            newItem.setCount(1);
+            cart.setSum(cart.getSum() + product.getPrice());
+            cart.getItems().add(newItem);
+        }
+
+        cartService.saveCart(cart);
+        return "redirect:/categories";
+    }
+
 //
 //    @RequestMapping(value = {"/cart/delete/{id}"}, method = RequestMethod.GET)
 //    public ModelAndView deleteItem(@PathVariable(value = "id") Integer id) {

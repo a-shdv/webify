@@ -1,9 +1,6 @@
 package com.shadaev.webify.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +13,8 @@ import java.util.*;
 @Table(name = "users")
 @Builder
 @Data
+@EqualsAndHashCode(exclude = {"id", "userRoles", "cart"})
+@ToString(exclude = {"id", "userRoles", "cart", "posts"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
@@ -38,7 +37,7 @@ public class User implements UserDetails {
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
 
