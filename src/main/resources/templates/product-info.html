@@ -24,7 +24,7 @@
     <div class="overflow-hidden">
         <div class="container px-5">
             <img th:src="@{${product.image}}" class="img-fluid border rounded-3 shadow-lg mb-4"
-                 alt="Unable to load image" loading="lazy" width="700" height="500">
+                 alt="Не удалось загрузить изображение." loading="lazy" width="700" height="500">
         </div>
     </div>
     <div class="col-lg-6 mx-auto">
@@ -32,13 +32,12 @@
         <p th:text="${product.description}"></p></p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
             <a class="btn btn-outline-secondary btn-lg px-4" href="javascript:history.back()">Назад</a>
-            <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}" method="post"><br> <br>
+            <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}" method="post">
                 <a style="text-decoration:none">
                     <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину</button>
                 </a>
             </form>
         </div>
-        <small class="text-muted"><p th:text="'Количество товара на складе: ' + ${product.quantity}"></p></small>
     </div>
 </div>
 
@@ -46,7 +45,7 @@
 
 
 <!--<div class="bd-example-snippet bd-code-snippet"><div class="bd-example">-->
-<!--    <img th:src="@{${product.image}}" alt="Unable to load image" width="800" height="800">-->
+<!--    <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="800" height="800">-->
 <!--</div></div>-->
 
 <!--<p th:text="${product.name}"></p>-->

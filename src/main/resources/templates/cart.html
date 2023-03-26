@@ -21,7 +21,7 @@
 
 <div class="container">
 
-    <h2 style="margin-top: 30px">My cart</h2>
+    <h2 style="margin-top: 30px">Моя корзина</h2>
 
     <div th:if="!${#lists.isEmpty(items)}">
         <div class="row" style="margin-top: 20px">
@@ -40,7 +40,7 @@
                             <div class="col-md-3">
                                 <a th:href="@{/products/{id}(id=${item.product.id})}">
                                     <img style="max-height: 100px !important;" th:src="${item.product.getImage()}"
-                                         alt="Couldn't load image"/>
+                                         alt="Не удалось загрузить изображение"/>
                                 </a>
                             </div>
 
@@ -58,7 +58,7 @@
                                 <div class="card-text">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item price">
-                                            Price:&nbsp;<span th:text="${item.product.price}">Price</span>&nbsp;RUB
+                                            Цена:&nbsp;<span th:text="${item.product.price}">Цена:</span>&nbsp;
                                         </li>
                                         <li class="list-group-item price">
                                             <div class="row">
@@ -83,7 +83,7 @@
         <div class="row">
             <div class="col-md-4">
                 <h3>
-                    SUM <span th:text="${cart.sum}"></span> RUB
+                    Всего: <span th:text="${cart.sum}"></span> ₽
                 </h3>
             </div>
         </div>
@@ -91,7 +91,7 @@
     </div>
 
     <div th:if="${#lists.isEmpty(items)}">
-        <p class="alert alert-info">Your cart empty!</p>
+        <p class="alert alert-info">В вашей корзине нет товаров.</p>
     </div>
 
 </div>
