@@ -31,4 +31,7 @@ public class CartItem {
     @Column(name = "count")
     private Integer count;
 
+    @Column(name ="price")
+    private Double price;
+
 }

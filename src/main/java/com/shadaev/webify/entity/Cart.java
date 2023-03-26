@@ -1,17 +1,20 @@
 package com.shadaev.webify.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name = "cart")
-@EqualsAndHashCode(exclude = {"id", "items", "user"})
-@ToString(exclude = {"id", "items"})
+@EqualsAndHashCode(exclude = {"id", "cartItems", "user"})
+@ToString(exclude = {"id", "cartItems"})
 @NoArgsConstructor
 public class Cart {
     @Id
@@ -23,9 +26,9 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
-    private Set<CartItem> items;
+    @Fetch(FetchMode.SUBSELECT)
+    private List<CartItem> cartItems;
 
-    @Column(name = "sum")
-    private Double sum = 0d;
+    @Column(name = "price")
+    private Double price = 0.0;
 }
