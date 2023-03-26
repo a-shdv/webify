@@ -10,15 +10,15 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "cart_items")
-@EqualsAndHashCode(exclude = {"id", "cart"})
-@ToString(exclude = {"cart"})
+@EqualsAndHashCode(exclude = {"id", "cart", "product"})
+@ToString(exclude = {"cart", "product"})
 @NoArgsConstructor
 public class CartItem {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")

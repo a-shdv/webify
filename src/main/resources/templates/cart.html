@@ -44,35 +44,29 @@
                                 </a>
                             </div>
 
-<!--                            <div class="col-md-6">-->
-<!--                                <div class="card-text"-->
-<!--                                     th:text="${#strings.substring(item.product.description, 0, 100).concat('...')}">-->
-<!--                                </div>-->
-<!--                            </div>-->
                             <div class="col-md-3">
-
-<!--                                <a style="position: absolute; right: 0; top:-40px;"-->
-<!--                                   class="btn btn-default" th:href="@{/cart/delete/{id}(id=${item.id})}"><i-->
-<!--                                        class="material-icons md-18">delete_forever</i></a>-->
-
                                 <div class="card-text">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item price">
-                                            Цена:&nbsp;<span th:text="${item.product.price}">Цена:</span>&nbsp;
+                                            Цена: <span th:text="${item.product.price} + ' ₽'"></span>&nbsp;
                                         </li>
                                         <li class="list-group-item price">
                                             <div class="row">
-<!--                                                <button th:attr="data-id=${item.id}"-->
-<!--                                                        class="btn btn-default good-calc good-calc-up"><i-->
-<!--                                                        class="material-icons">keyboard_arrow_up</i></button>-->
                                                 <span class="good-count" style="margin: 0 5px"
                                                       th:text="${item.count}"></span>
-<!--                                                <button th:attr="data-id=${item.id}"-->
-<!--                                                        class="btn btn-default good-calc"><i-->
-<!--                                                        class="material-icons md-18">keyboard_arrow_down</i></button>-->
                                             </div>
                                         </li>
                                     </ul>
+                                    <div>
+                                        <form th:action="@{/user/{user}/cart/{cart}/delete/{item}(user=${cart.user.id}, cart=${cart.id}, item=${item.id})}"
+                                              method="post">
+                                            <a style="text-decoration:none">
+                                                <button type="submit" class="w-100 btn btn-lg btn-danger">Удалить
+                                                </button>
+                                            </a>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -86,8 +80,10 @@
                     Всего: <span th:text="${cart.sum}"></span> ₽
                 </h3>
             </div>
+            <div>
+                <a style="margin-top: 20px" class="btn btn-warning">Купить</a>
+            </div>
         </div>
-<!--        <a style="margin-top: 20px" class="btn btn-success" th:href="@{/order/create}">Buy all...</a>-->
     </div>
 
     <div th:if="${#lists.isEmpty(items)}">

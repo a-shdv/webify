@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "products")
 @Data
 @EqualsAndHashCode(exclude = {"id", "category", "cartItems"})
-@ToString(exclude = "cartItems")
+@ToString(exclude = {"category", "cartItems"})
 @NoArgsConstructor
 public class Product {
     @Id

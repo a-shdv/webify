@@ -5,17 +5,15 @@ import com.shadaev.webify.entity.CartItem;
 import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.CartService;
-import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -36,7 +34,7 @@ public class CartController {
     }
 
     @PostMapping("/user/{user}/cart/{cart}/add/{product}")
-    public String addToCart(Cart cart, Product product) {
+    public String addItemToCart(Cart cart, Product product) {
         Set<CartItem> items = cart.getItems();
         boolean flag = true;
         for (CartItem item : items) {
@@ -59,24 +57,21 @@ public class CartController {
         return "redirect:/categories";
     }
 
-//
-//    @RequestMapping(value = {"/cart/delete/{id}"}, method = RequestMethod.GET)
-//    public ModelAndView deleteItem(@PathVariable(value = "id") Integer id) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String userName = authentication.getName();
-//
-//        User user = userService.getUserByLogin(userName);
-//        Cart cart = user.getCart();
-//        Item item = cart.getItem(id);
-//
-//        Double itemsSum = item.getGood().getPrice() * item.getCount();
-//        cart.setSum(cart.getSum() - itemsSum);
-//
-//        if (cart.getItems().remove(item))
-//            cartService.updateCart(cart);
-//
-//        return cart();
-//    }
+
+    @PostMapping("/user/{user}/cart/{cart}/delete/{item}")
+    public String deleteItemFromCart(@PathVariable(value = "item") Long itemId, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
+        Cart cart = user.getCart();
+        CartItem item = cartService.getItem(itemId, principal);
+
+        cart.getItems().remove(item);
+
+        Double itemsSum = item.getProduct().getPrice() * item.getCount();
+        cart.setSum(cart.getSum() - itemsSum);
+
+        cartService.saveCart(cart);
+        return "redirect:/user/{user}/cart";
+    }
 //
 //    @ResponseBody
 //    @RequestMapping(value = {"/cart/calculate"})
