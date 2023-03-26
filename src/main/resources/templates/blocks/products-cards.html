@@ -5,16 +5,28 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3 text-bg-dark">
-                            <h4 class="my-0 fw-normal"><p th:text="${product.name}"></p></h4>
+
+                            <a th:href="@{/products/{id}(id=${product.id})}" class="w-100 btn btn-lg btn-dark">
+                                <h4 class="my-0 fw-normal"><p th:text="${product.name}"></p></h4>
+                            </a>
+
+
                         </div>
                         <div class="card-body">
-                            <img th:src="@{${product.image}}" alt="Unable to load image" width="225" height="200">
+                            <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="225" height="200">
                             <ul class="list-unstyled mt-3 mb-4">
                                 <b>
-                                    <li><p th:text="${product.price} + ' руб.'"></p></li>
+                                    <li><p th:text="${product.price} + ' ₽'"></p></li>
                                 </b>
                             </ul>
-                            <a th:href="@{/products/{id}(id=${product.id})}" class="w-100 btn btn-lg btn-warning">Подробнее</a>
+
+                            <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}"
+                                  method="post">
+                                <a style="text-decoration:none">
+                                    <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину
+                                    </button>
+                                </a>
+                            </form>
                         </div>
                     </div>
                 </div>

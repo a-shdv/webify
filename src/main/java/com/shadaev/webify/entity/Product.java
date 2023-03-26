@@ -2,14 +2,22 @@ package com.shadaev.webify.entity;
 
 import com.shadaev.webify.entity.Category;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
 @Data
+@EqualsAndHashCode(exclude = {"id", "category", "cartItems"})
+@ToString(exclude = {"category", "cartItems"})
 @NoArgsConstructor
 public class Product {
     @Id
@@ -24,15 +32,15 @@ public class Product {
     private String description;
 
     @Column(name = "price")
-    private BigDecimal price;
+    private Double price;
 
     @Column(name = "image")
     private String image;
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems = new ArrayList<>();
 }

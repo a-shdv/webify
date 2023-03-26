@@ -17,43 +17,85 @@
 </head>
 <body>
 <div th:replace="/blocks/header :: header"/>
-<div class="container">
-      <h1>
-        <span th:text="'Корзина ' + ${user.username}"/>
-      </h1>
 
 
-    <div class="card" th:each="product : ${products}">
-        <div class="card-header">
-            <img th:src="@{${product.getKey().getImage()}}" alt="Unable to load image" width="150" height="150">
-            <h1 th:text="${product.getKey().getName()}"/>
-        </div>
-        <div class="row card-body">
-            <div class="col-md-2" th:inline="text">
-                Цена: [[${product.getKey().getPrice()}]] руб
+<!-- Start Cart  -->
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="table-main table-responsive">
+                    <table class="table">
+                        <div th:if="${#lists.isEmpty(cart.cartItems)}">
+                            <p class="alert alert-warning">В вашей корзине нет товаров.</p>
+                        </div>
+
+                        <div th:if="${!#lists.isEmpty(cart.cartItems)}">
+                            <thead>
+                            <tr>
+                                <th>Изображение</th>
+                                <th>Название товара</th>
+                                <th>Цена</th>
+                                <th>Количество</th>
+                                <th>К оплате</th>
+                                <th>Действие</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            <tr th:each="cartItem : ${cart.cartItems}">
+                                <td class="thumbnail-img">
+                                    <img style="max-height: 100px" th:src="${cartItem.product.image}"
+                                         alt="Не удалось загрузить изображение"/>
+                                </td>
+                                <td class="name-pr">
+                                    <p th:text="${cartItem.product.name}"></p>
+                                </td>
+                                <td class="price-pr">
+                                    <p th:text="'₽' + ${cartItem.product.price}"></p>
+                                </td>
+                                <form th:action="@{/user/{user}/cart/{cart}/update/{product}(user=${cart.user.id}, cart=${cart.id}, product=${cartItem.product.id})}"
+                                      method="post">
+                                    <input type="hidden" name="id" th:value="${cartItem.product.id}">
+                                    <td class="quantity-box"><input type="number" size="4" th:value="${cartItem.getQuantity}"
+                                                                    name="quantity" min="0" step="1"
+                                                                    class="c-input-text qty text"></td>
+                                    <td class="total-pr">
+                                        <p th:text="'₽' + ${cartItem.price}"></p>
+                                    </td>
+
+                                    <td class="update-pr">
+
+                                        <button type="submit" name="action" value="update" title="Update"
+                                                class="btn btn-warning">Применить
+                                        </button>
+
+                                        <button type="submit" name="action" value="delete" title="Delete"
+                                                class="btn btn-danger">Удалить
+                                        </button>
+                                    </td>
+
+                                </form>
+                            </tr>
+                            </tbody>
+                        </div>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-9" th:inline="text">
-                Количество: [[${product.getValue()}]]
-            </div>
-            <a class="col-md-1" th:href="@{/user/{user}/cart/remove/{id}(user=${user.id}, id = ${product.getKey().getId()})}">
-                <button class="btn btn-danger" type="button">
-                    Удалить
-                </button>
-            </a>
         </div>
-        <br/>
+
+        <div class="row my-5">
+            <div class="col-lg-8 col-sm-12"></div>
+            <!--            <div class="col-12 d-flex shopping-box"><a th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>-->
+        </div>
     </div>
-    <div class="row card-body">
-        <h2 class="col-md-11" th:inline="text">
-            Общая стоимость: [[${total}]] руб.
-        </h2>
-            <a class="col-md-1" th:href="@{/user/{user}/cart/checkout(user=${user.id})}">
-              <button class="btn btn-warning" type="button">
-                Купить
-              </button>
-            </a>
-    </div>
+
 </div>
+</div>
+<!-- End Cart -->
+
 <div th:replace="/blocks/footer :: footer"/>
 </body>
 </html>

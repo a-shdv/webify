@@ -1,59 +1,127 @@
 package com.shadaev.webify.service;
 
+import com.shadaev.webify.entity.Cart;
+import com.shadaev.webify.entity.CartItem;
 import com.shadaev.webify.entity.Product;
-import com.shadaev.webify.repository.ProductRepository;
+import com.shadaev.webify.entity.User;
+import com.shadaev.webify.repository.CartItemRepository;
+import com.shadaev.webify.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductRepository productRepository;
-    private final Map<Product, Integer> products = new HashMap<>();
+    private final CartRepository cartRepository;
+    private final CartItemRepository itemRepository;
 
-    public void add(Product product) {
-        products.computeIfPresent(
-                product, (key, value) -> value + 1
-        );
+    public Cart addItemToCart(Product product, int quantity, User user) {
+        Cart cart = user.getCart();
 
-        products.putIfAbsent(product, 1);
-    }
-
-    public void remove(Product product) {
-        var quantity = products.get(product);
-
-        if (quantity > 1) {
-            products.replace(product, quantity - 1);
-        } else if (quantity == 1) {
-            products.remove(product);
+        if (cart == null) {
+            cart = new Cart();
         }
+
+        List<CartItem> cartItems = cart.getCartItems();
+        CartItem cartItem = findCartItem(cartItems, product.getId());
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+            if (cartItem == null) {
+                cartItem = new CartItem();
+                cartItem.setProduct(product);
+                cartItem.setPrice(quantity * product.getPrice());
+                cartItem.setQuantity(quantity);
+                cartItem.setCart(cart);
+                cartItems.add(cartItem);
+                itemRepository.save(cartItem);
+            }
+        } else {
+            if (cartItem == null) {
+                cartItem = new CartItem();
+                cartItem.setProduct(product);
+                cartItem.setPrice(quantity * product.getPrice());
+                cartItem.setQuantity(quantity);
+                cartItem.setCart(cart);
+                cartItems.add(cartItem);
+                itemRepository.save(cartItem);
+            } else {
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                cartItem.setPrice(cartItem.getPrice() + (quantity * product.getPrice()));
+                itemRepository.save(cartItem);
+            }
+        }
+        cart.setCartItems(cartItems);
+
+        double totalPrice = totalPrice(cart.getCartItems());
+
+        cart.setTotalPrice(totalPrice);
+        cart.setUser(user);
+
+        return cartRepository.save(cart);
     }
 
-    public void purchase() {
-        products.forEach((product, cartQuantity) -> productRepository.findById(product.getId())
-                .map(Product::getQuantity)
-                .ifPresent(quantity -> product.setQuantity(quantity - cartQuantity))
-        );
+    public Cart updateItemInCart(Product product, int quantity, User user) {
+        Cart cart = user.getCart();
 
-        productRepository.saveAll(
-                products.keySet()
-        );
+        List<CartItem> cartItems = cart.getCartItems();
 
-        products.clear();
+        CartItem item = findCartItem(cartItems, product.getId());
+
+        item.setQuantity(quantity);
+        item.setPrice(quantity * product.getPrice());
+
+        itemRepository.save(item);
+
+        double totalPrice = totalPrice(cartItems);
+
+        cart.setTotalPrice(totalPrice);
+
+        return cartRepository.save(cart);
     }
 
-    public BigDecimal getTotalPrice() {
-        return products.entrySet().stream()
-                .map(x -> x.getKey().getPrice().multiply(BigDecimal.valueOf(x.getValue())))
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
+    public Cart deleteItemFromCart(Product product, User user) {
+        Cart cart = user.getCart();
+
+        List<CartItem> cartItems = cart.getCartItems();
+
+        CartItem item = findCartItem(cartItems, product.getId());
+
+        cartItems.remove(item);
+
+        itemRepository.delete(item);
+
+        double totalPrice = totalPrice(cartItems);
+
+        cart.setCartItems(cartItems);
+        cart.setTotalPrice(totalPrice);
+
+        return cartRepository.save(cart);
     }
 
-    public Map<Product, Integer> getProducts() {
-        return Map.copyOf(products);
+    private CartItem findCartItem(List<CartItem> cartItems, Long productId) {
+        if (cartItems == null) {
+            return null;
+        }
+        CartItem cartItem = null;
+
+        for (CartItem item : cartItems) {
+            if (item.getProduct().getId() == productId) {
+                cartItem = item;
+            }
+        }
+        return cartItem;
+    }
+
+    private double totalPrice(List<CartItem> cartItems) {
+        double totalPrice = 0.0;
+
+        for (CartItem item : cartItems) {
+            totalPrice += item.getPrice();
+        }
+
+        return totalPrice;
     }
 }

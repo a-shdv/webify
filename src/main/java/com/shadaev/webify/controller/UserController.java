@@ -1,5 +1,6 @@
 package com.shadaev.webify.controller;
 
+import com.shadaev.webify.entity.Cart;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,7 @@ public class UserController {
             return "registration";
         }
         model.addAttribute("user", user);
+        user.setCart(new Cart());
         userService.saveUser(user);
         return "redirect:/login";
     }
