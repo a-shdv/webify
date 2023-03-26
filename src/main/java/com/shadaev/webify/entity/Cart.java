@@ -29,6 +29,6 @@ public class Cart {
     @Fetch(FetchMode.SUBSELECT)
     private List<CartItem> cartItems;
 
-    @Column(name = "price")
-    private Double price = 0.0;
+    @Column(name = "total_price")
+    private Double totalPrice = 0.0;
 }
