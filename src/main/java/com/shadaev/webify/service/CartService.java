@@ -18,7 +18,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository itemRepository;
 
-    public Cart addItemToCart(Product product, User user) {
+    public Cart addItemToCart(Product product, int quantity, User user) {
         Cart cart = user.getCart();
 
         if (cart == null) {
@@ -32,8 +32,8 @@ public class CartService {
             if (cartItem == null) {
                 cartItem = new CartItem();
                 cartItem.setProduct(product);
-                cartItem.setPrice(product.getPrice());
-//                cartItem.setCount(count);
+                cartItem.setPrice(quantity * product.getPrice());
+                cartItem.setQuantity(quantity);
                 cartItem.setCart(cart);
                 cartItems.add(cartItem);
                 itemRepository.save(cartItem);
@@ -42,14 +42,14 @@ public class CartService {
             if (cartItem == null) {
                 cartItem = new CartItem();
                 cartItem.setProduct(product);
-                cartItem.setPrice(product.getPrice());
-//                cartItem.setCount(count);
+                cartItem.setPrice(quantity * product.getPrice());
+                cartItem.setQuantity(quantity);
                 cartItem.setCart(cart);
                 cartItems.add(cartItem);
                 itemRepository.save(cartItem);
             } else {
-                cartItem.setCount(cartItem.getCount());
-                cartItem.setPrice(cartItem.getPrice() + (product.getPrice()));
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                cartItem.setPrice(cartItem.getPrice() + (quantity * product.getPrice()));
                 itemRepository.save(cartItem);
             }
         }
@@ -70,7 +70,7 @@ public class CartService {
 
         CartItem item = findCartItem(cartItems, product.getId());
 
-        item.setCount(quantity);
+        item.setQuantity(quantity);
         item.setPrice(quantity * product.getPrice());
 
         itemRepository.save(item);
@@ -115,13 +115,13 @@ public class CartService {
         return cartItem;
     }
 
-//    private int totalItems(List<CartItem> cartItems) {
-//        int totalItems = 0;
-//        for (CartItem item : cartItems) {
-//            totalItems += item.getCount();
-//        }
-//        return totalItems;
-//    }
+    private int totalItems(List<CartItem> cartItems) {
+        int totalItems = 0;
+        for (CartItem item : cartItems) {
+            totalItems += item.getQuantity();
+        }
+        return totalItems;
+    }
 
     private double totalPrice(List<CartItem> cartItems) {
         double totalPrice = 0.0;

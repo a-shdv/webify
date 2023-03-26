@@ -28,8 +28,8 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "count")
-    private Integer count;
+    @Column(name = "quantity")
+    private int quantity;
 
     @Column(name ="price")
     private Double price;
