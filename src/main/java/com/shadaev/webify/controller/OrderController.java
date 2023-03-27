@@ -32,9 +32,8 @@ public class OrderController {
     }
 
     @GetMapping("user/{user}/orders")
-    public String userInfoOrder(Order order, Model model, Principal principal) {
+    public String userInfoOrders(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
-
         model.addAttribute("user", user);
         model.addAttribute("order", order);
         return "user-info-orders";
@@ -43,19 +42,10 @@ public class OrderController {
     @PostMapping("/user/{user}/cart/order/create")
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
-
         model.addAttribute("user", user);
         model.addAttribute("order", order);
-
         orderService.saveOrder(order);
         cartService.deleteCartItems();
-        return "order";
+        return "order-info";
     }
-
-
-//    @GetMapping("/order")
-//    public String order() {
-//        return "order";
-//    }
-
 }

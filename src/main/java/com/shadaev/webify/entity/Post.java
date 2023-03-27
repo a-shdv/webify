@@ -25,12 +25,6 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Post(String header, String description, User user) {
-        this.header = header;
-        this.description = description;
-        this.user = user;
-    }
-
     public String getUsername() {
         return user != null ? user.getUsername() : "<none>";
     }

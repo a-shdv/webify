@@ -4,9 +4,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -43,7 +47,7 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-//    private User user;
+//    @ManyToMany(mappedBy = "orders")
+//    private List<Product> products = new ArrayList<>();
 
 }

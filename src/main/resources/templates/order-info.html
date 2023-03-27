@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="/parts/head :: head">
+</head>
+<body>
+<div th:replace="/parts/navbar :: navbar"/>
+<div class="text-center">
+    <h1>Ваш заказ оформлен!</h1> <br>
+    <p th:text="'Спасибо за покупку, ' + ${order.name} + '!'"></p>
+    <p th:text="'Номер Вашего заказа: №' + ${order.id} + '.'"></p>
+    <p th:text="'Заказ будет доставлен в город: ' + ${order.city} + ','"></p>
+    <p th:text="'по адресу: ' + ${order.shippingAddress} + '.'"></p>
+    <p th:text="'Детали заказа будут отправлены на Вашу электроную почту: ' + ${order.email} + '.'"></p></div>
+
+<div th:replace="/parts/footer :: footer"/>
+</body>
+</html>
