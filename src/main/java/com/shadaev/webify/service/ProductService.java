@@ -10,17 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
-
-    public List<Product> getProducts(String name) {
-        if (name != null)
-            return productRepository.findByName(name);
-        return productRepository.findAll();
-    }
 
     public void saveProduct(Product product) {
         productRepository.save(product);
@@ -32,5 +24,11 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.getById(id);
+    }
+
+    public List<Product> getProducts(String name) {
+        if (name != null)
+            return productRepository.findByName(name);
+        return productRepository.findAll();
     }
 }

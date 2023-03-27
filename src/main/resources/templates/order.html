@@ -18,7 +18,7 @@
 <body>
 <div th:replace="/blocks/header :: header"/>
 
-<form class="needs-validation" novalidate>
+<form th:action="@{/user/{user}/cart/order/create(user=${cart.user.id})}" method="post" class="needs-validation" novalidate>
 
     <div class="text-center"><h1>Оформление заказа</h1>
     </div>
@@ -26,7 +26,7 @@
         <!-- Name -->
         <div class="col-md-2 mb-3">
             <label for="validationTooltip01">Имя</label>
-            <input type="text" class="form-control" id="validationTooltip01" placeholder="Имя" required>
+            <input type="text" name="name" class="form-control" id="validationTooltip01" placeholder="Имя" required>
             <div class="invalid-feedback">
                 Пожалуйста, введите Ваше имя.
             </div>
@@ -35,7 +35,8 @@
         <!-- Phone Number -->
         <div class="col-md-2 mb-3">
             <label for="validationCustom05">Номер телефона</label>
-            <input type="text" class="form-control" id="validationCustom05" placeholder="Номер телефона" required>
+            <input type="text" name="phoneNumber" class="form-control" id="validationCustom05"
+                   placeholder="Номер телефона" required>
             <div class="invalid-feedback">
                 Пожалуйста, введите номер телефона.
             </div>
@@ -50,8 +51,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
                 </div>
-                <input type="text" class="form-control" id="validationCustomUsername" placeholder="Электронная почта"
+                <input type="text" name="email" class="form-control" id="validationCustomUsername"
+                       placeholder="Электронная почта"
                        aria-describedby="inputGroupPrepend" required>
+
                 <div class="invalid-feedback">
                     Пожалуйста, введите электронную почту.
                 </div>
@@ -63,7 +66,7 @@
         <!-- City -->
         <div class="col-md-1 mb-3">
             <label for="controlSelect1">Город</label>
-            <select class="form-control" id="controlSelect1">
+            <select class="form-control" id="controlSelect1" name="city">
                 <option>Москва</option>
                 <option>Санкт-Петербург</option>
                 <option>Казань</option>
@@ -76,18 +79,19 @@
             </div>
         </div>
 
-<!--        <div class="col-md-1 mb-3">-->
-<!--            <label for="validationCustom03">Город</label>-->
-<!--            <input type="text" class="form-control" id="validationCustom03" placeholder="Город" required>-->
-<!--            <div class="invalid-feedback">-->
-<!--                Пожалуйста, выберите город.-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="col-md-1 mb-3">-->
+        <!--            <label for="validationCustom03">Город</label>-->
+        <!--            <input type="text" class="form-control" id="validationCustom03" placeholder="Город" required>-->
+        <!--            <div class="invalid-feedback">-->
+        <!--                Пожалуйста, выберите город.-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <!-- Shipping Address -->
         <div class="col-md-3 mb-3">
             <label for="validationCustom04">Адрес доставки</label>
-            <input type="text" class="form-control" id="validationCustom04" placeholder="Адрес доставки" required>
+            <input type="text" name="shippingAddress" class="form-control" id="validationCustom04"
+                   placeholder="Адрес доставки" required>
             <div class="invalid-feedback">
                 Пожалуйста, введите адрес доставки.
             </div>
@@ -100,7 +104,6 @@
             <textarea class="form-control" id="textarea0" rows="3"></textarea>
         </div>
     </div>
-
     <div class="text-center">
         <button class="btn btn-warning" type="submit">Приобрести</button>
     </div>
