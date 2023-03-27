@@ -1,17 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="/parts/head :: head">
+<head th:replace="parts/head :: head">
 </head>
 <body>
 <div th:replace="/parts/navbar :: navbar"/>
-<div class="text-center">
-    <h1>Ваш заказ оформлен!</h1> <br>
-    <p th:text="'Спасибо за покупку, ' + ${order.name} + '!'"></p>
-    <p th:text="'Номер Вашего заказа: №' + ${order.id} + '.'"></p>
-    <p th:text="'Заказ будет доставлен в город: ' + ${order.city} + ','"></p>
-    <p th:text="'по адресу: ' + ${order.shippingAddress} + '.'"></p>
-    <p th:text="'Детали заказа будут отправлены на Вашу электроную почту: ' + ${order.email} + '.'"></p></div>
 
+<form th:action="@{/user/{user}/cart/order/create(user=${cart.user.id})}" method="post" class="needs-validation"
+      novalidate>
+
+    <div class="text-center"><h1>Оформление заказа</h1>
+    </div>
+    <div class="row justify-content-center">
+        <!-- Name -->
+        <div class="col-md-2 mb-3">
+            <label for="validationTooltip01">Имя</label>
+            <input type="text" name="name" class="form-control" id="validationTooltip01" placeholder="Имя" required>
+            <div class="invalid-feedback">
+                Пожалуйста, введите Ваше имя.
+            </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="col-md-2 mb-3">
+            <label for="validationCustom05">Номер телефона</label>
+            <input type="text" name="phoneNumber" class="form-control" id="validationCustom05"
+                   placeholder="Номер телефона" required>
+            <div class="invalid-feedback">
+                Пожалуйста, введите номер телефона.
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <!-- Email -->
+        <div class="col-md-4 mb-3">
+            <label for="validationCustomUsername">Электронная почта</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                </div>
+                <input type="text" name="email" class="form-control" id="validationCustomUsername"
+                       placeholder="Электронная почта"
+                       aria-describedby="inputGroupPrepend" required>
+
+                <div class="invalid-feedback">
+                    Пожалуйста, введите электронную почту.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <!-- City -->
+        <div class="col-md-1 mb-3">
+            <label for="controlSelect1">Город</label>
+            <select class="form-control" id="controlSelect1" name="city">
+                <option>Москва</option>
+                <option>Санкт-Петербург</option>
+                <option>Казань</option>
+                <option>Самара</option>
+                <option>Ульяновск</option>
+                <option>Нижний Новгород</option>
+            </select>
+            <div class="invalid-feedback">
+                Пожалуйста, выберите город.
+            </div>
+        </div>
+
+        <!--        <div class="col-md-1 mb-3">-->
+        <!--            <label for="validationCustom03">Город</label>-->
+        <!--            <input type="text" class="form-control" id="validationCustom03" placeholder="Город" required>-->
+        <!--            <div class="invalid-feedback">-->
+        <!--                Пожалуйста, выберите город.-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <!-- Shipping Address -->
+        <div class="col-md-3 mb-3">
+            <label for="validationCustom04">Адрес доставки</label>
+            <input type="text" name="shippingAddress" class="form-control" id="validationCustom04"
+                   placeholder="Адрес доставки" required>
+            <div class="invalid-feedback">
+                Пожалуйста, введите адрес доставки.
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-3">
+            <label for="textarea0">Комментарий к заказу</label>
+            <textarea class="form-control" id="textarea0" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-warning" type="submit">Приобрести</button>
+    </div>
+</form>
 <div th:replace="/parts/footer :: footer"/>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 </body>
 </html>
