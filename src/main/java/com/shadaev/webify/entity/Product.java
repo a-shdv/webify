@@ -44,9 +44,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "products_orders",
-    joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
-    private List<Order> orders;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "products_orders",
+//    joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+//    inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
+//    private List<Order> orders;
 }
