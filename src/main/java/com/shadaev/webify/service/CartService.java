@@ -101,8 +101,8 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public void clear() {
-        cartRepository.deleteAll();
+    public void deleteCartItems() {
+        itemRepository.deleteAll();
     }
 
     private CartItem findCartItem(List<CartItem> cartItems, Long productId) {

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,7 +39,7 @@ public class OrderController {
         model.addAttribute("order", order);
 
         orderService.saveOrder(order);
-        cartService.clear();
+        cartService.deleteCartItems();
         return "order-info";
     }
 

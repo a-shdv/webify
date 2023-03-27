@@ -42,13 +42,13 @@ public class User implements UserDetails {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
 
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Order order;
+//    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "order_id", referencedColumnName = "id")
+//    private Order order;
 
-//    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "user")
-//    @Fetch(value = FetchMode.SUBSELECT)
-//    private List<Order> orders = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "user")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Order> orders = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)

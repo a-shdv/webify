@@ -39,11 +39,11 @@ public class Order {
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
-//    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id")
-//    private User user;
-
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
+
+//    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+//    private User user;
 
 }

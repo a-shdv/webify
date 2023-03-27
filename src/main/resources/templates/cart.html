@@ -80,23 +80,24 @@
                                 </form>
                             </tr>
                             </tbody>
+                            <div class="d-flex justify-content-between mb-5">
+                                <b><h5 class="text-uppercase">К оплате:</h5></b>
+                                <b>
+                                    <h5><p th:text="${cart.totalPrice} + ' ₽'"></p></h5>
+                                </b>
+                            </div>
                         </div>
                     </table>
-
-                    <div class="d-flex justify-content-between mb-5">
-                        <b><h5 class="text-uppercase">К оплате:</h5></b>
-                        <b><h5><p th:text="${cart.totalPrice} + ' ₽'"></p></h5></b>
-                    </div>
-
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="text-center"><a th:href="@{/user/{user}/cart/order(user=${user.id})}"
-                                        class="ml-auto btn btn-lg btn-warning">Оформить заказ</a></div>
+        <div th:if="${!#lists.isEmpty(cart.cartItems)}">
+            <div class="row">
+                <div class="text-center"><a th:href="@{/user/{user}/cart/order(user=${user.id})}"
+                                            class="ml-auto btn btn-lg btn-warning">Оформить заказ</a></div>
+            </div>
         </div>
-
     </div>
 </div>
 <!-- End Cart -->
