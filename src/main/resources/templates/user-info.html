@@ -5,14 +5,12 @@
 <body>
 <div th:replace="/parts/navbar :: navbar"></div>
 <div class="text-center">
-    <h1>Профиль</h1>
+    <h1 th:text="${user.username}"></h1>
     <hr>
-    <h4 th:text="'Имя пользователя: ' + ${user.username}"></h4>
     <h4 th:text="'Роль: ' + ${user.getUserRoles}"></h4>
     <h4 th:text="'Количество постов: ' + ${user.posts.size()}"></h4>
     <div th:replace="/parts/footer :: footer"></div>
 </div>
-
 
 </body>
 </html>

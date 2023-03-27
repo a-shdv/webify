@@ -6,7 +6,7 @@
 <div th:replace="/parts/navbar :: navbar"/>
 
 <!-- Start Cart  -->
-<div class="cart-box-main">
+<div class="cart-box-main mt-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -66,14 +66,15 @@
                                 </form>
                             </tr>
                             </tbody>
-                            <div class="d-flex justify-content-between mb-5">
-                                <b><h5 class="text-uppercase">К оплате:</h5></b>
-                                <b>
-                                    <h5><p th:text="${cart.totalPrice} + ' ₽'"></p></h5>
-                                </b>
-                            </div>
+
                         </div>
                     </table>
+                    <div class="d-flex justify-content-between mb-5" th:if="${!#lists.isEmpty(cart.cartItems)}">
+                        <b><h5 class="text-uppercase">К оплате:</h5></b>
+                        <b>
+                            <h5><p th:text="${cart.totalPrice} + ' ₽'"></p></h5>
+                        </b>
+                    </div>
                 </div>
             </div>
         </div>

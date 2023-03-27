@@ -28,12 +28,6 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/about")
-    public String about(Model model, Principal principal) {
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "about";
-    }
-
     @PostMapping("/filter")
     public String filter(@RequestParam String filter, Model model, Principal principal) {
         List<Post> posts;
