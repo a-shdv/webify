@@ -7,7 +7,9 @@
 <div class="text-center">
     <h1 th:text="${user.username}"></h1>
     <hr>
-    <h4 th:text="'Роль: ' + ${user.getUserRoles}"></h4>
+    <h4 th:text="'Логин: ' + ${user.username}"></h4>
+    <a type="password"><h4 th:text="'Пароль: ' + ${user.password}"></h4></a>
+    <h4 th:text="'Количество заказов: ' + ${user.orders.size()}"></h4>
     <h4 th:text="'Количество постов: ' + ${user.posts.size()}"></h4>
     <div th:replace="/parts/footer :: footer"></div>
 </div>
