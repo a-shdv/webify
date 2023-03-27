@@ -1,6 +1,7 @@
 package com.shadaev.webify.controller;
 
 import com.shadaev.webify.entity.Product;
+import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,12 @@ public class ProductController {
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "product-info";
+    }
+
+    @GetMapping("/user/{user}/products")
+    public String userInfoProducts(@PathVariable("user") User user, Model model) {
+        model.addAttribute("user", user);
+        return "user-info-products";
     }
 
     @PostMapping("/products/create")

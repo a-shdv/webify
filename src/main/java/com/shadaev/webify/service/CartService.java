@@ -101,6 +101,10 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
+    public void deleteCartItems() {
+        itemRepository.deleteAll();
+    }
+
     private CartItem findCartItem(List<CartItem> cartItems, Long productId) {
         if (cartItems == null) {
             return null;

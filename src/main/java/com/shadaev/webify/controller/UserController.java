@@ -35,18 +35,6 @@ public class UserController {
         return "user-info";
     }
 
-    @GetMapping("/user/{user}/posts")
-    public String userInfoPosts(@PathVariable("user") User user, Model model) {
-        model.addAttribute("user", user);
-        return "user-info-posts";
-    }
-
-    @GetMapping("/user/{user}/products")
-    public String userInfoProducts(@PathVariable("user") User user, Model model) {
-        model.addAttribute("user", user);
-        return "user-info-products";
-    }
-
     @PostMapping("/registration")
     public String createUser(User user, Model model) {
         User userFromDb = (User) userService.loadUserByUsername(user.getUsername());
