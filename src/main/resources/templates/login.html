@@ -21,10 +21,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
 
-            <div th:style="'color:red'" th:if="${param.error} ">
+            <div class="text-center mt-5" th:style="'color:red'" th:if="${param.error} ">
                 Неправильное имя пользователя или пароль.
             </div>
-            <div th:style="'color:red'" th:if="${param.logout}">
+            <div class="text-center mt-5" th:style="'color:red'" th:if="${param.logout}">
                 Вы вышли учетной записи.
             </div>
 

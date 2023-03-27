@@ -59,7 +59,8 @@
                                 <form th:action="@{/user/{user}/cart/{cart}/update/{product}(user=${cart.user.id}, cart=${cart.id}, product=${cartItem.product.id})}"
                                       method="post">
                                     <input type="hidden" name="id" th:value="${cartItem.product.id}">
-                                    <td class="quantity-box"><input type="number" size="4" th:value="${cartItem.getQuantity}"
+                                    <td class="quantity-box"><input type="number" size="4"
+                                                                    th:value="${cartItem.getQuantity}"
                                                                     name="quantity" min="0" step="1"
                                                                     class="c-input-text qty text"></td>
                                     <td class="total-pr">
@@ -69,30 +70,34 @@
                                     <td class="update-pr">
 
                                         <button type="submit" name="action" value="update" title="Update"
-                                                class="btn btn-warning">Применить
+                                                class="btn btn-warning">Обновить
                                         </button>
 
                                         <button type="submit" name="action" value="delete" title="Delete"
                                                 class="btn btn-danger">Удалить
                                         </button>
                                     </td>
-
                                 </form>
                             </tr>
                             </tbody>
                         </div>
                     </table>
+
+                    <div class="d-flex justify-content-between mb-5">
+                        <b><h5 class="text-uppercase">К оплате:</h5></b>
+                        <b><h5><p th:text="${cart.totalPrice} + ' ₽'"></p></h5></b>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <div class="row my-5">
-            <div class="col-lg-8 col-sm-12"></div>
-            <!--            <div class="col-12 d-flex shopping-box"><a th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>-->
+        <div class="row">
+            <div class="text-center"><a th:href="@{/user/{user}/cart/place_order(user=${user.id})}"
+                                        class="ml-auto btn btn-lg btn-warning">Оформить заказ</a></div>
         </div>
-    </div>
 
-</div>
+    </div>
 </div>
 <!-- End Cart -->
 
