@@ -31,6 +31,15 @@ public class OrderController {
         return "order";
     }
 
+    @GetMapping("user/{user}/orders")
+    public String userInfoOrder(Order order, Model model, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
+
+        model.addAttribute("user", user);
+        model.addAttribute("order", order);
+        return "user-info-orders";
+    }
+
     @PostMapping("/user/{user}/cart/order/create")
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
@@ -40,7 +49,7 @@ public class OrderController {
 
         orderService.saveOrder(order);
         cartService.deleteCartItems();
-        return "order-info";
+        return "order";
     }
 
 
