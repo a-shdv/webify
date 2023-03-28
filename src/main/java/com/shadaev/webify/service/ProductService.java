@@ -1,5 +1,6 @@
 package com.shadaev.webify.service;
 
+import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.ProductRepository;
 import com.shadaev.webify.repository.UserRepository;
@@ -26,7 +27,11 @@ public class ProductService {
         return productRepository.getById(id);
     }
 
-    public List<Product> getProducts(String name) {
+    public List<Product> getProducts() {
+        return productRepository.findAll();
+    }
+
+    public List<Product> getProductByName(String name) {
         if (name != null)
             return productRepository.findByName(name);
         return productRepository.findAll();

@@ -3,10 +3,46 @@
 <head th:replace="/parts/head :: head">
 </head>
 <body>
-    <div th:replace="/parts/navbar :: navbar"></div>
+<div th:replace="/parts/navbar :: navbar"></div>
 
-    <p th:text="${user.orders}"></p>
+<div class="row justify-content-center">
+    <div class="col-md-6 mt-5">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Номер заказа</th>
+                <th scope="col">Название товара</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Количество</th>
+            </tr>
+            </thead>
+            <tbody th:each="order: ${orders}">
+            <tr th:each="product: ${order.products}">
+                <th scope="row" th:text="${order.id}"></th>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.quantity}"></td>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!--    <tr th:each="order: ${orders}">-->
+            <!--        <th scope="row"></th>-->
+            <!--&lt;!&ndash;        <td th:each="product: ${order.products}" th:text="${product.id}"></td>&ndash;&gt;-->
+            <!--        <td th:each="product: ${order.products}" th:text="${product.name}"></td>-->
+            <!--&lt;!&ndash;        <td th:each="product: ${order.products}" th:text="${product.price}"></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;        <td th:each="product: ${order.products}" th:text="${product.quantity}"></td>&ndash;&gt;-->
+            <!--    </tr>-->
+            </tbody>
+        </table>
+    </div>
 
-    <div th:replace="/parts/footer :: footer"></div>
+</div>
+
+
+<div th:replace="/parts/footer :: footer"></div>
 </body>
 </html>

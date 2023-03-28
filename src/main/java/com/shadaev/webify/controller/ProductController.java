@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class ProductController {
     @GetMapping("/products")
     public String products(@RequestParam(name = "name", required = false) String name, Model model,
                            Principal principal) {
-        model.addAttribute("products", productService.getProducts(name));
+        model.addAttribute("products", productService.getProductByName(name));
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "products";
     }
@@ -32,13 +33,27 @@ public class ProductController {
     public String productInfo(@PathVariable Long id, Model model, Principal principal) {
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "product-info";
+        return "product";
     }
 
     @GetMapping("/user/{user}/products")
     public String userInfoProducts(@PathVariable("user") User user, Model model) {
         model.addAttribute("user", user);
         return "user-info-products";
+    }
+
+    @PostMapping("/products/filter")
+    public String filterProduct(@RequestParam String filter, Model model, Principal principal) {
+        List<Product> products;
+
+        if (filter != null && !filter.isEmpty()) {
+            products = productService.getProductByName(filter.trim());
+        } else {
+            products = productService.getProducts();
+        }
+        model.addAttribute("products", products);
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "products";
     }
 
     @PostMapping("/products/create")
@@ -52,4 +67,6 @@ public class ProductController {
         productService.deleteProduct(id);
         return "redirect:/";
     }
+
+
 }

@@ -4,7 +4,7 @@
 </head>
 <body>
 <div th:replace="/parts/navbar :: navbar"></div>
-
+<div th:replace="/parts/products-filter :: products-filter"></div>
 <div class="container py-3">
     <header>
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
@@ -13,7 +13,7 @@
         </div>
     </header>
 </div>
-<div th:replace="/parts/categories-cards :: categories-cards"></div>
+<div class="mt-0" th:replace="/parts/categories-cards :: categories-cards"></div>
 <div th:replace="/parts/footer :: footer"></div>
 </body>
 </html>

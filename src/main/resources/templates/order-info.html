@@ -4,13 +4,68 @@
 </head>
 <body>
 <div th:replace="/parts/navbar :: navbar"/>
-<div class="text-center">
+<div class="text-center mt-5">
     <h1>Ваш заказ оформлен!</h1> <br>
     <p th:text="'Спасибо за покупку, ' + ${order.name} + '!'"></p>
     <p th:text="'Номер Вашего заказа: №' + ${order.id} + '.'"></p>
     <p th:text="'Заказ будет доставлен в город: ' + ${order.city} + ','"></p>
     <p th:text="'по адресу: ' + ${order.shippingAddress} + '.'"></p>
     <p th:text="'Детали заказа будут отправлены на Вашу электроную почту: ' + ${order.email} + '.'"></p></div>
+
+<section>
+    <div class="cart-box-main">
+        <div class="container mt-5">
+            <h1>Детали заказа</h1> <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Дата заказа</th>
+                                <th>Название товара</th>
+                                <th>Количество</th>
+                                <th>Статус заказа</th>
+                                <th>Способ оплаты</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <div th:each="product : ${products}">
+                                <tr>
+                                    <td>
+<!--                                        Дата заказа-->
+                                        <span><b>null</b></span>
+                                    </td>
+                                    <td>
+                                        <!-- Название товара-->
+                                        <a th:text="${product.name} + ${product.quantity}" th:href="@{/products/{id}(id=${product.id})}">
+                                        </a>
+                                    </td>
+                                    <!--Количество-->
+                                    <td th:text="${product.quantity}"></td>
+                                    <td>
+                                    <!-- Статус заказа-->
+                                     <p th:if="${order.status}">
+                                         Обрабатывается
+                                     </p>
+                                    </td>
+                                    <td style="color: black">
+                                        <!-- Способ оплаты-->
+                                        <span></span>Наличными</span>
+                                    </td>
+                                </tr>
+                            </div>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <div th:replace="/parts/footer :: footer"/>
 </body>

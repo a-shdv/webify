@@ -1,8 +1,6 @@
 package com.shadaev.webify.controller;
 
-import com.shadaev.webify.entity.Cart;
-import com.shadaev.webify.entity.Order;
-import com.shadaev.webify.entity.User;
+import com.shadaev.webify.entity.*;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,29 +22,41 @@ public class OrderController {
     private final CartService cartService;
 
     @GetMapping("user/{user}/cart/order")
-    public String order(Order order, Model model, Principal principal) {
+    public String order(Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
         Cart cart = user.getCart();
+
         model.addAttribute("user", user);
         model.addAttribute("cart", cart);
-        return "order";
-    }
+        model.addAttribute("items", cart.getCartItems());
 
-    @GetMapping("user/{user}/orders")
-    public String userInfoOrders(Order order, Model model, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
-        model.addAttribute("user", user);
-        model.addAttribute("order", order);
-        return "user-info-orders";
+        return "order";
     }
 
     @PostMapping("/user/{user}/cart/order/create")
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
+
+        List<Product> products = orderService.toProductsList(user.getCart().getCartItems());
+        model.addAttribute("products", products);
+
+        cartService.deleteCartItems(user.getCart());
+
+        order.setProducts(products);
+        orderService.saveOrder(order);
+
         model.addAttribute("user", user);
         model.addAttribute("order", order);
-        orderService.saveOrder(order);
-        cartService.deleteCartItems();
         return "order-info";
+    }
+
+    @GetMapping("user/{user}/orders")
+    public String userInfoOrders(Model model, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
+
+        model.addAttribute("user", user);
+        model.addAttribute("orders", user.getOrders());
+
+        return "user-info-orders";
     }
 }

@@ -1,0 +1,12 @@
+<div class="container" th:fragment="products-filter">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col">
+      <form th:action="@{/products/filter}" method="post" class="col-12 col-lg-auto mt-4 mb-lg-0 me-lg-auto" role="search">
+        <input type="text" name="filter" class="form-control" placeholder="Найти по названию товара..."
+               aria-label="Search">
+      </form>
+    </div>
+  </div>
+</div>

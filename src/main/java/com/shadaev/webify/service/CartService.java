@@ -16,9 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartService {
     private final CartRepository cartRepository;
-    private final CartItemRepository itemRepository;
+    private final CartItemRepository cartItemRepository;
 
-    public Cart addItemToCart(Product product, int quantity, User user) {
+    public Cart addItemToCart(Product product, Integer quantity, User user) {
         Cart cart = user.getCart();
 
         if (cart == null) {
@@ -36,7 +36,7 @@ public class CartService {
                 cartItem.setQuantity(quantity);
                 cartItem.setCart(cart);
                 cartItems.add(cartItem);
-                itemRepository.save(cartItem);
+                cartItemRepository.save(cartItem);
             }
         } else {
             if (cartItem == null) {
@@ -46,11 +46,11 @@ public class CartService {
                 cartItem.setQuantity(quantity);
                 cartItem.setCart(cart);
                 cartItems.add(cartItem);
-                itemRepository.save(cartItem);
+                cartItemRepository.save(cartItem);
             } else {
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
                 cartItem.setPrice(cartItem.getPrice() + (quantity * product.getPrice()));
-                itemRepository.save(cartItem);
+                cartItemRepository.save(cartItem);
             }
         }
         cart.setCartItems(cartItems);
@@ -63,7 +63,12 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Cart updateItemInCart(Product product, int quantity, User user) {
+    public List<CartItem> getCartItemsFromCart(Cart cart) {
+        System.out.println();
+        return cartRepository.getById(cart.getId()).getCartItems();
+    }
+
+    public Cart updateItemInCart(Product product, Integer quantity, User user) {
         Cart cart = user.getCart();
 
         List<CartItem> cartItems = cart.getCartItems();
@@ -73,7 +78,7 @@ public class CartService {
         item.setQuantity(quantity);
         item.setPrice(quantity * product.getPrice());
 
-        itemRepository.save(item);
+        cartItemRepository.save(item);
 
         double totalPrice = totalPrice(cartItems);
 
@@ -91,7 +96,7 @@ public class CartService {
 
         cartItems.remove(item);
 
-        itemRepository.delete(item);
+        cartItemRepository.delete(item);
 
         double totalPrice = totalPrice(cartItems);
 
@@ -101,8 +106,10 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public void deleteCartItems() {
-        itemRepository.deleteAll();
+    public void deleteCartItems(Cart cart) {
+        cart.getCartItems().clear();
+        List<CartItem> cartItems = cartItemRepository.findByCart(cart);
+        cartItemRepository.deleteAll(cartItems);
     }
 
     private CartItem findCartItem(List<CartItem> cartItems, Long productId) {

@@ -36,7 +36,7 @@ public class CartController {
 
     @PostMapping("/user/{user}/cart/{cart}/add/{product}")
     public String addItemToCart(Product product,
-                                @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity,
+                                @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
                                 Principal principal) {
         cartService.addItemToCart(product, quantity, userService.getUserByPrincipal(principal));
         return "redirect:/categories";
@@ -45,7 +45,7 @@ public class CartController {
 
     @PostMapping(value = "/user/{user}/cart/{cart}/update/{product}", params = "action=update")
     public String updateCart(@PathVariable(value = "product") Long productId,
-                             @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity,
+                             @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
                              Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
         Product product = productService.getProductById(productId);

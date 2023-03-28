@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "cart_items")
-@EqualsAndHashCode(exclude = {"id", "cart", "product"})
-@ToString(exclude = {"cart", "product"})
+@EqualsAndHashCode(exclude = {"id", "cart", "product", "order"})
+@ToString(exclude = {"cart", "product", "order"})
 @NoArgsConstructor
 public class CartItem {
 
@@ -28,10 +28,9 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "quantity")
-    private int quantity;
-
     @Column(name ="price")
     private Double price;
 
+    @Column(name = "quantity")
+    private Integer quantity;
 }

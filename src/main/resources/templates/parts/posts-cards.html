@@ -1,0 +1,56 @@
+<main th:fragment="posts-cards">
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                <tr th:each="post: ${posts}">
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <!--header-->
+                            <div class="card-header py-3 text-bg-dark text-center">
+                                <h4 class="my-0 fw-normal"><p th:text="${post.header}"></p></h4>
+                            </div>
+
+                            <!--img-->
+                            <svg class="bd-placeholder-img" width="100%" height="225"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                            </svg>
+
+
+                            <div class="card-body">
+                                <p class="card-text" th:text="${post.description}"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a class="text-body-secondary" th:href="@{/user/{user}(user=${post.user.id})}"
+                                       th:text="${post.username}">
+                                    </a>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-dark">Подробнее
+                                        </button>
+                                        <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--                    <td th:text="'Заголовок: ' + ${post.header}"></td>-->
+                    <!--                    <br>-->
+                    <!--                    <td th:text="'Описание: ' + ${post.description}"></td>-->
+                    <!--                    <br>-->
+                    <!--                    <td th:text="'Автор: ' + ${post.getUsername()}"></td>-->
+                    <!--                    <br> <br>-->
+
+
+                </tr>
+
+
+            </div>
+        </div>
+    </div>
+
+</main>

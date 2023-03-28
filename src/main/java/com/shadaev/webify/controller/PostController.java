@@ -20,6 +20,7 @@ public class PostController {
     @GetMapping("/user/{user}/posts")
     public String userInfoPosts(@PathVariable("user") User user, Model model) {
         model.addAttribute("user", user);
+        model.addAttribute("posts", postService.getPosts());
         return "user-info-posts";
     }
 

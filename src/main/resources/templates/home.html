@@ -5,27 +5,11 @@
 <body>
 
 <div th:replace="/parts/navbar :: navbar"></div>
-
-<hr>
-<form th:action="@{/filter}" method="post" >
-    <input type="text" name="filter" placeholder="Поиск по заголовку...">
-    <button type="submit">Найти</button>
-</form>
-<hr>
-<div class="text-center">
+<div th:replace="/parts/posts-filter :: posts-filter"></div>
+<div class="text-center mt-5">
     <h1>Все посты</h1>
-    <div>
-        <tr th:each="post: ${posts}">
-            <td th:text="'Заголовок: ' + ${post.header}"></td>
-            <br>
-            <td th:text="'Описание: ' + ${post.description}"></td>
-            <br>
-            <td th:text="'Автор: ' + ${post.getUsername()}"></td>
-            <br> <br>
-        </tr>
-    </div>
 </div>
-<hr>
+<div th:replace="/parts/posts-cards :: posts-cards"></div>
 <div th:replace="/parts/footer :: footer"></div>
 </body>
 </html>

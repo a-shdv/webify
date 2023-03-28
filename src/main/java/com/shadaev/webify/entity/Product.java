@@ -1,23 +1,19 @@
 package com.shadaev.webify.entity;
 
-import com.shadaev.webify.entity.Category;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "products")
 @Data
-@EqualsAndHashCode(exclude = {"id", "category", "cartItems"})
-@ToString(exclude = {"category", "cartItems"})
+@EqualsAndHashCode(exclude = {"id", "category", "orders"})
+@ToString(exclude = {"category", "orders"})
 @NoArgsConstructor
 public class Product {
     @Id
@@ -34,6 +30,10 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
+    @Nullable
+    @Column(name = "quantity")
+    private Integer quantity;
+
     @Column(name = "image")
     private String image;
 
@@ -41,12 +41,16 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<CartItem> cartItems = new ArrayList<>();
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "products_orders",
-//    joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-//    inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
-//    private List<Order> orders;
+    public Product(Long id, String name, String description, Double price, @Nullable Integer quantity, String image, Category category) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.image = image;
+        this.category = category;
+    }
 }
