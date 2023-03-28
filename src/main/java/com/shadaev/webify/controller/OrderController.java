@@ -1,6 +1,8 @@
 package com.shadaev.webify.controller;
 
-import com.shadaev.webify.entity.*;
+import com.shadaev.webify.entity.Cart;
+import com.shadaev.webify.entity.Order;
+import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,18 +37,14 @@ public class OrderController {
     @PostMapping("/user/{user}/cart/order/create")
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
+        Cart cart = user.getCart();
+
+
+        cartService.deleteCartItems(cart);
+        orderService.saveOrder(order);
 
         model.addAttribute("user", user);
         model.addAttribute("order", order);
-        model.addAttribute("products", orderService.toProductsList(user.getCart().getCartItems()));
-
-        List<Product> test = orderService.toProductsList(user.getCart().getCartItems());
-
-        cartService.deleteCartItems();
-
-        order.setStatus(OrderStatus.IN_PROGRESS);
-
-        orderService.saveOrder(order);
         return "order-info";
     }
 
