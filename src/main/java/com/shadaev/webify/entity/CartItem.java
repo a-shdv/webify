@@ -33,9 +33,4 @@ public class CartItem {
 
     @Column(name ="price")
     private Double price;
-
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order;
-
 }

@@ -36,16 +36,17 @@ public class OrderController {
     @PostMapping("/user/{user}/cart/order/create")
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
-//        List<CartItem> cartItems = user.getCart().getCartItems();
 
         model.addAttribute("user", user);
         model.addAttribute("order", order);
+        model.addAttribute("products", orderService.toProductsList(user.getCart().getCartItems()));
+
+        List<Product> test =orderService.toProductsList(user.getCart().getCartItems());
 
         cartService.deleteCartItems();
         order.setStatus(OrderStatus.IN_PROGRESS);
 
         orderService.saveOrder(order);
-
         return "order-info";
     }
 
@@ -54,6 +55,7 @@ public class OrderController {
         User user = userService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
         model.addAttribute("orders", user.getOrders());
+
         return "user-info-orders";
     }
 }

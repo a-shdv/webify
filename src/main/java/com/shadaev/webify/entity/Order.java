@@ -50,8 +50,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-//    @Fetch(value = FetchMode.SUBSELECT)
-//    private List<CartItem> cartItems = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Product> products = new ArrayList<>();
 
 }
