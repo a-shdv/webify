@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartService {
     private final CartRepository cartRepository;
-    private final CartItemRepository itemRepository;
+    private final CartItemRepository cartItemRepository;
 
     public Cart addItemToCart(Product product, int quantity, User user) {
         Cart cart = user.getCart();
@@ -36,7 +36,7 @@ public class CartService {
                 cartItem.setQuantity(quantity);
                 cartItem.setCart(cart);
                 cartItems.add(cartItem);
-                itemRepository.save(cartItem);
+                cartItemRepository.save(cartItem);
             }
         } else {
             if (cartItem == null) {
@@ -46,11 +46,11 @@ public class CartService {
                 cartItem.setQuantity(quantity);
                 cartItem.setCart(cart);
                 cartItems.add(cartItem);
-                itemRepository.save(cartItem);
+                cartItemRepository.save(cartItem);
             } else {
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
                 cartItem.setPrice(cartItem.getPrice() + (quantity * product.getPrice()));
-                itemRepository.save(cartItem);
+                cartItemRepository.save(cartItem);
             }
         }
         cart.setCartItems(cartItems);
@@ -63,6 +63,11 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
+    public List<CartItem> getCartItemsFromCart(Cart cart) {
+        System.out.println();
+        return cartRepository.getById(cart.getId()).getCartItems();
+    }
+
     public Cart updateItemInCart(Product product, int quantity, User user) {
         Cart cart = user.getCart();
 
@@ -73,7 +78,7 @@ public class CartService {
         item.setQuantity(quantity);
         item.setPrice(quantity * product.getPrice());
 
-        itemRepository.save(item);
+        cartItemRepository.save(item);
 
         double totalPrice = totalPrice(cartItems);
 
@@ -91,7 +96,7 @@ public class CartService {
 
         cartItems.remove(item);
 
-        itemRepository.delete(item);
+        cartItemRepository.delete(item);
 
         double totalPrice = totalPrice(cartItems);
 
@@ -102,7 +107,7 @@ public class CartService {
     }
 
     public void deleteCartItems() {
-        itemRepository.deleteAll();
+        cartItemRepository.deleteAll();
     }
 
     private CartItem findCartItem(List<CartItem> cartItems, Long productId) {

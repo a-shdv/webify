@@ -8,8 +8,9 @@
 <form th:action="@{/user/{user}/cart/order/create(user=${cart.user.id})}" method="post" class="needs-validation"
       novalidate>
 
-    <div class="text-center"><h1>Оформление заказа</h1>
+    <div class="text-center mt-5 mb-5"><h1>Оформление заказа</h1>
     </div>
+
     <div class="row justify-content-center">
         <!-- Name -->
         <div class="col-md-2 mb-3">
@@ -92,10 +93,22 @@
             <textarea class="form-control" id="textarea0" rows="3"></textarea>
         </div>
     </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-5 mt-5">
+            <div th:each="item: ${items}">
+                <ul class="list-group">
+                    <li class="list-group-item" th:text="${item.product.name} + ' ' + ${item.quantity} + ' шт.'"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="text-center">
         <button class="btn btn-warning" type="submit">Приобрести</button>
     </div>
 </form>
+
 <div th:replace="/parts/footer :: footer"/>
 
 <script>

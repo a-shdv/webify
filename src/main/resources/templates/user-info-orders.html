@@ -5,7 +5,17 @@
 <body>
     <div th:replace="/parts/navbar :: navbar"></div>
 
-    <p th:text="${user.orders}"></p>
+    <table>
+        <tr th:each="order: ${orders}">
+            <td th:text="'Номер заказа: ' + ${order.id}+ '\n'"></td>
+            <br>
+            <td th:text="'Заказы: ' + ${order.cartItems}"></td>
+            <br>
+        </tr>
+    </table>
+
+
+
 
     <div th:replace="/parts/footer :: footer"></div>
 </body>

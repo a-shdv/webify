@@ -47,7 +47,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @ManyToMany(mappedBy = "orders")
-//    private List<Product> products = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<CartItem> cartItems = new ArrayList<>();
 
 }
