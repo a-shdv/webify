@@ -15,7 +15,7 @@
         <!-- Name -->
         <div class="col-md-2 mb-3">
             <label for="validationTooltip01">Имя</label>
-            <input type="text" name="name" class="form-control" id="validationTooltip01" placeholder="Имя" required>
+            <input type="text" name="name" class="form-control" id="validationTooltip01" value="Антон" placeholder="Имя" required>
             <div class="invalid-feedback">
                 Пожалуйста, введите Ваше имя.
             </div>
@@ -24,7 +24,7 @@
         <!-- Phone Number -->
         <div class="col-md-2 mb-3">
             <label for="validationCustom05">Номер телефона</label>
-            <input type="text" name="phoneNumber" class="form-control" id="validationCustom05"
+            <input type="text" name="phoneNumber" class="form-control" value="89876380847" id="validationCustom05"
                    placeholder="Номер телефона" required>
             <div class="invalid-feedback">
                 Пожалуйста, введите номер телефона.
@@ -41,7 +41,7 @@
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
                 </div>
                 <input type="text" name="email" class="form-control" id="validationCustomUsername"
-                       placeholder="Электронная почта"
+                       placeholder="Электронная почта" value="shadaev2001@icloud.com"
                        aria-describedby="inputGroupPrepend" required>
 
                 <div class="invalid-feedback">
@@ -68,18 +68,10 @@
             </div>
         </div>
 
-        <!--        <div class="col-md-1 mb-3">-->
-        <!--            <label for="validationCustom03">Город</label>-->
-        <!--            <input type="text" class="form-control" id="validationCustom03" placeholder="Город" required>-->
-        <!--            <div class="invalid-feedback">-->
-        <!--                Пожалуйста, выберите город.-->
-        <!--            </div>-->
-        <!--        </div>-->
-
         <!-- Shipping Address -->
         <div class="col-md-3 mb-3">
             <label for="validationCustom04">Адрес доставки</label>
-            <input type="text" name="shippingAddress" class="form-control" id="validationCustom04"
+            <input type="text" name="shippingAddress" class="form-control" id="validationCustom04" value="ул. Тестовая"
                    placeholder="Адрес доставки" required>
             <div class="invalid-feedback">
                 Пожалуйста, введите адрес доставки.
@@ -96,7 +88,15 @@
 
     <div class="row justify-content-center">
         <div class="col-md-4 mb-5 mt-5">
+            <p>Заказы</p>
             <div th:each="item: ${items}">
+<!--                <input type="hidden" name="cartItems" th:value="${items}">-->
+                <input type="hidden" name="cart" th:value="${item.product}">
+<!--                <input type="hidden" name="product" th:value="${item.product}">-->
+<!--                <input type="hidden" name="quantity" th:value="${item.quantity}">-->
+<!--                <input type="hidden" name="price" th:value="${item.price}">-->
+<!--                <input type="hidden" name="order" th:value="${item.order}">-->
+
                 <ul class="list-group">
                     <li class="list-group-item" th:text="${item.product.name} + ' ' + ${item.quantity} + ' шт.'"></li>
                 </ul>

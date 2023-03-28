@@ -39,16 +39,13 @@ public class OrderController {
     @PostMapping("/user/{user}/cart/order/create")
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
-        List<CartItem> cartItems = user.getCart().getCartItems();
+//        List<CartItem> cartItems = user.getCart().getCartItems();
 
         model.addAttribute("user", user);
         model.addAttribute("order", order);
 
-
-        orderService.saveOrder(order);
         cartService.deleteCartItems();
-
-        order.getCartItems().addAll(cartItems);
+        orderService.saveOrder(order);
 
         return "order-info";
     }
