@@ -37,11 +37,12 @@ public class OrderController {
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
 
-        model.addAttribute("products", orderService.toProductsList(user.getCart().getCartItems()));
+        List<Product> products = orderService.toProductsList(user.getCart().getCartItems());
+        model.addAttribute("products", products);
 
         cartService.deleteCartItems(user.getCart());
 
-        order.setStatus(OrderStatus.IN_PROGRESS);
+        order.setProducts(products);
         orderService.saveOrder(order);
 
         model.addAttribute("user", user);

@@ -2,6 +2,7 @@ package com.shadaev.webify.service;
 
 import com.shadaev.webify.entity.CartItem;
 import com.shadaev.webify.entity.Order;
+import com.shadaev.webify.entity.OrderStatus;
 import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public void saveOrder(Order order) {
+        order.setStatus(OrderStatus.IN_PROGRESS);
         orderRepository.save(order);
     }
 
@@ -28,8 +30,8 @@ public class OrderService {
                     cartItem.getProduct().getName(),
                     cartItem.getProduct().getDescription(),
                     cartItem.getProduct().getPrice(),
-                    cartItem.getProduct().getImage(),
                     cartItem.getQuantity(),
+                    cartItem.getProduct().getImage(),
                     cartItem.getProduct().getCategory()
             );
             products.add(product);

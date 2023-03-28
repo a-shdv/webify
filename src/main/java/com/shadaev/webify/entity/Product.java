@@ -7,14 +7,13 @@ import lombok.ToString;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "products")
 @Data
-@EqualsAndHashCode(exclude = {"id", "category", "cartItems"})
-@ToString(exclude = {"category", "cartItems"})
+@EqualsAndHashCode(exclude = {"id", "category", "orders"})
+@ToString(exclude = {"category", "orders"})
 @NoArgsConstructor
 public class Product {
     @Id
@@ -42,15 +41,16 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Product(Long id, String name, String description, Double price,
-                   String image, Integer quantity, Category category) {
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders;
+
+    public Product(Long id, String name, String description, Double price, @Nullable Integer quantity, String image, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.image = image;
         this.quantity = quantity;
+        this.image = image;
         this.category = category;
     }
-
 }
