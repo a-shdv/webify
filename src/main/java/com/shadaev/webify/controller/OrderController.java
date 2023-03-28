@@ -1,9 +1,6 @@
 package com.shadaev.webify.controller;
 
-import com.shadaev.webify.entity.Cart;
-import com.shadaev.webify.entity.CartItem;
-import com.shadaev.webify.entity.Order;
-import com.shadaev.webify.entity.User;
+import com.shadaev.webify.entity.*;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
@@ -45,6 +42,8 @@ public class OrderController {
         model.addAttribute("order", order);
 
         cartService.deleteCartItems();
+        order.setStatus(OrderStatus.IN_PROGRESS);
+
         orderService.saveOrder(order);
 
         return "order-info";

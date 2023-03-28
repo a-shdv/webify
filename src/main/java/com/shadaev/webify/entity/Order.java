@@ -43,12 +43,15 @@ public class Order {
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
+    @Column(name = "status")
+    private OrderStatus status;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<CartItem> cartItems = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+//    @Fetch(value = FetchMode.SUBSELECT)
+//    private List<CartItem> cartItems = new ArrayList<>();
 
 }
