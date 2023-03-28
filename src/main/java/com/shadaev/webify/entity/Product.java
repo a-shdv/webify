@@ -42,9 +42,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<CartItem> cartItems = new ArrayList<>();
-
     public Product(Long id, String name, String description, Double price,
                    String image, Integer quantity, Category category) {
         this.id = id;

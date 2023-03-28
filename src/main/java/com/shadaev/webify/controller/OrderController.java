@@ -1,9 +1,6 @@
 package com.shadaev.webify.controller;
 
-import com.shadaev.webify.entity.Cart;
-import com.shadaev.webify.entity.Order;
-import com.shadaev.webify.entity.OrderStatus;
-import com.shadaev.webify.entity.User;
+import com.shadaev.webify.entity.*;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
