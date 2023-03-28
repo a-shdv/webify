@@ -24,6 +24,7 @@ public class OrderService {
         Product product;
         for (CartItem cartItem : cartItems) {
             product = new Product(
+                    cartItem.getProduct().getId(),
                     cartItem.getProduct().getName(),
                     cartItem.getProduct().getDescription(),
                     cartItem.getProduct().getPrice(),

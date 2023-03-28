@@ -38,14 +38,16 @@
                                     </td>
                                     <td>
                                         <!-- Название товара-->
-                                        <a th:text="${product.name} + ${product.quantity}" href="#">
+                                        <a th:text="${product.name} + ${product.quantity}" th:href="@{/products/{id}(id=${product.id})}">
                                         </a>
                                     </td>
                                     <!--Количество-->
                                     <td th:text="${product.quantity}"></td>
                                     <td>
                                     <!-- Статус заказа-->
-<!--                                     <p th:text="${product.order.status}"></p>-->
+                                     <p th:if="${order.status}">
+                                         Обрабатывается
+                                     </p>
                                     </td>
                                     <td style="color: black">
                                         <!-- Способ оплаты-->

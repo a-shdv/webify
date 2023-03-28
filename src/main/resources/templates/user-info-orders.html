@@ -9,7 +9,7 @@
         <tr th:each="order: ${orders}">
             <td th:text="'Номер заказа: ' + ${order.id}+ '\n'"></td>
             <br>
-            <td th:text="'Заказы: ' + ${order.cartItems}"></td>
+            <td th:text="'Заказы: ' + ${order}"></td>
             <br>
         </tr>
     </table>

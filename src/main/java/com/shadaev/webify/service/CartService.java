@@ -110,11 +110,6 @@ public class CartService {
         cart.getCartItems().clear();
         List<CartItem> cartItems = cartItemRepository.findByCart(cart);
         cartItemRepository.deleteAll(cartItems);
-//        List<CartItem> cartItems = cart.getCartItems();
-//        cartItemRepository.deleteAll(cartItems);
-//        cartItems.clear();
-//        cart.setCartItems(cartItems);
-//        cartRepository.save(cart);
     }
 
     private CartItem findCartItem(List<CartItem> cartItems, Long productId) {

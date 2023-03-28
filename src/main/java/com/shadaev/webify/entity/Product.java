@@ -45,8 +45,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    public Product(String name, String description, Double price,
+    public Product(Long id, String name, String description, Double price,
                    String image, Integer quantity, Category category) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;

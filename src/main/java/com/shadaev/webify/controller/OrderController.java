@@ -2,6 +2,7 @@ package com.shadaev.webify.controller;
 
 import com.shadaev.webify.entity.Cart;
 import com.shadaev.webify.entity.Order;
+import com.shadaev.webify.entity.OrderStatus;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
@@ -37,10 +38,12 @@ public class OrderController {
     @PostMapping("/user/{user}/cart/order/create")
     public String createOrder(Order order, Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
-        Cart cart = user.getCart();
 
+        model.addAttribute("products", orderService.toProductsList(user.getCart().getCartItems()));
 
-        cartService.deleteCartItems(cart);
+        cartService.deleteCartItems(user.getCart());
+
+        order.setStatus(OrderStatus.IN_PROGRESS);
         orderService.saveOrder(order);
 
         model.addAttribute("user", user);
@@ -51,6 +54,7 @@ public class OrderController {
     @GetMapping("user/{user}/orders")
     public String userInfoOrders(Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
+
         model.addAttribute("user", user);
         model.addAttribute("orders", user.getOrders());
 
