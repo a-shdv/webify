@@ -33,18 +33,23 @@
                             <div th:each="product : ${products}">
                                 <tr>
                                     <td>
+<!--                                        Дата заказа-->
                                         <span><b>null</b></span>
                                     </td>
                                     <td>
-                                        <a th:text="${product.name}" href="#">
+                                        <!-- Название товара-->
+                                        <a th:text="${product.name} + ${product.quantity}" href="#">
                                         </a>
                                     </td>
-                                    <td>1</td>
+                                    <!--Количество-->
+                                    <td th:text="${product.quantity}"></td>
                                     <td>
-<!--                                        <p th:text="${product.order.status}"></p>-->
+                                    <!-- Статус заказа-->
+<!--                                     <p th:text="${product.order.status}"></p>-->
                                     </td>
                                     <td style="color: black">
-                                        <span></span>null</span>
+                                        <!-- Способ оплаты-->
+                                        <span></span>Наличными</span>
                                     </td>
                                 </tr>
                             </div>

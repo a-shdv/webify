@@ -28,9 +28,9 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "quantity")
-    private int quantity;
-
     @Column(name ="price")
     private Double price;
+
+    @Column(name = "quantity")
+    private Integer quantity;
 }

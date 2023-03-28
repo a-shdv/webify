@@ -28,6 +28,7 @@ public class OrderService {
                     cartItem.getProduct().getDescription(),
                     cartItem.getProduct().getPrice(),
                     cartItem.getProduct().getImage(),
+                    cartItem.getQuantity(),
                     cartItem.getProduct().getCategory()
             );
             products.add(product);

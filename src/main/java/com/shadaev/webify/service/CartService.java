@@ -18,7 +18,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
 
-    public Cart addItemToCart(Product product, int quantity, User user) {
+    public Cart addItemToCart(Product product, Integer quantity, User user) {
         Cart cart = user.getCart();
 
         if (cart == null) {
@@ -68,7 +68,7 @@ public class CartService {
         return cartRepository.getById(cart.getId()).getCartItems();
     }
 
-    public Cart updateItemInCart(Product product, int quantity, User user) {
+    public Cart updateItemInCart(Product product, Integer quantity, User user) {
         Cart cart = user.getCart();
 
         List<CartItem> cartItems = cart.getCartItems();

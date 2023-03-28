@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,15 +22,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Product(String name, String description, Double price,
-                   String image, Category category) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.image = image;
-        this.category = category;
-    }
-
     @Column(name = "name")
     private String name;
 
@@ -38,6 +30,10 @@ public class Product {
 
     @Column(name = "price")
     private Double price;
+
+    @Nullable
+    @Column(name = "quantity")
+    private Integer quantity;
 
     @Column(name = "image")
     private String image;
@@ -49,13 +45,14 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    public Product(String name, String description, Double price,
+                   String image, Integer quantity, Category category) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.image = image;
+        this.quantity = quantity;
+        this.category = category;
+    }
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "products_orders",
-//    joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-//    inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
-//    private List<Order> orders;
 }

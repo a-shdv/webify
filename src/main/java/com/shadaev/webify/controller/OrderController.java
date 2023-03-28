@@ -41,9 +41,10 @@ public class OrderController {
         model.addAttribute("order", order);
         model.addAttribute("products", orderService.toProductsList(user.getCart().getCartItems()));
 
-        List<Product> test =orderService.toProductsList(user.getCart().getCartItems());
+        List<Product> test = orderService.toProductsList(user.getCart().getCartItems());
 
         cartService.deleteCartItems();
+
         order.setStatus(OrderStatus.IN_PROGRESS);
 
         orderService.saveOrder(order);
