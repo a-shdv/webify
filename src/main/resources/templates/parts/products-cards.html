@@ -13,7 +13,9 @@
 
                         </div>
                         <div class="card-body">
-                            <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="225" height="200">
+
+                            <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="225"
+                                 height="200">
                             <ul class="list-unstyled mt-3 mb-4">
                                 <b>
                                     <li><p th:text="${product.price} + ' ₽'"></p></li>
@@ -22,10 +24,26 @@
 
                             <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}"
                                   method="post">
-                                <a style="text-decoration:none">
-                                    <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину
-                                    </button>
-                                </a>
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="mt-2 col-6 col-md-4">
+                                            <td class="quantity-box"><input type="number" size="4"
+                                                                            th:value="${product.quantity}"
+                                                                            name="quantity" min="0" step="1"
+                                                                            class="c-input-text qty text"></td>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <a style="text-decoration:none">
+                                                <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в
+                                                    корзину
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </form>
                         </div>
                     </div>
