@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "cart")
-@EqualsAndHashCode(exclude = {"id", "cartItems", "user"})
-@ToString(exclude = {"id", "cartItems"})
+@EqualsAndHashCode(exclude = {"id", "cartItemList", "user"})
+@ToString(exclude = {"id", "cartItemList"})
 @NoArgsConstructor
 public class Cart {
     @Id
@@ -27,7 +27,7 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
-    private List<CartItem> cartItems;
+    private List<CartItem> cartItemList;
 
     @Column(name = "total_price")
     private Double totalPrice = 0.0;

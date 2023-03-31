@@ -3,7 +3,6 @@ package com.shadaev.webify.entity;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,8 +13,8 @@ import java.util.*;
 @Table(name = "users")
 @Builder
 @Data
-@EqualsAndHashCode(exclude = {"id", "userRoles", "cart", "orders", "posts"})
-@ToString(exclude = {"id", "userRoles", "cart", "orders","posts"})
+@EqualsAndHashCode(exclude = {"id", "userRoleSet", "cart", "orderList", "postList"})
+@ToString(exclude = {"id", "userRoleSet", "cart", "orderList","postList"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
@@ -36,7 +35,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-    private Set<UserRole> userRoles = new HashSet<>();
+    private Set<UserRole> userRoleSet = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
@@ -44,15 +43,15 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orderList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Post> posts = new ArrayList<>();
+    private List<Post> postList = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getUserRoles();
+        return getUserRoleSet();
     }
 
     @Override

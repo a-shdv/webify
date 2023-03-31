@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "cart_items")
-@EqualsAndHashCode(exclude = {"id", "cart", "product", "order"})
-@ToString(exclude = {"cart", "product", "order"})
+@EqualsAndHashCode(exclude = {"id", "cart", "product"})
+@ToString(exclude = {"cart", "product"})
 @NoArgsConstructor
 public class CartItem {
 

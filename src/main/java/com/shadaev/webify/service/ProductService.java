@@ -1,11 +1,8 @@
 package com.shadaev.webify.service;
 
-import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.ProductRepository;
-import com.shadaev.webify.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +16,21 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
-    }
-
-    public Product getProductById(Long id) {
+    public Product findProductById(Long id) {
         return productRepository.getById(id);
     }
 
-    public List<Product> getProducts() {
+    public List<Product> findProductList() {
         return productRepository.findAll();
     }
 
-    public List<Product> getProductByName(String name) {
+    public List<Product> findProductListByName(String name) {
         if (name != null)
             return productRepository.findByName(name);
         return productRepository.findAll();
+    }
+
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
     }
 }

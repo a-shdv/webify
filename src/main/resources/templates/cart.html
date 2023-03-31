@@ -13,11 +13,11 @@
 
                 <div class="table-main table-responsive">
                     <table class="table">
-                        <div th:if="${#lists.isEmpty(cart.cartItems)}">
+                        <div th:if="${#lists.isEmpty(cart.getCartItemList)}">
                             <p class="alert alert-warning">В вашей корзине нет товаров.</p>
                         </div>
 
-                        <div th:if="${!#lists.isEmpty(cart.cartItems)}">
+                        <div th:if="${!#lists.isEmpty(cart.getCartItemList)}">
                             <thead>
                             <tr>
                                 <th>Изображение</th>
@@ -31,7 +31,7 @@
                             <tbody>
 
 
-                            <tr th:each="cartItem : ${cart.cartItems}">
+                            <tr th:each="cartItem : ${cart.getCartItemList}">
                                 <td class="thumbnail-img">
                                     <img style="max-height: 100px" th:src="${cartItem.product.image}"
                                          alt="Не удалось загрузить изображение"/>
@@ -69,7 +69,7 @@
 
                         </div>
                     </table>
-                    <div class="d-flex justify-content-between mb-5" th:if="${!#lists.isEmpty(cart.cartItems)}">
+                    <div class="d-flex justify-content-between mb-5" th:if="${!#lists.isEmpty(cart.getCartItemList)}">
                         <b><h5 class="text-uppercase">К оплате:</h5></b>
                         <b>
                             <h5><p th:text="${cart.totalPrice} + ' ₽'"></p></h5>
@@ -79,7 +79,7 @@
             </div>
         </div>
 
-        <div th:if="${!#lists.isEmpty(cart.cartItems)}">
+        <div th:if="${!#lists.isEmpty(cart.getCartItemList)}">
             <div class="row">
                 <div class="text-center"><a th:href="@{/user/{user}/cart/order(user=${user.id})}"
                                             class="ml-auto btn btn-lg btn-warning">Оформить заказ</a></div>

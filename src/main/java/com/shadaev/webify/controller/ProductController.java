@@ -5,6 +5,7 @@ import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,52 +21,70 @@ public class ProductController {
     private final ProductService productService;
     private final UserService userService;
 
-    @GetMapping("/products")
-    public String products(@RequestParam(name = "name", required = false) String name, Model model,
-                           Principal principal) {
-        model.addAttribute("products", productService.getProductByName(name));
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "products";
-    }
-
-    @GetMapping("/products/{id}")
-    public String productInfo(@PathVariable Long id, Model model, Principal principal) {
-        model.addAttribute("product", productService.getProductById(id));
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "product";
-    }
-
-    @GetMapping("/user/{user}/products")
-    public String userInfoProducts(@PathVariable("user") User user, Model model) {
-        model.addAttribute("user", user);
-        return "user-info-products";
-    }
-
-    @PostMapping("/products/filter")
-    public String filterProduct(@RequestParam String filter, Model model, Principal principal) {
-        List<Product> products;
-
-        if (filter != null && !filter.isEmpty()) {
-            products = productService.getProductByName(filter.trim());
-        } else {
-            products = productService.getProducts();
-        }
-        model.addAttribute("products", products);
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
-        return "products";
-    }
-
     @PostMapping("/products/create")
     public String createProduct(Product product) {
         productService.saveProduct(product);
+
         return "redirect:/";
+    }
+
+    @GetMapping("/products/{id}")
+    public String getProductInfo(@PathVariable Long id,
+                                 @AuthenticationPrincipal User userSession, Model model) {
+        if (userSession != null) {
+            User userFromDb = userService.findByUsername(userSession.getUsername());
+            model.addAttribute("user", userFromDb);
+        }
+        Product product = productService.findProductById(id);
+
+        model.addAttribute("product", product);
+        return "product";
+    }
+
+    @GetMapping("/products")
+    public String getProducts(@RequestParam(name = "name", required = false) String name,
+                              @AuthenticationPrincipal User userSession, Model model) {
+        if (userSession != null) {
+            User userFromDb = userService.findByUsername(userSession.getUsername());
+            model.addAttribute("user", userFromDb);
+        }
+        List<Product> productList = productService.findProductListByName(name);
+
+        model.addAttribute("productList", productList);
+        return "products";
+    }
+
+    @GetMapping("/user/{user}/products")
+    public String getUserInfoProducts(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+
+        model.addAttribute("user", userFromDb);
+        return "user-info-products";
     }
 
     @PostMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
+
         return "redirect:/";
     }
 
+    @PostMapping("/products/filter")
+    public String filterProduct(@RequestParam String filter,
+                                @AuthenticationPrincipal User userSession, Model model) {
+        if (userSession != null) {
+            User userFromDb = userService.findByUsername(userSession.getUsername());
+            model.addAttribute("user", userFromDb);
+        }
+        List<Product> productList;
 
+        if (filter != null && !filter.isEmpty()) {
+            productList = productService.findProductListByName(filter.trim());
+        } else {
+            productList = productService.findProductList();
+        }
+
+        model.addAttribute("products", productList);
+        return "products";
+    }
 }
