@@ -21,12 +21,7 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String home(@AuthenticationPrincipal User userSession, Model model) {
-        if (userSession != null) {
-            User userFromDb = userService.findByUsername(userSession.getUsername());
-            model.addAttribute("user", userFromDb);
-        }
-        model.addAttribute("postList", postService.findPostList());
+    public String home() {
         return "home";
     }
 
