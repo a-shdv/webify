@@ -33,7 +33,7 @@ public class UserController {
         return "registration";
     }
 
-    @GetMapping("/user/{user}")
+    @GetMapping("/user")
     public String getUserInfo(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
 

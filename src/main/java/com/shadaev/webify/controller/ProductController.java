@@ -21,26 +21,6 @@ public class ProductController {
     private final ProductService productService;
     private final UserService userService;
 
-    @PostMapping("/products/create")
-    public String createProduct(Product product) {
-        productService.saveProduct(product);
-
-        return "redirect:/";
-    }
-
-    @GetMapping("/products/{id}")
-    public String getProductInfo(@PathVariable Long id,
-                                 @AuthenticationPrincipal User userSession, Model model) {
-        if (userSession != null) {
-            User userFromDb = userService.findByUsername(userSession.getUsername());
-            model.addAttribute("user", userFromDb);
-        }
-        Product product = productService.findProductById(id);
-
-        model.addAttribute("product", product);
-        return "product";
-    }
-
     @GetMapping("/products")
     public String getProducts(@RequestParam(name = "name", required = false) String name,
                               @AuthenticationPrincipal User userSession, Model model) {
@@ -54,7 +34,20 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping("/user/{user}/products")
+    @GetMapping("/products/{product}")
+    public String getProduct(@PathVariable(value = "product") Long productId,
+                             @AuthenticationPrincipal User userSession, Model model) {
+        if (userSession != null) {
+            User userFromDb = userService.findByUsername(userSession.getUsername());
+            model.addAttribute("user", userFromDb);
+        }
+        Product product = productService.findProductById(productId);
+
+        model.addAttribute("product", product);
+        return "product";
+    }
+
+    @GetMapping("/user/products")
     public String getUserInfoProducts(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
 
@@ -62,9 +55,16 @@ public class ProductController {
         return "user-info-products";
     }
 
-    @PostMapping("/products/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    @PostMapping("/products/create")
+    public String createProduct(Product product) {
+        productService.saveProduct(product);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/products/delete/{product}")
+    public String deleteProduct(@PathVariable(value = "product") Long productId) {
+        productService.deleteProduct(productId);
 
         return "redirect:/";
     }

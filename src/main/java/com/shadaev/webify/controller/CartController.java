@@ -25,18 +25,7 @@ public class CartController {
     private final ProductService productService;
     private final UserService userService;
 
-    @PostMapping("/user/{user}/cart/{cart}/add/{product}")
-    public String createItemInCart(Product product,
-                                   @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
-                                   @AuthenticationPrincipal User userSession) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
-
-        cartService.saveCartItemToCart(product, quantity, userFromDb);
-
-        return "redirect:/categories";
-    }
-
-    @GetMapping("/user/{user}/cart")
+    @GetMapping("/user/cart")
     public String getCart(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
         Cart cart = userFromDb.getCart();
@@ -48,8 +37,20 @@ public class CartController {
         return "cart";
     }
 
+    @PostMapping("/user/cart/add/{product}")
+    public String createItemInCart(@PathVariable(value = "product") Long productId,
+                                   @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
+                                   @AuthenticationPrincipal User userSession) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        Product product = productService.findProductById(productId);
 
-    @PostMapping(value = "/user/{user}/cart/{cart}/update/{product}", params = "action=update")
+        cartService.saveCartItemToCart(product, quantity, userFromDb);
+
+        return "redirect:/categories";
+    }
+
+
+    @PostMapping(value = "/user/cart/update/{product}", params = "action=update")
     public String updateCart(@PathVariable(value = "product") Long productId,
                              @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
                              @AuthenticationPrincipal User userSession, Model model) {
@@ -61,7 +62,7 @@ public class CartController {
         return "redirect:/user/cart";
     }
 
-    @PostMapping(value = "/user/{user}/cart/{cart}/update/{product}", params = "action=delete")
+    @PostMapping(value = "/user/cart/update/{product}", params = "action=delete")
     public String deleteItemFromCart(@PathVariable(value = "product") Long productId,
                                      @AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());

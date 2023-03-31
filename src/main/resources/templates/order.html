@@ -5,7 +5,7 @@
 <body>
 <div th:replace="/parts/navbar :: navbar"/>
 
-<form th:action="@{/user/{user}/cart/order/create(user=${cart.user.id})}" method="post" class="needs-validation"
+<form th:action="@{/user/cart/order/create}" method="post" class="needs-validation"
       novalidate>
 
     <div class="text-center mt-5 mb-5"><h1>Оформление заказа</h1>

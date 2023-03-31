@@ -20,21 +20,22 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
 
-    @PostMapping("/user/{user}/posts/post/create")
+    @GetMapping("/user/posts")
+    public String getUserInfoPosts(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        List<Post> postList = postService.findPostList();
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("postList", postList);
+        return "user-info-posts";
+    }
+
+    @PostMapping("/user/posts/post/create")
     public String createPost(Post post, @AuthenticationPrincipal User userSession) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
 
         postService.savePost(post, userFromDb);
 
-        return "redirect:/user/{user}/posts";
-    }
-
-    @GetMapping("/user/{user}/posts")
-    public String getUserInfoPosts(@PathVariable("user") User user, Model model) {
-        List<Post> postList = postService.findPostList();
-
-        model.addAttribute("user", user);
-        model.addAttribute("postList", postList);
-        return "user-info-posts";
+        return "redirect:/user/posts";
     }
 }

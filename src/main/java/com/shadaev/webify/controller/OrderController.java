@@ -21,9 +21,30 @@ public class OrderController {
     private final CartService cartService;
     private final UserService userService;
 
-    @PostMapping("/user/{user}/cart/order/create")
-    public String createOrder(Order order,
-                              @AuthenticationPrincipal User userSession, Model model) {
+    @GetMapping("/user/cart/order")
+    public String getOrder(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        Cart cart = userFromDb.getCart();
+        List<CartItem> cartItemList = cart.getCartItemList();
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("cart", cart);
+        model.addAttribute("cartItemList", cartItemList);
+        return "order";
+    }
+
+    @GetMapping("/user/orders")
+    public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        List<Order> orderList = userFromDb.getOrderList();
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("orderList", orderList);
+        return "user-info-orders";
+    }
+
+    @PostMapping("/user/cart/order/create")
+    public String createOrder(@AuthenticationPrincipal User userSession, Order order, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
         Cart cart = userFromDb.getCart();
         List<CartItem> cartItemList = cart.getCartItemList();
@@ -38,27 +59,5 @@ public class OrderController {
         model.addAttribute("user", userFromDb);
         model.addAttribute("order", order);
         return "order-info";
-    }
-
-    @GetMapping("user/{user}/cart/order")
-    public String getOrder(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
-        Cart cart = userFromDb.getCart();
-        List<CartItem> cartItemList = cart.getCartItemList();
-
-        model.addAttribute("user", userFromDb);
-        model.addAttribute("cart", cart);
-        model.addAttribute("cartItemList", cartItemList);
-        return "order";
-    }
-
-    @GetMapping("user/{user}/orders")
-    public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
-        List<Order> orderList = userFromDb.getOrderList();
-
-        model.addAttribute("user", userFromDb);
-        model.addAttribute("orderList", orderList);
-        return "user-info-orders";
     }
 }

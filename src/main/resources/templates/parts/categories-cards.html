@@ -16,7 +16,7 @@
                                 <a th:href="@{/categories/{category}(category=${category.id})}" class="w-100 btn btn-lg btn-warning">Перейти</a>
                             </div>
                             <div th:if="${category.name == 'Все товары'}">
-                                <a th:href="@{/products}" class="w-100 btn btn-lg btn-warning">Перейти</a>
+                                <a href="/products" class="w-100 btn btn-lg btn-warning">Перейти</a>
                             </div>
                         </div>
                     </div>
