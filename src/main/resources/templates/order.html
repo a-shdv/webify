@@ -5,7 +5,7 @@
 <body>
 <div th:replace="/parts/navbar :: navbar"/>
 
-<form th:action="@{/user/{user}/cart/order/create(user=${cart.user.id})}" method="post" class="needs-validation"
+<form th:action="@{/user/cart/order/create}" method="post" class="needs-validation"
       novalidate>
 
     <div class="text-center mt-5 mb-5"><h1>Оформление заказа</h1>
@@ -89,16 +89,16 @@
     <div class="row justify-content-center">
         <div class="col-md-4 mb-5 mt-5">
             <p>Заказы</p>
-            <div th:each="item: ${items}">
-<!--                <input type="hidden" name="cartItems" th:value="${items}">-->
-                <input type="hidden" name="cart" th:value="${item.product}">
-<!--                <input type="hidden" name="product" th:value="${item.product}">-->
-<!--                <input type="hidden" name="quantity" th:value="${item.quantity}">-->
-<!--                <input type="hidden" name="price" th:value="${item.price}">-->
-<!--                <input type="hidden" name="order" th:value="${item.order}">-->
+            <div th:each="cartItem: ${cartItemList}">
+                <!--                <input type="hidden" name="cartItemList" th:value="${cartItemList}">-->
+                <input type="hidden" name="cart" th:value="${cartItem.product}">
+                <!--                <input type="hidden" name="product" th:value="${cartItem.product}">-->
+                <!--                <input type="hidden" name="quantity" th:value="${cartItem.quantity}">-->
+                <!--                <input type="hidden" name="price" th:value="${cartItem.price}">-->
+                <!--                <input type="hidden" name="order" th:value="${cartItem.order}">-->
 
                 <ul class="list-group">
-                    <li class="list-group-item" th:text="${item.product.name} + ' ' + ${item.quantity} + ' шт.'"></li>
+                    <li class="list-group-item" th:text="${cartItem.product.name} + ' ' + ${cartItem.quantity} + ' шт.'"></li>
                 </ul>
             </div>
         </div>

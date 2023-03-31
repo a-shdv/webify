@@ -1,31 +1,47 @@
 <div class="container py-3" th:fragment="products-cards">
     <main>
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            <tr th:each="product: ${products}">
+            <tr th:each="product: ${productList}">
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3 text-bg-dark">
 
-                            <a th:href="@{/products/{id}(id=${product.id})}" class="w-100 btn btn-lg btn-dark">
+                            <a th:href="@{/products/{product}(product=${product.id})}" class="w-100 btn btn-lg btn-dark">
                                 <h4 class="my-0 fw-normal"><p th:text="${product.name}"></p></h4>
                             </a>
 
 
                         </div>
                         <div class="card-body">
-                            <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="225" height="200">
+
+                            <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="225"
+                                 height="200">
                             <ul class="list-unstyled mt-3 mb-4">
                                 <b>
                                     <li><p th:text="${product.price} + ' ₽'"></p></li>
                                 </b>
                             </ul>
 
-                            <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}"
-                                  method="post">
-                                <a style="text-decoration:none">
-                                    <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину
-                                    </button>
-                                </a>
+                            <form th:action="@{/user/cart/add/{product}(product=${product.id})}" method="post">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="mt-2 col-6 col-md-4">
+                                            <td class="quantity-box"><input type="number" size="4"
+                                                                            th:value="${product.quantity}"
+                                                                            name="quantity" min="0" step="1"
+                                                                            class="c-input-text qty text"></td>
+                                        </div>
+                                        <div class="col-12 col-md-8">
+                                            <a style="text-decoration:none">
+                                                <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в
+                                                    корзину
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </form>
                         </div>
                     </div>

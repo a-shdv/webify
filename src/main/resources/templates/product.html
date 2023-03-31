@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="/parts/head :: head">
 </head>
 <body>
@@ -16,14 +16,16 @@
     </div>
     <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">
-        <p th:text="${product.description}"></p></p>
+        <p th:text="${product.description}"></p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
             <a class="btn btn-outline-secondary btn-lg px-4" href="javascript:history.back()">Назад</a>
-            <form th:action="@{/user/{user}/cart/{cart}/add/{product}(user=${user.id}, cart=${user.cart.id}, product=${product.id})}" method="post">
-                <a style="text-decoration:none">
-                    <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину</button>
-                </a>
-            </form>
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/user/cart/add/{product}(product=${product.id})}" method="post">
+                    <a style="text-decoration:none">
+                        <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину</button>
+                    </a>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -41,7 +43,7 @@
 <!--<p th:text="${product.image}"></p>-->
 
 <!--<h3>Удалить товар</h3>-->
-<!--<form action="/products/delete/{{id}}" method="post">-->
+<!--<form action="/productList/delete/{{id}}" method="post">-->
 <!--    <input type="submit" value="Удалить товар">-->
 <!--</form>-->
 </body>

@@ -7,14 +7,13 @@ import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,44 +22,49 @@ public class CartController {
     private final ProductService productService;
     private final UserService userService;
 
-    @GetMapping("/user/{user}/cart")
-    public String cart(Model model, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
+    @GetMapping("/user/cart")
+    public String getCart(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
 
-        model.addAttribute("user", user);
-        model.addAttribute("cart", user.getCart());
-        model.addAttribute("items", user.getCart().getCartItems());
-
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("cart", userFromDb.getCart());
+        model.addAttribute("cartItemList", userFromDb.getCart().getCartItemList());
         return "cart";
     }
 
-    @PostMapping("/user/{user}/cart/{cart}/add/{product}")
-    public String addItemToCart(Product product,
-                                @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
-                                Principal principal) {
-        cartService.addItemToCart(product, quantity, userService.getUserByPrincipal(principal));
+    @PostMapping("/user/cart/add/{product}")
+    public String createItemInCart(@PathVariable(value = "product") Long productId,
+                                   @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
+                                   @AuthenticationPrincipal User userSession) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        Product product = productService.findProductById(productId);
+
+        cartService.saveCartItemToCart(product, quantity, userFromDb);
+
         return "redirect:/categories";
     }
 
 
-    @PostMapping(value = "/user/{user}/cart/{cart}/update/{product}", params = "action=update")
-    public String updateCart(@PathVariable(value = "product") Long productId,
-                             @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
-                             Model model, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
-        Product product = productService.getProductById(productId);
-        Cart cart = cartService.updateItemInCart(product, quantity, user);
-        model.addAttribute("cart", cart);
-        return "redirect:/user/{user}/cart";
+    @PostMapping(value = "/user/cart/update/{product}", params = "action=update")
+    public String updateCartItemInCart(@PathVariable(value = "product") Long productId,
+                                       @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
+                                       @AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        Product product = productService.findProductById(productId);
+        Cart updatedCart = cartService.updateCartItemInCart(product, quantity, userFromDb.getCart());
+
+        model.addAttribute("cart", updatedCart);
+        return "redirect:/user/cart";
     }
 
-    @PostMapping(value = "/user/{user}/cart/{cart}/update/{product}", params = "action=delete")
-    public String deleteItemFromCart(@PathVariable(value = "product") Long productId,
-                                     Model model, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
-        Product product = productService.getProductById(productId);
-        Cart cart = cartService.deleteItemFromCart(product, user);
-        model.addAttribute("cart", cart);
-        return "redirect:/user/{user}/cart";
+    @PostMapping(value = "/user/cart/update/{product}", params = "action=delete")
+    public String deleteCartItemFromCart(@PathVariable(value = "product") Long productId,
+                                         @AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        Product product = productService.findProductById(productId);
+        Cart cartWithDeletedItem = cartService.deleteCartItemFromCart(product, userFromDb.getCart());
+
+        model.addAttribute("cart", cartWithDeletedItem);
+        return "redirect:/user/cart";
     }
 }

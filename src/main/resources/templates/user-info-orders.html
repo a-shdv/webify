@@ -16,8 +16,8 @@
                 <th scope="col">Количество</th>
             </tr>
             </thead>
-            <tbody th:each="order: ${orders}">
-            <tr th:each="product: ${order.products}">
+            <tbody th:each="order: ${orderList}">
+            <tr th:each="product: ${order.getProductList}">
                 <th scope="row" th:text="${order.id}"></th>
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.price}"></td>
@@ -29,12 +29,12 @@
                 <td></td>
                 <td></td>
             </tr>
-            <!--    <tr th:each="order: ${orders}">-->
+            <!--    <tr th:each="order: ${orderList}">-->
             <!--        <th scope="row"></th>-->
-            <!--&lt;!&ndash;        <td th:each="product: ${order.products}" th:text="${product.id}"></td>&ndash;&gt;-->
-            <!--        <td th:each="product: ${order.products}" th:text="${product.name}"></td>-->
-            <!--&lt;!&ndash;        <td th:each="product: ${order.products}" th:text="${product.price}"></td>&ndash;&gt;-->
-            <!--&lt;!&ndash;        <td th:each="product: ${order.products}" th:text="${product.quantity}"></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;        <td th:each="product: ${order.productList}" th:text="${product.id}"></td>&ndash;&gt;-->
+            <!--        <td th:each="product: ${order.productList}" th:text="${product.name}"></td>-->
+            <!--&lt;!&ndash;        <td th:each="product: ${order.productList}" th:text="${product.price}"></td>&ndash;&gt;-->
+            <!--&lt;!&ndash;        <td th:each="product: ${order.productList}" th:text="${product.quantity}"></td>&ndash;&gt;-->
             <!--    </tr>-->
             </tbody>
         </table>

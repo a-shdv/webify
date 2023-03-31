@@ -21,10 +21,10 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<Product> toProductsList(List<CartItem> cartItems) {
+    public List<Product> toProductList(List<CartItem> cartItemList) {
         List<Product> products = new ArrayList<>();
         Product product;
-        for (CartItem cartItem : cartItems) {
+        for (CartItem cartItem : cartItemList) {
             product = new Product(
                     cartItem.getProduct().getId(),
                     cartItem.getProduct().getName(),

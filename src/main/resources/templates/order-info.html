@@ -30,7 +30,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <div th:each="product : ${products}">
+                            <div th:each="product : ${productList}">
                                 <tr>
                                     <td>
 <!--                                        Дата заказа-->
@@ -38,7 +38,7 @@
                                     </td>
                                     <td>
                                         <!-- Название товара-->
-                                        <a th:text="${product.name} + ${product.quantity}" th:href="@{/products/{id}(id=${product.id})}">
+                                        <a th:text="${product.name} + ${product.quantity}" th:href="@{/products/{product}(product=${product.id})}">
                                         </a>
                                     </td>
                                     <!--Количество-->
@@ -51,7 +51,7 @@
                                     </td>
                                     <td style="color: black">
                                         <!-- Способ оплаты-->
-                                        <span></span>Наличными</span>
+                                        <span>Наличными</span>
                                     </td>
                                 </tr>
                             </div>

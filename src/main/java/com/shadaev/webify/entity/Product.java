@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @Data
-@EqualsAndHashCode(exclude = {"id", "category", "orders"})
-@ToString(exclude = {"category", "orders"})
+@EqualsAndHashCode(exclude = {"id", "category", "orderList"})
+@ToString(exclude = {"category", "orderList"})
 @NoArgsConstructor
 public class Product {
     @Id
@@ -41,8 +41,8 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Order> orders;
+    @ManyToMany(mappedBy = "productList")
+    private List<Order> orderList;
 
     public Product(Long id, String name, String description, Double price, @Nullable Integer quantity, String image, Category category) {
         this.id = id;

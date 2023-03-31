@@ -1,7 +1,7 @@
 <div class="container py-3" th:fragment="categories-cards">
     <main>
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-            <tr th:each="category: ${categories}">
+            <tr th:each="category: ${categoryList}">
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3 text-bg-dark">
@@ -13,10 +13,10 @@
                             </ul>
 
                             <div th:if="${category.name != 'Все товары'}">
-                                <a th:href="@{/categories/{id}(id=${category.id})}" class="w-100 btn btn-lg btn-warning">Перейти</a>
+                                <a th:href="@{/categories/{category}(category=${category.id})}" class="w-100 btn btn-lg btn-warning">Перейти</a>
                             </div>
                             <div th:if="${category.name == 'Все товары'}">
-                                <a th:href="@{/products}" class="w-100 btn btn-lg btn-warning">Перейти</a>
+                                <a href="/products" class="w-100 btn btn-lg btn-warning">Перейти</a>
                             </div>
                         </div>
                     </div>

@@ -4,11 +4,12 @@
 </head>
 <body>
 <div th:replace="/parts/navbar :: navbar"></div>
+<div th:replace="/parts/posts-filter :: posts-filter"></div>
 
 
 <div class="text-center">
 
-    <form th:action="@{/user/{user}/posts/post/create(user = ${user.id})}" method="post"><br> <br>
+    <form th:action="@{/user/posts/post/create}" method="post"><br> <br>
         Название поста: <input type="text" name="header"><br> <br>
         Описание поста: <input type="text" name="description"> <br> <br>
         <input type="submit" value="Добавить пост">

@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.Collections;
 
 @Service
@@ -19,15 +18,17 @@ public class UserService implements UserDetailsService {
 
     public void saveUser(User user) {
         user.setActive(true);
-        user.setUserRoles(Collections.singleton(UserRole.USER));
+        user.setUserRoleSet(Collections.singleton(UserRole.USER));
         userRepository.save(user);
     }
 
-    public User getUserByPrincipal(Principal principal) {
-        if (principal == null) return new User();
-        return userRepository.findByUsername(principal.getName());
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
+    public User findUserById(Long id) {
+        return userRepository.getById(id);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

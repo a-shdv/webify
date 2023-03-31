@@ -5,14 +5,13 @@ import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.PostService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,23 +21,26 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String home(Model model, Principal principal) {
-        model.addAttribute("posts", postService.getPosts());
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
+    public String home() {
         return "home";
     }
 
     @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Model model, Principal principal) {
-        List<Post> posts;
+    public String filter(@RequestParam String filter,
+                         @AuthenticationPrincipal User userSession, Model model) {
+        if (userSession != null) {
+            User userFromDb = userService.findByUsername(userSession.getUsername());
+            model.addAttribute("user", userFromDb);
+        }
+        List<Post> postList;
 
         if (filter != null && !filter.isEmpty()) {
-            posts = postService.getPostByHeader(filter.trim());
+            postList = postService.findPostByHeader(filter.trim());
         } else {
-            posts = postService.getPosts();
+            postList = postService.findPostList();
         }
-        model.addAttribute("posts", posts);
-        model.addAttribute("user", userService.getUserByPrincipal(principal));
+
+        model.addAttribute("postList", postList);
         return "home";
     }
 }

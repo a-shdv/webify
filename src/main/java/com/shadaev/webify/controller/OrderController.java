@@ -5,12 +5,12 @@ import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -18,45 +18,46 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final UserService userService;
     private final CartService cartService;
+    private final UserService userService;
 
-    @GetMapping("user/{user}/cart/order")
-    public String order(Model model, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
-        Cart cart = user.getCart();
+    @GetMapping("/user/cart/order")
+    public String getOrder(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        Cart cart = userFromDb.getCart();
+        List<CartItem> cartItemList = cart.getCartItemList();
 
-        model.addAttribute("user", user);
+        model.addAttribute("user", userFromDb);
         model.addAttribute("cart", cart);
-        model.addAttribute("items", cart.getCartItems());
-
+        model.addAttribute("cartItemList", cartItemList);
         return "order";
     }
 
-    @PostMapping("/user/{user}/cart/order/create")
-    public String createOrder(Order order, Model model, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
+    @GetMapping("/user/orders")
+    public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        List<Order> orderList = userFromDb.getOrderList();
 
-        List<Product> products = orderService.toProductsList(user.getCart().getCartItems());
-        model.addAttribute("products", products);
-
-        cartService.deleteCartItems(user.getCart());
-
-        order.setProducts(products);
-        orderService.saveOrder(order);
-
-        model.addAttribute("user", user);
-        model.addAttribute("order", order);
-        return "order-info";
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("orderList", orderList);
+        return "user-info-orders";
     }
 
-    @GetMapping("user/{user}/orders")
-    public String userInfoOrders(Model model, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
+    @PostMapping("/user/cart/order/create")
+    public String createOrder(@AuthenticationPrincipal User userSession, Order order, Model model) {
+        User userFromDb = userService.findByUsername(userSession.getUsername());
+        Cart cart = userFromDb.getCart();
+        List<CartItem> cartItemList = cart.getCartItemList();
+        List<Product> productList = orderService.toProductList(cartItemList);
 
-        model.addAttribute("user", user);
-        model.addAttribute("orders", user.getOrders());
+        model.addAttribute("products", productList);
 
-        return "user-info-orders";
+        cartService.deleteCartItemListFromCart(cart);
+        order.setProductList(productList);
+        orderService.saveOrder(order);
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("order", order);
+        return "order-info";
     }
 }
