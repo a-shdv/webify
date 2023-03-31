@@ -1,8 +1,8 @@
 package com.shadaev.webify.service;
 
 import com.shadaev.webify.entity.Post;
-import com.shadaev.webify.repository.PostRepository;
 import com.shadaev.webify.entity.User;
+import com.shadaev.webify.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +31,4 @@ public class PostService {
     public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
-
 }

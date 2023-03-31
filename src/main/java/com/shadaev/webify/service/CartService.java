@@ -18,17 +18,6 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
 
-    private void saveCartItem(Product product, Integer quantity, Cart cart, List<CartItem> cartItemList) {
-        CartItem cartItem;
-        cartItem = new CartItem();
-        cartItem.setProduct(product);
-        cartItem.setPrice(quantity * product.getPrice());
-        cartItem.setQuantity(quantity);
-        cartItem.setCart(cart);
-        cartItemList.add(cartItem);
-        cartItemRepository.save(cartItem);
-    }
-
     public void saveCartItemToCart(Product product, Integer quantity, User user) {
         Cart cart = user.getCart();
 
@@ -60,6 +49,17 @@ public class CartService {
         cartRepository.save(cart);
     }
 
+    private void saveCartItem(Product product, Integer quantity, Cart cart, List<CartItem> cartItemList) {
+        CartItem cartItem;
+        cartItem = new CartItem();
+        cartItem.setProduct(product);
+        cartItem.setPrice(quantity * product.getPrice());
+        cartItem.setQuantity(quantity);
+        cartItem.setCart(cart);
+        cartItemList.add(cartItem);
+        cartItemRepository.save(cartItem);
+    }
+
     private CartItem findCartItem(List<CartItem> cartItemList, Long productId) {
         if (cartItemList == null) {
             return null;
@@ -67,16 +67,14 @@ public class CartService {
         CartItem cartItem = null;
 
         for (CartItem item : cartItemList) {
-            if (item.getProduct().getId() == productId) {
+            if (item.getProduct().getId().equals(productId)) {
                 cartItem = item;
             }
         }
         return cartItem;
     }
 
-    public Cart updateCartItemInCart(Product product, Integer quantity, User user) {
-        Cart cart = user.getCart();
-
+    public Cart updateCartItemInCart(Product product, Integer quantity, Cart cart) {
         List<CartItem> cartItemList = cart.getCartItemList();
 
         CartItem cartItem = findCartItem(cartItemList, product.getId());
@@ -93,9 +91,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Cart deleteCartItemFromCart(Product product, User user) {
-        Cart cart = user.getCart();
-
+    public Cart deleteCartItemFromCart(Product product, Cart cart) {
         List<CartItem> cartItemList = cart.getCartItemList();
 
         CartItem cartItem = findCartItem(cartItemList, product.getId());
@@ -112,7 +108,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public void deleteCartItems(Cart cart) {
+    public void deleteCartItemListFromCart(Cart cart) {
         cart.getCartItemList().clear();
         List<CartItem> cartItemList = cartItemRepository.findByCart(cart);
         cartItemRepository.deleteAll(cartItemList);

@@ -14,7 +14,7 @@ import java.util.*;
 @Builder
 @Data
 @EqualsAndHashCode(exclude = {"id", "userRoleSet", "cart", "orderList", "postList"})
-@ToString(exclude = {"id", "userRoleSet", "cart", "orderList","postList"})
+@ToString(exclude = {"id", "userRoleSet", "cart", "orderList", "postList"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {

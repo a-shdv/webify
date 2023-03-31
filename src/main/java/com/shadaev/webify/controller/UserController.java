@@ -45,7 +45,7 @@ public class UserController {
 
     @GetMapping("/user/{user}")
     public String getAnotherUserInfo(@PathVariable(value = "user") Long userId,
-            @AuthenticationPrincipal User userSession, Model model) {
+                                     @AuthenticationPrincipal User userSession, Model model) {
         if (userSession != null) {
             User userFromDb = userService.findByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);

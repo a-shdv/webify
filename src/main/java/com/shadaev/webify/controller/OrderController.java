@@ -52,7 +52,7 @@ public class OrderController {
 
         model.addAttribute("products", productList);
 
-        cartService.deleteCartItems(cart);
+        cartService.deleteCartItemListFromCart(cart);
         order.setProductList(productList);
         orderService.saveOrder(order);
 
