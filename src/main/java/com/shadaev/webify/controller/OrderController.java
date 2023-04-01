@@ -76,7 +76,7 @@ public class OrderController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "my-pdf.pdf");
+        headers.setContentDispositionFormData("attachment", "order.pdf");
 
         return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
     }

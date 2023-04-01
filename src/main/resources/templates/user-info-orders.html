@@ -6,7 +6,7 @@
 <div th:replace="/parts/navbar :: navbar"></div>
 <div class="text-center"><h1>Мои заказы</h1></div>
 <div class="row justify-content-center">
-    <div class="col-md-6 mt-5">
+    <div class="col-md-6 mt-5" style="position: relative">
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -36,10 +36,9 @@
                 <td></td>
             </tr>
         </table>
-            <form th:action="@{/user/orders/pdf}" method="get">
-                <button type="submit" name="action" class="btn btn-warning">Сформировать отчет</button>
-            </form>
-
+        <form th:action="@{/user/orders/pdf}" method="get">
+            <button type="submit" class="btn btn-warning" style="position:absolute; bottom:5; right:0;">Сформировать отчет</button>
+        </form>
     </div>
 
 </div>
