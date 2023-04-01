@@ -16,19 +16,22 @@
                 <th scope="col">Количество</th>
             </tr>
             </thead>
-            <tbody th:each="order: ${orderList}">
-            <tr th:each="product: ${order.getProductList}">
-                <th scope="row" th:text="${order.id}"></th>
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.price}"></td>
-                <td th:text="${product.quantity}"></td>
-            </tr>
-            <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <tbody>
+            <div th:if="${!#lists.isEmpty(orderInfoList.size())}" >
+                <tr th:each="orderInfo: ${orderInfoList}">
+                    <th scope="row" th:text="${orderInfo.order.id}"></th>
+                    <td th:text="${orderInfo.product.name}"></td>
+                    <td th:text="${orderInfo.totalPrice}"></td>
+                    <td th:text="${orderInfo.quantity}"></td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </div>
+
             <!--    <tr th:each="order: ${orderList}">-->
             <!--        <th scope="row"></th>-->
             <!--&lt;!&ndash;        <td th:each="product: ${order.productList}" th:text="${product.id}"></td>&ndash;&gt;-->

@@ -47,9 +47,6 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name = "orders_products",
-            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    private List<Product> productList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
+    private OrderInfo orderInfo;
 }

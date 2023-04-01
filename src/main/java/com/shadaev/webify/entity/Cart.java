@@ -22,13 +22,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "total_price")
+    private Double totalPrice = 0.0;
+
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
     private List<CartItem> cartItemList;
-
-    @Column(name = "total_price")
-    private Double totalPrice = 0.0;
 }
