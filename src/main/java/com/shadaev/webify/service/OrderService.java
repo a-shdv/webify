@@ -1,9 +1,7 @@
 package com.shadaev.webify.service;
 
-import com.shadaev.webify.entity.CartItem;
-import com.shadaev.webify.entity.Order;
-import com.shadaev.webify.entity.OrderStatus;
-import com.shadaev.webify.entity.Product;
+import com.shadaev.webify.entity.*;
+import com.shadaev.webify.repository.OrderInfoRepository;
 import com.shadaev.webify.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,28 +13,53 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderInfoRepository orderInfoRepository;
 
     public void saveOrder(Order order) {
         order.setStatus(OrderStatus.IN_PROGRESS);
         orderRepository.save(order);
     }
 
-    public List<Product> toProductList(List<CartItem> cartItemList) {
-        List<Product> products = new ArrayList<>();
-        Product product;
-        for (CartItem cartItem : cartItemList) {
-            product = new Product(
-                    cartItem.getProduct().getId(),
-                    cartItem.getProduct().getName(),
-                    cartItem.getProduct().getDescription(),
-                    cartItem.getProduct().getPrice(),
-                    cartItem.getQuantity(),
-                    cartItem.getProduct().getImage(),
-                    cartItem.getProduct().getCategory()
-            );
-            products.add(product);
-        }
-        return products;
+    public void saveOrderInfoList(List<OrderInfo> orderInfoList) {
+        orderInfoRepository.saveAll(orderInfoList);
     }
+
+//    public List<OrderInfo> findOrderInfoList(User user) {
+//        user.getOrderList();
+//    }
+//
+//    public List<OrderInfo> findOrderInfoListById(List<Order> orderList) {
+//        orderInfoRepository.getById()
+//        List<OrderInfo> orderInfoList = new ArrayList<>();
+//
+//        for (Order order : orderList) {
+//            orderInfoList.add(order.getOrderInfo());
+//        }
+//        return orderInfoList;
+//    }
+
+    public List<OrderInfo> cartItemListToOrderInfoList(List<CartItem> cartItemList, Order order) {
+        List<OrderInfo> orderInfoList = new ArrayList<>();
+        OrderInfo orderInfo;
+        for (CartItem cartItem : cartItemList) {
+            orderInfo = new OrderInfo(
+                    cartItem.getTotalPrice(),
+                    cartItem.getQuantity(),
+                    cartItem.getProduct(),
+                    order
+            );
+            orderInfoList.add(orderInfo);
+        }
+        return orderInfoList;
+    }
+
+//    public List<OrderInfo> orderListToOrderInfoList(List<Order> orderList) {
+//        List<OrderInfo> orderInfoList = new ArrayList<>();
+//        for (Order order : orderList) {
+//
+//            orderInfoList.add()
+//        }
+//        return orderInfoList;
+//    }
 
 }

@@ -37,9 +37,11 @@ public class OrderController {
     public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
         List<Order> orderList = userFromDb.getOrderList();
+//        List<OrderInfo> orderInfoList = orderList.ge;
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("orderList", orderList);
+//        model.addAttribute("orderInfoList", orderInfoList);
         return "user-info-orders";
     }
 
@@ -48,16 +50,20 @@ public class OrderController {
         User userFromDb = userService.findByUsername(userSession.getUsername());
         Cart cart = userFromDb.getCart();
         List<CartItem> cartItemList = cart.getCartItemList();
-        List<Product> productList = orderService.toProductList(cartItemList);
-
-        model.addAttribute("products", productList);
+        List<OrderInfo> orderInfoList = orderService.cartItemListToOrderInfoList(cartItemList, order);
 
         cartService.deleteCartItemListFromCart(cart);
-        order.setProductList(productList);
+
+        order.setOrderInfoList(orderInfoList);
+        order.setUser(userFromDb);
         orderService.saveOrder(order);
+
+        orderService.saveOrderInfoList(orderInfoList);
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("order", order);
+        model.addAttribute("orderInfoList", orderInfoList);
+
         return "order-info";
     }
 }

@@ -13,8 +13,8 @@ import java.util.List;
 @Table(name = "orders")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"id", "user", "productList"})
-@ToString(exclude = {"id", "user", "productList"})
+@EqualsAndHashCode(exclude = {"id", "user", "orderInfoList"})
+@ToString(exclude = {"id", "user", "orderInfoList"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +47,6 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name = "orders_products",
-            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    private List<Product> productList;
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "order")
+    private List<OrderInfo> orderInfoList;
 }

@@ -30,7 +30,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <div th:each="product : ${productList}">
+                            <div th:each="orderInfo : ${orderInfoList}">
                                 <tr>
                                     <td>
 <!--                                        Дата заказа-->
@@ -38,11 +38,11 @@
                                     </td>
                                     <td>
                                         <!-- Название товара-->
-                                        <a th:text="${product.name} + ${product.quantity}" th:href="@{/products/{product}(product=${product.id})}">
+                                        <a th:text="${orderInfo.product.name} + ${orderInfo.quantity}" th:href="@{/products/{product}(product=${orderInfo.product.id})}">
                                         </a>
                                     </td>
                                     <!--Количество-->
-                                    <td th:text="${product.quantity}"></td>
+<!--                                    <td th:text="${product.quantity}"></td>-->
                                     <td>
                                     <!-- Статус заказа-->
                                      <p th:if="${order.status}">
@@ -55,8 +55,6 @@
                                     </td>
                                 </tr>
                             </div>
-
-
                             </tbody>
                         </table>
                     </div>

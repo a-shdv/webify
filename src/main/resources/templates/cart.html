@@ -24,7 +24,7 @@
                                 <th>Название товара</th>
                                 <th>Цена</th>
                                 <th>Количество</th>
-                                <th>К оплате</th>
+                                <th>Итого</th>
                                 <th>Действие</th>
                             </tr>
                             </thead>
@@ -40,7 +40,7 @@
                                     <p th:text="${cartItem.product.name}"></p>
                                 </td>
                                 <td class="price-pr">
-                                    <p th:text="'₽' + ${cartItem.product.price}"></p>
+                                <p th:text="${#numbers.formatDecimal(cartItem.product.price, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>
                                 </td>
                                 <form th:action="@{/user/cart/update/{product}(product=${cartItem.product.id})}"
                                       method="post">
@@ -50,7 +50,7 @@
                                                                     name="quantity" min="0" step="1"
                                                                     class="c-input-text qty text"></td>
                                     <td class="total-pr">
-                                        <p th:text="'₽' + ${cartItem.price}"></p>
+                                        <p th:text="${#numbers.formatDecimal(cartItem.totalPrice, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>
                                     </td>
 
                                     <td class="update-pr">
@@ -72,7 +72,7 @@
                     <div class="d-flex justify-content-between mb-5" th:if="${!#lists.isEmpty(cart.getCartItemList)}">
                         <b><h5 class="text-uppercase">К оплате:</h5></b>
                         <b>
-                            <h5><p th:text="${cart.totalPrice} + ' ₽'"></p></h5>
+                            <h5><p th:text="${#numbers.formatDecimal(cart.totalPrice, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p></h5>
                         </b>
                     </div>
                 </div>

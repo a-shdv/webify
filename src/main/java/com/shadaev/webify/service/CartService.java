@@ -35,13 +35,13 @@ public class CartService {
                 saveCartItem(product, quantity, cart, cartItemList);
             } else {
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                cartItem.setPrice(cartItem.getPrice() + (quantity * product.getPrice()));
+                cartItem.setTotalPrice(cartItem.getTotalPrice() + (quantity * product.getPrice()));
                 cartItemRepository.save(cartItem);
             }
         }
         cart.setCartItemList(cartItemList);
 
-        double totalPrice = totalPrice(cart.getCartItemList());
+        double totalPrice = getTotalPrice(cart.getCartItemList());
 
         cart.setTotalPrice(totalPrice);
         cart.setUser(user);
@@ -53,7 +53,7 @@ public class CartService {
         CartItem cartItem;
         cartItem = new CartItem();
         cartItem.setProduct(product);
-        cartItem.setPrice(quantity * product.getPrice());
+        cartItem.setTotalPrice(quantity * product.getPrice());
         cartItem.setQuantity(quantity);
         cartItem.setCart(cart);
         cartItemList.add(cartItem);
@@ -80,11 +80,11 @@ public class CartService {
         CartItem cartItem = findCartItem(cartItemList, product.getId());
 
         cartItem.setQuantity(quantity);
-        cartItem.setPrice(quantity * product.getPrice());
+        cartItem.setTotalPrice(quantity * product.getPrice());
 
         cartItemRepository.save(cartItem);
 
-        double totalPrice = totalPrice(cartItemList);
+        double totalPrice = getTotalPrice(cartItemList);
 
         cart.setTotalPrice(totalPrice);
 
@@ -100,7 +100,7 @@ public class CartService {
 
         cartItemRepository.delete(cartItem);
 
-        double totalPrice = totalPrice(cartItemList);
+        double totalPrice = getTotalPrice(cartItemList);
 
         cart.setCartItemList(cartItemList);
         cart.setTotalPrice(totalPrice);
@@ -114,11 +114,11 @@ public class CartService {
         cartItemRepository.deleteAll(cartItemList);
     }
 
-    private double totalPrice(List<CartItem> cartItemList) {
+    public double getTotalPrice(List<CartItem> cartItemList) {
         double totalPrice = 0.0;
 
         for (CartItem cartItem : cartItemList) {
-            totalPrice += cartItem.getPrice();
+            totalPrice += cartItem.getTotalPrice();
         }
 
         return totalPrice;
