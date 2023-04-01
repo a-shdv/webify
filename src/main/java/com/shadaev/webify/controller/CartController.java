@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequiredArgsConstructor
 public class CartController {
@@ -35,13 +37,13 @@ public class CartController {
     @PostMapping("/user/cart/add/{product}")
     public String createItemInCart(@PathVariable(value = "product") Long productId,
                                    @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
-                                   @AuthenticationPrincipal User userSession) {
+                                   @AuthenticationPrincipal User userSession, HttpServletRequest request) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
         Product product = productService.findProductById(productId);
 
         cartService.saveCartItemToCart(product, quantity, userFromDb);
 
-        return "redirect:/categories";
+        return "redirect:/categories/" + product.getCategory().getId();
     }
 
 

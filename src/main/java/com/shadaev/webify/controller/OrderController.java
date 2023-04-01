@@ -5,12 +5,17 @@ import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @Controller
@@ -37,11 +42,9 @@ public class OrderController {
     public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
         List<Order> orderList = userFromDb.getOrderList();
-//        List<OrderInfo> orderInfoList = orderList.ge;
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("orderList", orderList);
-//        model.addAttribute("orderInfoList", orderInfoList);
         return "user-info-orders";
     }
 
@@ -65,5 +68,16 @@ public class OrderController {
         model.addAttribute("orderInfoList", orderInfoList);
 
         return "order-info";
+    }
+
+    @GetMapping("/user/orders/pdf")
+    public ResponseEntity<byte[]> downloadPdf() throws Exception {
+        ByteArrayOutputStream outputStream = orderService.generatePdf();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "my-pdf.pdf");
+
+        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
     }
 }

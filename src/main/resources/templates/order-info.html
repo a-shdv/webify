@@ -32,17 +32,15 @@
                             <tbody>
                             <div th:each="orderInfo : ${orderInfoList}">
                                 <tr>
-                                    <td>
-<!--                                        Дата заказа-->
-                                        <span><b>null</b></span>
-                                    </td>
+                                    <!--Дата заказа-->
+                                    <td th:utext="${#temporals.format(orderInfo.order.createdDate, 'dd.MM.yyyy')}"></td>
                                     <td>
                                         <!-- Название товара-->
-                                        <a th:text="${orderInfo.product.name} + ${orderInfo.quantity}" th:href="@{/products/{product}(product=${orderInfo.product.id})}">
+                                        <a th:text="${orderInfo.product.name}" th:href="@{/products/{product}(product=${orderInfo.product.id})}">
                                         </a>
                                     </td>
                                     <!--Количество-->
-<!--                                    <td th:text="${product.quantity}"></td>-->
+                                    <td th:text="${orderInfo.quantity}"></td>
                                     <td>
                                     <!-- Статус заказа-->
                                      <p th:if="${order.status}">
