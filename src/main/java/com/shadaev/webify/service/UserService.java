@@ -24,11 +24,6 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-//    public void saveOrder(Order order, User user) {
-//        user.getOrderList().add(order);
-//        userRepository.save(user);
-//    }
-
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

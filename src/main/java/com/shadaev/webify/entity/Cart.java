@@ -23,7 +23,7 @@ public class Cart {
     private Long id;
 
     @Column(name = "total_price")
-    private Double totalPrice = 0.0;
+    private double totalPrice = 0.0;
 
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private User user;

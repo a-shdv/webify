@@ -16,10 +16,10 @@ public class OrderInfo {
     private Long id;
 
     @Column(name = "total_price")
-    private Double totalPrice;
+    private double totalPrice;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -29,7 +29,7 @@ public class OrderInfo {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public OrderInfo(Double totalPrice, Integer quantity,
+    public OrderInfo(double totalPrice, int quantity,
                      Product product, Order order) {
         this.totalPrice = totalPrice;
         this.quantity = quantity;

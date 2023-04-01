@@ -21,10 +21,10 @@ public class CartItem {
     private Long id;
 
     @Column(name = "total_price")
-    private Double totalPrice;
+    private double totalPrice;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
