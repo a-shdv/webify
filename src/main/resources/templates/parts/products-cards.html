@@ -18,7 +18,7 @@
                                  height="200">
                             <ul class="list-unstyled mt-3 mb-4">
                                 <b>
-                                    <li><p th:text="${product.price} + ' ₽'"></p></li>
+                                    <li><p th:text="${#numbers.formatDecimal(product.price, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p></li>
                                 </b>
                             </ul>
 

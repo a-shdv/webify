@@ -25,8 +25,8 @@ public class OrderInfo {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
 
     public OrderInfo(Double totalPrice, Integer quantity,

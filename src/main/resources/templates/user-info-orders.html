@@ -4,7 +4,7 @@
 </head>
 <body>
 <div th:replace="/parts/navbar :: navbar"></div>
-
+<div class="text-center"><h1>Мои заказы</h1></div>
 <div class="row justify-content-center">
     <div class="col-md-6 mt-5">
         <table class="table">
@@ -14,32 +14,25 @@
                 <th scope="col">Название товара</th>
                 <th scope="col">Цена</th>
                 <th scope="col">Количество</th>
+                <th scope="col">Итого</th>
             </tr>
             </thead>
-            <tbody>
-            <div th:if="${!#lists.isEmpty(orderInfoList.size())}" >
-                <tr th:each="orderInfo: ${orderInfoList}">
-                    <th scope="row" th:text="${orderInfo.order.id}"></th>
-                    <td th:text="${orderInfo.product.name}"></td>
-                    <td th:text="${orderInfo.totalPrice}"></td>
-                    <td th:text="${orderInfo.quantity}"></td>
-                </tr>
-                <tr>
-                    <th scope="row"></th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </div>
+            <tbody th:each="order, i: ${orderList}">
 
-            <!--    <tr th:each="order: ${orderList}">-->
-            <!--        <th scope="row"></th>-->
-            <!--&lt;!&ndash;        <td th:each="product: ${order.productList}" th:text="${product.id}"></td>&ndash;&gt;-->
-            <!--        <td th:each="product: ${order.productList}" th:text="${product.name}"></td>-->
-            <!--&lt;!&ndash;        <td th:each="product: ${order.productList}" th:text="${product.price}"></td>&ndash;&gt;-->
-            <!--&lt;!&ndash;        <td th:each="product: ${order.productList}" th:text="${product.quantity}"></td>&ndash;&gt;-->
-            <!--    </tr>-->
-            </tbody>
+            <tr th:each="info, j: ${order.orderInfoList}">
+                <th scope="row" th:if="${j.first}" th:text="${order.id}"></th>
+                <th scope="row" th:unless="${j.first}" th:text="' '"></th>
+                <td th:text="${info.product.name}"></td>
+                <td th:text="${#numbers.formatDecimal(info.product.price, 2, 'WHITESPACE', 2, 'COMMA')} + ' ₽'"></td>
+                <td th:text="${info.quantity}"></td>
+                <td th:text="${#numbers.formatDecimal(info.totalPrice, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></td>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
         </table>
     </div>
 

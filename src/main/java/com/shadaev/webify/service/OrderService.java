@@ -24,17 +24,22 @@ public class OrderService {
         orderInfoRepository.saveAll(orderInfoList);
     }
 
-    public List<OrderInfo> getOrderInfoListFromOrderList(List<Order> orderList) {
-        List<OrderInfo> orderInfoList = new ArrayList<>();
-
-        for (Order order : orderList) {
-            orderInfoList.add(order.getOrderInfo());
-        }
-        return orderInfoList;
-    }
+//    public List<OrderInfo> findOrderInfoList(User user) {
+//        user.getOrderList();
+//    }
+//
+//    public List<OrderInfo> findOrderInfoListById(List<Order> orderList) {
+//        orderInfoRepository.getById()
+//        List<OrderInfo> orderInfoList = new ArrayList<>();
+//
+//        for (Order order : orderList) {
+//            orderInfoList.add(order.getOrderInfo());
+//        }
+//        return orderInfoList;
+//    }
 
     public List<OrderInfo> cartItemListToOrderInfoList(List<CartItem> cartItemList, Order order) {
-        List<OrderInfo> orderInfoList  = new ArrayList<>();
+        List<OrderInfo> orderInfoList = new ArrayList<>();
         OrderInfo orderInfo;
         for (CartItem cartItem : cartItemList) {
             orderInfo = new OrderInfo(
@@ -42,10 +47,19 @@ public class OrderService {
                     cartItem.getQuantity(),
                     cartItem.getProduct(),
                     order
-                    );
+            );
             orderInfoList.add(orderInfo);
         }
         return orderInfoList;
     }
+
+//    public List<OrderInfo> orderListToOrderInfoList(List<Order> orderList) {
+//        List<OrderInfo> orderInfoList = new ArrayList<>();
+//        for (Order order : orderList) {
+//
+//            orderInfoList.add()
+//        }
+//        return orderInfoList;
+//    }
 
 }

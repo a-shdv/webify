@@ -13,8 +13,8 @@ import java.util.List;
 @Table(name = "orders")
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"id", "user", "productList"})
-@ToString(exclude = {"id", "user", "productList"})
+@EqualsAndHashCode(exclude = {"id", "user", "orderInfoList"})
+@ToString(exclude = {"id", "user", "orderInfoList"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +47,6 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
-    private OrderInfo orderInfo;
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "order")
+    private List<OrderInfo> orderInfoList;
 }
