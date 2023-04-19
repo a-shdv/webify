@@ -22,49 +22,41 @@ public class ProductController {
     private final UserService userService;
 
     @GetMapping("/products")
-    public String getProducts(@RequestParam(name = "name", required = false) String name,
-                              @AuthenticationPrincipal User userSession, Model model) {
+    public String getAllProducts(@AuthenticationPrincipal User userSession, Model model) {
+        List<Product> products = productService.getAllProducts();
+
         if (userSession != null) {
             User userFromDb = userService.findByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
-        List<Product> productList = productService.findProductListByName(name);
 
-        model.addAttribute("productList", productList);
-        return "products";
+        model.addAttribute("products", products);
+        return "/products/list";
     }
 
-    @GetMapping("/products/{product}")
-    public String getProduct(@PathVariable(value = "product") Long productId,
-                             @AuthenticationPrincipal User userSession, Model model) {
+    @GetMapping("/products/{id}")
+    public String getProductById(@PathVariable(value = "id") Long id,
+                                 @AuthenticationPrincipal User userSession, Model model) {
         if (userSession != null) {
             User userFromDb = userService.findByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
-        Product product = productService.findProductById(productId);
+        Product product = productService.getProductById(id);
 
         model.addAttribute("product", product);
-        return "product";
+        return "products/show";
     }
 
-    @GetMapping("/user/products")
-    public String getUserInfoProducts(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
-
-        model.addAttribute("user", userFromDb);
-        return "user-info-products";
-    }
-
-    @PostMapping("/products/create")
+    @PostMapping("/products")
     public String createProduct(Product product) {
-        productService.saveProduct(product);
+        productService.createProduct(product);
 
         return "redirect:/";
     }
 
-    @PostMapping("/products/delete/{product}")
-    public String deleteProduct(@PathVariable(value = "product") Long productId) {
-        productService.deleteProduct(productId);
+    @PostMapping("/products/{id}")
+    public String deleteProduct(@PathVariable(value = "id") Long id) {
+        productService.deleteProduct(id);
 
         return "redirect:/";
     }
@@ -79,9 +71,9 @@ public class ProductController {
         List<Product> productList;
 
         if (filter != null && !filter.isEmpty()) {
-            productList = productService.findProductListByName(filter.trim());
+            productList = productService.filterProductsByName(filter.trim());
         } else {
-            productList = productService.findProductList();
+            productList = productService.getAllProducts();
         }
 
         model.addAttribute("products", productList);

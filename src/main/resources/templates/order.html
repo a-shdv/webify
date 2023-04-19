@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="parts/head :: head">
+<head th:replace="partials/head :: head">
 </head>
 <body>
-<div th:replace="/parts/navbar :: navbar"/>
+<div th:replace="/partials/navbar :: navbar"/>
 
 <form th:action="@{/user/cart/order/create}" method="post" class="needs-validation"
       novalidate>
@@ -109,7 +109,7 @@
     </div>
 </form>
 
-<div th:replace="/parts/footer :: footer"/>
+<div th:replace="/partials/footer :: footer"/>
 
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields

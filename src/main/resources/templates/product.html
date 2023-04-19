@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="/parts/head :: head">
+<head th:replace="/partials/head :: head">
 </head>
 <body>
-<div th:replace="/parts/navbar :: navbar"></div>
+<div th:replace="/partials/navbar :: navbar"></div>
 
 <div class="px-4 pt-5 my-5 text-center border-bottom">
     <h1 class="display-4 fw-bold"><p th:text="${product.name}"></p></h1>
@@ -30,21 +30,6 @@
     </div>
 </div>
 
-<div th:replace="/parts/footer :: footer"></div>
-
-
-<!--<div class="bd-example-snippet bd-code-snippet"><div class="bd-example">-->
-<!--    <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="800" height="800">-->
-<!--</div></div>-->
-
-<!--<p th:text="${product.name}"></p>-->
-<!--<p th:text="${product.description}"></p>-->
-<!--<p th:text="${product.price}"></p>-->
-<!--<p th:text="${product.image}"></p>-->
-
-<!--<h3>Удалить товар</h3>-->
-<!--<form action="/productList/delete/{{id}}" method="post">-->
-<!--    <input type="submit" value="Удалить товар">-->
-<!--</form>-->
+<div th:replace="/partials/footer :: footer"></div>
 </body>
 </html>

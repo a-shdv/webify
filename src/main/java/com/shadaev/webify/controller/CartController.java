@@ -39,7 +39,7 @@ public class CartController {
                                    @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
                                    @AuthenticationPrincipal User userSession, HttpServletRequest request) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
-        Product product = productService.findProductById(productId);
+        Product product = productService.getProductById(productId);
 
         cartService.saveCartItemToCart(product, quantity, userFromDb);
 
@@ -52,7 +52,7 @@ public class CartController {
                                        @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
                                        @AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
-        Product product = productService.findProductById(productId);
+        Product product = productService.getProductById(productId);
         Cart updatedCart = cartService.updateCartItemInCart(product, quantity, userFromDb.getCart());
 
         model.addAttribute("cart", updatedCart);
@@ -63,7 +63,7 @@ public class CartController {
     public String deleteCartItemFromCart(@PathVariable(value = "product") Long productId,
                                          @AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findByUsername(userSession.getUsername());
-        Product product = productService.findProductById(productId);
+        Product product = productService.getProductById(productId);
         Cart cartWithDeletedItem = cartService.deleteCartItemFromCart(product, userFromDb.getCart());
 
         model.addAttribute("cart", cartWithDeletedItem);

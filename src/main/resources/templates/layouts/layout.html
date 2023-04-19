@@ -1,0 +1,10 @@
+<div th:fragment="layout">
+    <!-- Navbar -->
+    <div th:replace="/layouts/partials/navbar :: navbar"></div>
+
+    <!-- This is where the child content will be inserted -->
+    <div th:fragment="content"></div>
+
+    <!-- Footer-->
+    <div th:replace="/layouts/partials/footer :: footer"></div>
+</div>

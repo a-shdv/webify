@@ -12,25 +12,25 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public void saveProduct(Product product) {
-        productRepository.save(product);
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 
-    public Product findProductById(Long id) {
+    public Product getProductById(Long id) {
         return productRepository.getById(id);
     }
 
-    public List<Product> findProductList() {
-        return productRepository.findAll();
-    }
-
-    public List<Product> findProductListByName(String name) {
-        if (name != null)
-            return productRepository.findByName(name);
-        return productRepository.findAll();
+    public void createProduct(Product product) {
+        productRepository.save(product);
     }
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> filterProductsByName(String name) {
+        if (name != null)
+            return productRepository.findByName(name);
+        return productRepository.findAll();
     }
 }

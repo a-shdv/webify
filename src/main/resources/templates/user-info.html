@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="/parts/head :: head">
+<head th:replace="/partials/head :: head">
 </head>
 <body>
-<div th:replace="/parts/navbar :: navbar"></div>
+<div th:replace="/partials/navbar :: navbar"></div>
 <div class="text-center">
     <h1 th:text="${user.username}"></h1>
     <hr>
@@ -11,7 +11,7 @@
     <a type="password"><h4 th:text="'Пароль: ' + ${user.password}"></h4></a>
     <h4 th:text="'Количество заказов: ' + ${user.getOrderList.size()}"></h4>
     <h4 th:text="'Количество постов: ' + ${user.getPostList.size()}"></h4>
-    <div th:replace="/parts/footer :: footer"></div>
+    <div th:replace="/partials/footer :: footer"></div>
 </div>
 
 </body>
