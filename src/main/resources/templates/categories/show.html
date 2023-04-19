@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Head -->
+<div th:replace="/layouts/partials/head :: head"></div>
+<body>
+<!-- Navbar-->
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+<!-- Search -->
+<div th:replace="/layouts/partials/products-filter :: products-filter"></div>
+
+<!-- Container -->
+<main class="container py-3">
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <!-- Products -->
+        <table>
+            <tr th:each="product: ${products}">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <!-- Card Header -->
+                    <div class="card-header py-3 text-bg-dark">
+                        <!-- Product Link -->
+                        <a th:href="@{/products/{product}(product=${product.id})}"
+                           class="w-100 btn btn-lg btn-dark">
+                            <h4 class="my-0 fw-normal" th:text="${product.name}"></h4>
+                        </a>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <!-- Product Image -->
+                        <img th:src="@{${product.image}}" alt="Не удалось загрузить изображение." width="225"
+                             height="200">
+
+                        <!-- Product Price -->
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>
+                                <b th:text="${#numbers.formatDecimal(product.price, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></b>
+                            </li>
+                        </ul>
+
+                        <!-- "Add Product" Form -->
+                        <form th:action="@{/user/cart/add/{product}(product=${product.id})}" method="post">
+                            <!-- Container -->
+                            <div class="row">
+                                <!-- Product Quantity -->
+                                <div class="mt-2 col-6 col-md-4">
+                                    <div class="quantity-box">
+                                        <label for="quantity"></label>
+                                        <input id="quantity" type="number" value="1" name="quantity"
+                                               size="4" min="1" step="1">
+                                    </div>
+                                </div>
+                                <!-- "Add To Cart" Button-->
+                                <div class="col-12 col-md-8">
+                                    <a style="text-decoration:none">
+                                        <button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в
+                                            корзину
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </tr>
+        </table>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="/layouts/partials/footer :: footer"></div>
+</body>
+</html>

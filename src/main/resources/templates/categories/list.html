@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Head -->
+<div th:replace="/layouts/partials/head :: head"></div>
+<body>
+<!-- Navbar-->
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+<!-- Search -->
+<div th:replace="/layouts/partials/products-filter :: products-filter"></div>
+
+<div class="p-3 pb-md-4 mx-auto text-center">
+    <h1 class="display-4 fw-normal">Каталог товаров</h1>
+    <p class="fs-5 text-muted">Здесь вы найдете нужные товары по самым привлекательным ценам!</p>
+</div>
+<main class="container py-3">
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <tr th:each="category: ${categories}">
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3 text-bg-dark">
+                        <h4 class="my-0 fw-normal"><p th:text="${category.name}"></p></h4>
+                    </div>
+                    <div class="card-body">
+                        <img th:src="@{${category.image}}" alt="Не удалось загрузить изображение." width="200"
+                             height="200">
+                        <ul class="list-unstyled mt-5 mb-4">
+                        </ul>
+
+                        <div th:if="${category.name != 'Все товары'}">
+                            <a th:href="@{/categories/{category}(category=${category.id})}"
+                               class="w-100 btn btn-lg btn-warning">Перейти</a>
+                        </div>
+                        <div th:if="${category.name == 'Все товары'}">
+                            <a href="/products" class="w-100 btn btn-lg btn-warning">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tr>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="/layouts/partials/footer :: footer"></div>
+</body>
+</html>

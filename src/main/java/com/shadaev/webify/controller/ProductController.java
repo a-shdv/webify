@@ -77,6 +77,6 @@ public class ProductController {
         }
 
         model.addAttribute("products", productList);
-        return "products";
+        return "products/list";
     }
 }

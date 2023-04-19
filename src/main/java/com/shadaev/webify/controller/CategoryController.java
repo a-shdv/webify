@@ -21,27 +21,29 @@ public class CategoryController {
     private final UserService userService;
 
     @GetMapping("/categories")
-    public String getCategories(@AuthenticationPrincipal User userSession, Model model) {
+    public String getAllCategories(@AuthenticationPrincipal User userSession, Model model) {
+        List<Category> categories = categoryService.getAllCategories();
+
         if (userSession != null) {
             User userFromDb = userService.findByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
-        List<Category> categoryList = categoryService.findCategoryList();
 
-        model.addAttribute("categoryList", categoryList);
-        return "categories";
+        model.addAttribute("categories", categories);
+        return "categories/list";
     }
 
-    @GetMapping("/categories/{category}")
-    public String getCategory(@PathVariable(value = "category") Long categoryId,
-                              @AuthenticationPrincipal User userSession, Model model) {
+    @GetMapping("/categories/{id}")
+    public String getCategoryById(@PathVariable(value = "id") Long id,
+                                  @AuthenticationPrincipal User userSession, Model model) {
+        List<Product> products = categoryService.getCategoryById(id);
+
         if (userSession != null) {
             User userFromDb = userService.findByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
-        List<Product> productList = categoryService.findProductListByCategoryId(categoryId);
 
-        model.addAttribute("productList", productList);
-        return "category";
+        model.addAttribute("products", products);
+        return "categories/show";
     }
 }
