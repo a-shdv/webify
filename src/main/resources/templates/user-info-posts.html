@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="/partials/head :: head">
+<head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
-<div th:replace="/partials/navbar :: navbar"></div>
-<div th:replace="/partials/posts-filter :: posts-filter"></div>
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+<div th:replace="/layouts/partials/posts-filter :: posts-filter"></div>
 
 
 <div class="text-center">
@@ -18,10 +18,10 @@
     <div class="text-center mt-5">
         <h1>Мои посты</h1>
     </div>
-    <div th:replace="/partials/posts-cards :: posts-cards"></div>
+    <div th:replace="/layouts/partials/posts-cards :: posts-cards"></div>
 </div>
 
 
-<div th:replace="/partials/footer :: footer"></div>
+<div th:replace="/layouts/partials/footer :: footer"></div>
 </body>
 </html>

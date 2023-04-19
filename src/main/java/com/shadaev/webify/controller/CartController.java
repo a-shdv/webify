@@ -26,7 +26,7 @@ public class CartController {
 
     @GetMapping("/user/cart")
     public String getCart(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("cart", userFromDb.getCart());
@@ -38,8 +38,8 @@ public class CartController {
     public String createItemInCart(@PathVariable(value = "product") Long productId,
                                    @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
                                    @AuthenticationPrincipal User userSession, HttpServletRequest request) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
-        Product product = productService.getProductById(productId);
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        Product product = productService.findProductById(productId);
 
         cartService.saveCartItemToCart(product, quantity, userFromDb);
 
@@ -51,8 +51,8 @@ public class CartController {
     public String updateCartItemInCart(@PathVariable(value = "product") Long productId,
                                        @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
                                        @AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
-        Product product = productService.getProductById(productId);
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        Product product = productService.findProductById(productId);
         Cart updatedCart = cartService.updateCartItemInCart(product, quantity, userFromDb.getCart());
 
         model.addAttribute("cart", updatedCart);
@@ -62,8 +62,8 @@ public class CartController {
     @PostMapping(value = "/user/cart/update/{product}", params = "action=delete")
     public String deleteCartItemFromCart(@PathVariable(value = "product") Long productId,
                                          @AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
-        Product product = productService.getProductById(productId);
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        Product product = productService.findProductById(productId);
         Cart cartWithDeletedItem = cartService.deleteCartItemFromCart(product, userFromDb.getCart());
 
         model.addAttribute("cart", cartWithDeletedItem);

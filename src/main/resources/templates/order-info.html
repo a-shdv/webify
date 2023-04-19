@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="/partials/head :: head">
+<head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
-<div th:replace="/partials/navbar :: navbar"/>
+<div th:replace="/layouts/partials/navbar :: navbar"/>
 <div class="text-center mt-5">
     <h1>Ваш заказ оформлен!</h1> <br>
     <p th:text="'Спасибо за покупку, ' + ${order.name} + '!'"></p>
@@ -63,6 +63,6 @@
 </section>
 
 
-<div th:replace="/partials/footer :: footer"/>
+<div th:replace="/layouts/partials/footer :: footer"/>
 </body>
 </html>

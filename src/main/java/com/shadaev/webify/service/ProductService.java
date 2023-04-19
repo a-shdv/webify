@@ -12,11 +12,11 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<Product> getAllProducts() {
+    public List<Product> findAllProducts() {
         return productRepository.findAll();
     }
 
-    public Product getProductById(Long id) {
+    public Product findProductById(Long id) {
         return productRepository.getById(id);
     }
 

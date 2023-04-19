@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html>
-<head th:replace="/partials/head :: head">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Head -->
+<div th:replace="/layouts/partials/head :: head"></div>
 <body>
-<div th:replace="/partials/navbar :: navbar"></div>
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+
 <div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSignin">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
-
-            <div class="text-center mt-5" th:style="'color:red'" th:if="${param.error} ">
-                Неправильное имя пользователя или пароль.
+            <div>
+                <div th:if="${errorMessage}">
+                    <div th:style="'color:red'" th:text="${errorMessage}"></div>
+                </div>
             </div>
-            <div class="text-center mt-5" th:style="'color:red'" th:if="${param.logout}">
-                Вы вышли учетной записи.
-            </div>
-
             <div class="modal-header p-5 pb-4 border-bottom-0">
-                <h1 class="fw-bold mb-0 fs-2">Войти</h1>
-                <a href="/" style="text-decoration:none">
+                <h1 class="fw-bold mb-0 fs-2">Зарегистрироваться</h1>
+                <a href="/static" style="text-decoration:none">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </a>
             </div>
+
             <div class="modal-body p-5 pt-0">
-                <form th:action="@{/login}" method="post" class="">
+                <form th:action="@{/registration}" method="post" class="">
                     <div class="form-floating mb-3">
                         <input type="text" name="username" class="form-control rounded-3" id="floatingInput">
                         <label for="floatingInput">Имя пользователя</label>
@@ -31,12 +30,15 @@
                         <input type="password" name="password" class="form-control rounded-3" id="floatingPassword">
                         <label for="floatingPassword">Пароль</label>
                     </div>
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" type="submit">Войти</button>
+                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-warning" type="submit">Зарегистрироваться
+                    </button>
+                    <small class="text-muted">Нажимая "Зарегистрироваться", Вы соглашаетесь с условиями
+                        использования.</small>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<div th:replace="/partials/footer :: footer"></div>
+<div th:replace="/layouts/partials/footer :: footer"></div>
 </body>
 </html>

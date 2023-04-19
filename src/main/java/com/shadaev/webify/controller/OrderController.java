@@ -28,7 +28,7 @@ public class OrderController {
 
     @GetMapping("/user/cart/order")
     public String getOrder(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
         Cart cart = userFromDb.getCart();
         List<CartItem> cartItemList = cart.getCartItemList();
 
@@ -40,7 +40,7 @@ public class OrderController {
 
     @GetMapping("/user/orders")
     public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
         List<Order> orderList = userFromDb.getOrderList();
 
         model.addAttribute("user", userFromDb);
@@ -50,7 +50,7 @@ public class OrderController {
 
     @PostMapping("/user/cart/order/create")
     public String createOrder(@AuthenticationPrincipal User userSession, Order order, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
         Cart cart = userFromDb.getCart();
         List<CartItem> cartItemList = cart.getCartItemList();
         List<OrderInfo> orderInfoList = orderService.cartItemListToOrderInfoList(cartItemList, order);

@@ -3,7 +3,7 @@
 <head th:replace="partials/head :: head">
 </head>
 <body>
-<div th:replace="/partials/navbar :: navbar"/>
+<div th:replace="/layouts/partials/navbar :: navbar"/>
 
 <form th:action="@{/user/cart/order/create}" method="post" class="needs-validation"
       novalidate>
@@ -109,7 +109,7 @@
     </div>
 </form>
 
-<div th:replace="/partials/footer :: footer"/>
+<div th:replace="/layouts/partials/footer :: footer"/>
 
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields

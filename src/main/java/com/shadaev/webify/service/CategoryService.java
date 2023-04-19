@@ -13,11 +13,11 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public List<Category> getAllCategories() {
+    public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 
-    public List<Product> getCategoryById(Long categoryId) {
+    public List<Product> findCategoryById(Long categoryId) {
         return categoryRepository.getById(categoryId).getProductList();
     }
 }

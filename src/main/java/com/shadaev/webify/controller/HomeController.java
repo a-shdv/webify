@@ -29,7 +29,7 @@ public class HomeController {
     public String filter(@RequestParam String filter,
                          @AuthenticationPrincipal User userSession, Model model) {
         if (userSession != null) {
-            User userFromDb = userService.findByUsername(userSession.getUsername());
+            User userFromDb = userService.findUserByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
         List<Post> postList;

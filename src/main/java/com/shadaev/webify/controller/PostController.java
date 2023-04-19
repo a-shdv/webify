@@ -21,7 +21,7 @@ public class PostController {
 
     @GetMapping("/user/posts")
     public String getUserInfoPosts(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
         List<Post> postList = postService.findPostList();
 
         model.addAttribute("user", userFromDb);
@@ -31,7 +31,7 @@ public class PostController {
 
     @PostMapping("/user/posts/post/create")
     public String createPost(Post post, @AuthenticationPrincipal User userSession) {
-        User userFromDb = userService.findByUsername(userSession.getUsername());
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
 
         postService.savePost(post, userFromDb);
 

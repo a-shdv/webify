@@ -22,11 +22,11 @@ public class ProductController {
     private final UserService userService;
 
     @GetMapping("/products")
-    public String getAllProducts(@AuthenticationPrincipal User userSession, Model model) {
-        List<Product> products = productService.getAllProducts();
+    public String findAllProducts(@AuthenticationPrincipal User userSession, Model model) {
+        List<Product> products = productService.findAllProducts();
 
         if (userSession != null) {
-            User userFromDb = userService.findByUsername(userSession.getUsername());
+            User userFromDb = userService.findUserByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
 
@@ -35,13 +35,13 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public String getProductById(@PathVariable(value = "id") Long id,
-                                 @AuthenticationPrincipal User userSession, Model model) {
+    public String findProductById(@PathVariable(value = "id") Long id,
+                                  @AuthenticationPrincipal User userSession, Model model) {
         if (userSession != null) {
-            User userFromDb = userService.findByUsername(userSession.getUsername());
+            User userFromDb = userService.findUserByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
-        Product product = productService.getProductById(id);
+        Product product = productService.findProductById(id);
 
         model.addAttribute("product", product);
         return "products/show";
@@ -65,7 +65,7 @@ public class ProductController {
     public String filterProduct(@RequestParam String filter,
                                 @AuthenticationPrincipal User userSession, Model model) {
         if (userSession != null) {
-            User userFromDb = userService.findByUsername(userSession.getUsername());
+            User userFromDb = userService.findUserByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
         List<Product> productList;
@@ -73,7 +73,7 @@ public class ProductController {
         if (filter != null && !filter.isEmpty()) {
             productList = productService.filterProductsByName(filter.trim());
         } else {
-            productList = productService.getAllProducts();
+            productList = productService.findAllProducts();
         }
 
         model.addAttribute("products", productList);
