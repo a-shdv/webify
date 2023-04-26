@@ -7,16 +7,22 @@ import com.shadaev.webify.entity.User;
 import com.shadaev.webify.repository.CartItemRepository;
 import com.shadaev.webify.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+
+    @Autowired
+    public CartService(CartRepository cartRepository, CartItemRepository cartItemRepository) {
+        this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
+    }
 
     public void saveCartItemToCart(Product product, Integer quantity, User user) {
         Cart cart = user.getCart();

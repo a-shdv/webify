@@ -3,14 +3,19 @@ package com.shadaev.webify.service;
 import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+
+    @Autowired
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public List<Product> findAllProducts() {
         return productRepository.findAll();

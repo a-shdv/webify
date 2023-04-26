@@ -13,9 +13,8 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "cart")
-@EqualsAndHashCode(exclude = {"id", "cartItemList", "user"})
-@ToString(exclude = {"id", "cartItemList"})
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"cartItemList", "user"})
+@ToString(exclude = {"cartItemList", "user"})
 public class Cart {
     @Id
     @Column(name = "id")

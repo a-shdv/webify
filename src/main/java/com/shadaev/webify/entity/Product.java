@@ -12,9 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @Data
-@EqualsAndHashCode(exclude = {"id", "category"})
+@EqualsAndHashCode(exclude = {"category"})
 @ToString(exclude = {"category"})
-@NoArgsConstructor
 public class Product {
     @Id
     @Column(name = "id")

@@ -9,6 +9,7 @@ import com.shadaev.webify.entity.OrderStatus;
 import com.shadaev.webify.repository.OrderInfoRepository;
 import com.shadaev.webify.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -18,10 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderInfoRepository orderInfoRepository;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository, OrderInfoRepository orderInfoRepository) {
+        this.orderRepository = orderRepository;
+        this.orderInfoRepository = orderInfoRepository;
+    }
 
     public void saveOrder(Order order) {
         order.setStatus(OrderStatus.IN_PROGRESS);

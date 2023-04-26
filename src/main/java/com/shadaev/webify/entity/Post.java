@@ -1,14 +1,17 @@
 package com.shadaev.webify.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "posts")
 @Data
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"user"})
+@ToString(exclude = {"user"})
 public class Post {
     @Id
     @Column(name = "id")

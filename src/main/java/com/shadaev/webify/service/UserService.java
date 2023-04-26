@@ -4,6 +4,7 @@ import com.shadaev.webify.entity.User;
 import com.shadaev.webify.entity.UserRole;
 import com.shadaev.webify.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +15,12 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User findUser(User userSession) {
         User userFromDb;

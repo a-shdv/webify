@@ -4,14 +4,19 @@ import com.shadaev.webify.entity.Category;
 import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+
+    @Autowired
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();

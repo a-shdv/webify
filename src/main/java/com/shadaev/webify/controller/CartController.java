@@ -7,6 +7,7 @@ import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +19,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
     private final ProductService productService;
     private final UserService userService;
+
+    @Autowired
+    public CartController(CartService cartService,
+                          ProductService productService,
+                          UserService userService) {
+        this.cartService = cartService;
+        this.productService = productService;
+        this.userService = userService;
+    }
+
 
     @GetMapping("/user/cart")
     public String getCart(@AuthenticationPrincipal User userSession, Model model) {

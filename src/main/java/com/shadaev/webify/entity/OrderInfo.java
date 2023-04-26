@@ -1,14 +1,18 @@
 package com.shadaev.webify.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "orders_info")
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"order", "product"})
+@ToString(exclude = {"order", "product"})
 public class OrderInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
