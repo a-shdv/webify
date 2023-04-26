@@ -94,12 +94,38 @@ create table user_role
     user_role_set varchar(255)
 );
 
-alter table if exists cart_item add constraint cart_item_cart foreign key (cart_id) references cart;
-alter table if exists cart_item add constraint cart_item_product foreign key (product_id) references product;
-alter table if exists "order" add constraint order_user foreign key (user_id) references "user";
-alter table if exists order_info add constraint order_info_order foreign key (order_id) references "order";
-alter table if exists order_info add constraint order_info_product foreign key (product_id) references product;
-alter table if exists post add constraint post_user foreign key (user_id) references "user";
-alter table if exists product add constraint product_category foreign key (category_id) references category;
-alter table if exists "user" add constraint user_cart foreign key (cart_id) references cart;
-alter table if exists user_role add constraint user_role_user foreign key (user_id) references "user";
+alter table if exists cart_item
+    add constraint cart_item_cart
+        foreign key (cart_id) references cart;
+
+alter table if exists cart_item
+    add constraint cart_item_product
+        foreign key (product_id) references product;
+
+alter table if exists "order"
+    add constraint order_user
+        foreign key (user_id) references "user";
+
+alter table if exists order_info
+    add constraint order_info_order
+        foreign key (order_id) references "order";
+
+alter table if exists order_info
+    add constraint order_info_product
+        foreign key (product_id) references product;
+
+alter table if exists post
+    add constraint post_user
+        foreign key (user_id) references "user";
+
+alter table if exists product
+    add constraint product_category
+        foreign key (category_id) references category;
+
+alter table if exists "user"
+    add constraint user_cart
+        foreign key (cart_id) references cart;
+
+alter table if exists user_role
+    add constraint user_role_user
+        foreign key (user_id) references "user";
