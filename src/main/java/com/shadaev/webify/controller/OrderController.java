@@ -35,7 +35,7 @@ public class OrderController {
         model.addAttribute("user", userFromDb);
         model.addAttribute("cart", cart);
         model.addAttribute("cartItemList", cartItemList);
-        return "order";
+        return "orders/create";
     }
 
     @GetMapping("/user/orders")
@@ -45,7 +45,7 @@ public class OrderController {
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("orderList", orderList);
-        return "user-info-orders";
+        return "users/ordersList";
     }
 
     @PostMapping("/user/cart/order/create")
@@ -67,7 +67,7 @@ public class OrderController {
         model.addAttribute("order", order);
         model.addAttribute("orderInfoList", orderInfoList);
 
-        return "order-info";
+        return "orders/show";
     }
 
     @GetMapping("/user/orders/pdf")

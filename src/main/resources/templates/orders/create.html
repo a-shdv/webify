@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="partials/head :: head">
+<head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
-<div th:replace="/layouts/partials/navbar :: navbar"/>
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
 
 <form th:action="@{/user/cart/order/create}" method="post" class="needs-validation"
       novalidate>

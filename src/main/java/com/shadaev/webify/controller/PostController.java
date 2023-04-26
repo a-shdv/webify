@@ -26,7 +26,7 @@ public class PostController {
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("postList", postList);
-        return "user-info-posts";
+        return "users/postsList";
     }
 
     @PostMapping("/user/posts/post/create")

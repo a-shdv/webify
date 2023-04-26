@@ -33,16 +33,16 @@ public class UserController {
         return "users/registration";
     }
 
-    @GetMapping("/user/{id}")
-    public String findUserById(@PathVariable(value = "id") Long id,
-                               @AuthenticationPrincipal User userSession, Model model) {
-        User currentUser = userService.findUser(userSession);
-        User anotherUser = userService.findUserById(id);
-
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("anotherUser", anotherUser);
-        return "another-user-info";
-    }
+//    @GetMapping("/user/{id}")
+//    public String findUserById(@PathVariable(value = "id") Long id,
+//                               @AuthenticationPrincipal User userSession, Model model) {
+//        User currentUser = userService.findUser(userSession);
+//        User anotherUser = userService.findUserById(id);
+//
+//        model.addAttribute("currentUser", currentUser);
+//        model.addAttribute("anotherUser", anotherUser);
+//        return "another-user-info";
+//    }
 
     @PostMapping("/registration")
     public String createUser(User user, Model model) {

@@ -1,8 +1,5 @@
 package com.shadaev.webify.service;
 
-import com.itextpdf.io.font.FontConstants;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 import com.shadaev.webify.entity.CartItem;

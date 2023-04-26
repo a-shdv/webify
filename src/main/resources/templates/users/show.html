@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="/layouts/partials/head :: head"></div>
+<body>
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+<div class="text-center">
+  <h1 th:text="${anotherProfile.username}"></h1>
+  <hr>
+  <h4 th:text="'Пользователь: ' + ${anotherProfile.username}"></h4>
+  <h4 th:text="'Количество постов: ' + ${anotherProfile.getPostList.size()}"></h4>
+  <div th:replace="/layouts/partials/footer :: footer"></div>
+</div>
+</body>
+</html>
