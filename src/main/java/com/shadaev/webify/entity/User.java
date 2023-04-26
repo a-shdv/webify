@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "\"user\"")
 @Data
 @EqualsAndHashCode(exclude = {"userRoleSet", "cart", "orderList", "postList"})
 @ToString(exclude = {"userRoleSet", "cart", "orderList", "postList"})
@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private boolean active;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> userRoleSet = new HashSet<>();
 

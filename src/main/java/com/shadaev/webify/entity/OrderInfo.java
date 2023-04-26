@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "orders_info")
+@Table(name = "order_info")
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"order", "product"})
 @ToString(exclude = {"order", "product"})

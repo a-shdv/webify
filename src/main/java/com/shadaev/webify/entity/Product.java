@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 @Data
 @EqualsAndHashCode(exclude = {"category"})
 @ToString(exclude = {"category"})

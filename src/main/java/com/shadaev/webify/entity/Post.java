@@ -8,7 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "post")
 @Data
 @EqualsAndHashCode(exclude = {"user"})
 @ToString(exclude = {"user"})
