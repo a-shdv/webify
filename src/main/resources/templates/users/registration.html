@@ -27,6 +27,13 @@
                 <div class="modal-body p-5 pt-0">
                     <!-- Form registration -->
                     <form th:action="@{/registration}" method="post" class="">
+                        <!--Email-->
+                        <div class="form-floating mb-3">
+                            <input id="email" type="email"
+                                   class="form-control rounded-3" name="email" required autocomplete="email">
+                            <label for="email">Email</label>
+
+                        </div>
                         <!-- Username -->
                         <div class="form-floating mb-3">
                             <input id="username" type="text" name="username" class="form-control rounded-3">
@@ -39,7 +46,8 @@
                         </div>
                         <!-- Confirm password -->
                         <div class="form-floating mb-3">
-                            <input id="confirmPassword" type="password" name="confirmPassword" class="form-control rounded-3">
+                            <input id="confirmPassword" type="password" name="confirmPassword"
+                                   class="form-control rounded-3">
                             <label for="confirmPassword">Подтвердите пароль</label>
                         </div>
                         <!--Phone number -->
@@ -48,7 +56,8 @@
                             <label for="phone">Номер телефона</label>
                         </div>
                         <!-- Button register -->
-                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-warning" type="submit" onclick="return validateForm()">Зарегистрироваться
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-warning" type="submit"
+                                onclick="return validateForm()">Зарегистрироваться
                         </button>
                         <small class="text-muted">Нажимая "Зарегистрироваться", Вы соглашаетесь с условиями
                             использования.</small>
