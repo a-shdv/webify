@@ -1,0 +1,1 @@
+alter table "order" rename column phone_number TO phone;

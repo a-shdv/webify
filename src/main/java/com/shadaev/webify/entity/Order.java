@@ -26,15 +26,11 @@ public class Order {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "email")
     private String email;
-
-    @Column(name = "city")
-    private String city;
-
     @Column(name = "shipping_address")
     private String shippingAddress;
 
@@ -44,6 +40,18 @@ public class Order {
 
     @Column(name = "status")
     private OrderStatus status;
+
+    @Column(name = "entrance_number")
+    private int entranceNumber;
+
+    @Column(name = "door_password")
+    private int doorPassword;
+
+    @Column(name = "floor")
+    private int floor;
+
+    @Column(name = "apartment_number")
+    private int apartmentNumber;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
