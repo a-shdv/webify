@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!-- Head -->
+<div th:replace="/layouts/partials/head :: head"></div>
+<body>
+<!-- Navbar-->
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+
+<!-- Container -->
+<main class="mt-5 text-center">
+    <div class="col-lg-6 mx-auto">
+        <!-- Product Name -->
+        <h1 class="display-4 fw-bold" th:text="${product.name}"></h1>
+
+        <!-- Product Image -->
+        <img th:src="@{${product.image}}" class="img-fluid border rounded-3 shadow-lg mb-4"
+             alt="Не удалось загрузить изображение." loading="lazy" width="700" height="500">
+
+        <!-- Product Description -->
+        <div th:text="${product.description}"></div>
+
+        <!-- Buttons -->
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-5">
+            <!-- Button "Back" -->
+            <a class="btn btn-outline-secondary btn-lg px-4" href="javascript:history.back()">Назад</a>
+            <!-- Button "Add To Cart" -->
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/user/cart/add/{product}(product=${product.id})}" method="post">
+                    <a style="text-decoration:none"><button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину</button></a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="/layouts/partials/footer :: footer"></div>
+</body>
+</html>

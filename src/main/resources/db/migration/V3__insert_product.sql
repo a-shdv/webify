@@ -1,4 +1,4 @@
-insert into products (name, category_id, image, description, price)
+insert into product (name, category_id, image, description, price)
 values ('HP OMEN 25L GT12-1053ur', 1, '/images/products/hp.jpg',
         'HP OMEN 25L GT12 - это мощные компоненты и передовая система охлаждения — твоя выигрышная комбинация. Простота обновления и настройки программного обеспечения под свои задачи - и ты получаешь бесконечное удовольствие от игры. Боковые панели из закаленного стекла, лицевая панель с эффектом грубой шлифовки и настраиваемая подсветка RGB.',
         109999.99),

@@ -10,11 +10,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 @Data
-@EqualsAndHashCode(exclude = {"id", "category"})
+@EqualsAndHashCode(exclude = {"category"})
 @ToString(exclude = {"category"})
-@NoArgsConstructor
 public class Product {
     @Id
     @Column(name = "id")
@@ -28,7 +27,7 @@ public class Product {
     private String description;
 
     @Column(name = "price")
-    private Double price;
+    private double price;
 
     @Column(name = "image")
     private String image;

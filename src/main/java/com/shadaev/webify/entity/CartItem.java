@@ -9,10 +9,9 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "cart_items")
-@EqualsAndHashCode(exclude = {"id", "cart", "product"})
+@Table(name = "cart_item")
+@EqualsAndHashCode(exclude = {"cart", "product"})
 @ToString(exclude = {"cart", "product"})
-@NoArgsConstructor
 public class CartItem {
 
     @Id
@@ -21,10 +20,10 @@ public class CartItem {
     private Long id;
 
     @Column(name = "total_price")
-    private Double totalPrice;
+    private double totalPrice;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")

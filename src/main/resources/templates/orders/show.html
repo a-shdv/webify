@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="/parts/head :: head">
+<head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
-<div th:replace="/parts/navbar :: navbar"/>
+<div th:replace="/layouts/partials/navbar :: navbar"/>
 <div class="text-center mt-5">
     <h1>Ваш заказ оформлен!</h1> <br>
-    <p th:text="'Спасибо за покупку, ' + ${order.name} + '!'"></p>
+    <p th:text="'Спасибо за покупку, ' + ${user.username} + '!'"></p>
     <p th:text="'Номер Вашего заказа: №' + ${order.id} + '.'"></p>
-    <p th:text="'Заказ будет доставлен в город: ' + ${order.city} + ','"></p>
     <p th:text="'по адресу: ' + ${order.shippingAddress} + '.'"></p>
-    <p th:text="'Детали заказа будут отправлены на Вашу электроную почту: ' + ${order.email} + '.'"></p></div>
+<!--    <p th:text="'Детали заказа будут отправлены на Вашу электроную почту: ' + ${order.email} + '.'"></p></div>-->
 
 <section>
     <div class="cart-box-main">
@@ -32,17 +31,15 @@
                             <tbody>
                             <div th:each="orderInfo : ${orderInfoList}">
                                 <tr>
-                                    <td>
-<!--                                        Дата заказа-->
-                                        <span><b>null</b></span>
-                                    </td>
+                                    <!--Дата заказа-->
+                                    <td th:utext="${#temporals.format(orderInfo.order.createdDate, 'dd.MM.yyyy')}"></td>
                                     <td>
                                         <!-- Название товара-->
-                                        <a th:text="${orderInfo.product.name} + ${orderInfo.quantity}" th:href="@{/products/{product}(product=${orderInfo.product.id})}">
+                                        <a th:text="${orderInfo.product.name}" th:href="@{/products/{product}(product=${orderInfo.product.id})}">
                                         </a>
                                     </td>
                                     <!--Количество-->
-<!--                                    <td th:text="${product.quantity}"></td>-->
+                                    <td th:text="${orderInfo.quantity}"></td>
                                     <td>
                                     <!-- Статус заказа-->
                                      <p th:if="${order.status}">
@@ -65,6 +62,6 @@
 </section>
 
 
-<div th:replace="/parts/footer :: footer"/>
+<div th:replace="/layouts/partials/footer :: footer"/>
 </body>
 </html>

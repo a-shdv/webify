@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="/parts/head :: head">
+<head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
-<div th:replace="/parts/navbar :: navbar"></div>
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
 <div class="text-center"><h1>Мои заказы</h1></div>
 <div class="row justify-content-center">
-    <div class="col-md-6 mt-5">
+    <div class="col-md-6 mt-5" style="position: relative">
         <table class="table">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">Номер заказа</th>
+                <th scope="col">Дата заказа</th>
                 <th scope="col">Название товара</th>
                 <th scope="col">Цена</th>
                 <th scope="col">Количество</th>
                 <th scope="col">Итого</th>
             </tr>
             </thead>
-            <tbody th:each="order, i: ${orderList}">
+            <tbody th:each="order, i: ${orders}">
 
-            <tr th:each="info, j: ${order.orderInfoList}">
+            <tr th:each="info, j: ${order.orderInfos}">
                 <th scope="row" th:if="${j.first}" th:text="${order.id}"></th>
                 <th scope="row" th:unless="${j.first}" th:text="' '"></th>
+                <td th:utext="${#temporals.format(info.order.createdDate, 'dd.MM.yyyy')}"></td>
                 <td th:text="${info.product.name}"></td>
                 <td th:text="${#numbers.formatDecimal(info.product.price, 2, 'WHITESPACE', 2, 'COMMA')} + ' ₽'"></td>
                 <td th:text="${info.quantity}"></td>
@@ -34,11 +36,14 @@
                 <td></td>
             </tr>
         </table>
+        <form th:action="@{/templates/profiles/orders/pdf}" method="get">
+            <button type="submit" class="btn btn-warning" style="position:absolute; bottom:5; right:0;">Сформировать отчет</button>
+        </form>
     </div>
 
 </div>
 
 
-<div th:replace="/parts/footer :: footer"></div>
+<div th:replace="/layouts/partials/footer :: footer"></div>
 </body>
 </html>

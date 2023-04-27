@@ -10,11 +10,10 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "users")
-@Builder
+@Table(name = "\"user\"")
 @Data
-@EqualsAndHashCode(exclude = {"id", "userRoleSet", "cart", "orderList", "postList"})
-@ToString(exclude = {"id", "userRoleSet", "cart", "orderList", "postList"})
+@EqualsAndHashCode(exclude = {"userRoleSet", "cart", "orderList", "postList"})
+@ToString(exclude = {"userRoleSet", "cart", "orderList", "postList"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
@@ -23,17 +22,23 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "username")
     private String username;
 
     @Column(name = "password")
     private String password;
 
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "active")
     private boolean active;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> userRoleSet = new HashSet<>();
 

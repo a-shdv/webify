@@ -1,16 +1,19 @@
 package com.shadaev.webify.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 @Data
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"productList"})
+@ToString(exclude = {"productList"})
 public class Category {
     @Id
     @Column(name = "id")

@@ -13,9 +13,8 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "cart")
-@EqualsAndHashCode(exclude = {"id", "cartItemList", "user"})
-@ToString(exclude = {"id", "cartItemList"})
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"cartItemList", "user"})
+@ToString(exclude = {"cartItemList", "user"})
 public class Cart {
     @Id
     @Column(name = "id")
@@ -23,7 +22,7 @@ public class Cart {
     private Long id;
 
     @Column(name = "total_price")
-    private Double totalPrice = 0.0;
+    private double totalPrice = 0.0;
 
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private User user;

@@ -1,2 +1,2 @@
-src/main/resources/templates/blocks/*.html linguist-vendored
-src/main/resources/templates/*.html linguist-vendored
+# src/main/resources/templates/blocks/*.html linguist-vendored
+# src/main/resources/templates/*.html linguist-vendored

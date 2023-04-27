@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Head -->
+<div th:replace="/layouts/partials/head :: head"></div>
+<body>
+<!-- Navbar -->
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+
+<div class="container">
+    <div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSignin">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div th:if="${errorMessage}" class="text-center">
+                    <div th:style="'color:red'" th:text="${errorMessage}"></div>
+                </div>
+
+                <!-- Header -->
+                <div class="modal-header p-5 pb-4 border-bottom-0">
+                    <!-- Button close -->
+                    <h1 class="fw-bold mb-0 fs-2">Зарегистрироваться</h1>
+                    <a href="/" style="text-decoration:none">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </a>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body p-5 pt-0">
+                    <!-- Form registration -->
+                    <form th:action="@{/registration}" method="post" class="">
+                        <!--Email-->
+                        <div class="form-floating mb-3">
+                            <input id="email" type="email"
+                                   class="form-control rounded-3" name="email" required autocomplete="email">
+                            <label for="email">Email</label>
+
+                        </div>
+                        <!-- Username -->
+                        <div class="form-floating mb-3">
+                            <input id="username" type="text" name="username" class="form-control rounded-3">
+                            <label for="username">Имя пользователя</label>
+                        </div>
+                        <!-- Password -->
+                        <div class="form-floating mb-3">
+                            <input id="password" type="password" name="password" class="form-control rounded-3">
+                            <label for="password">Пароль</label>
+                        </div>
+                        <!-- Confirm password -->
+                        <div class="form-floating mb-3">
+                            <input id="confirmPassword" type="password" name="confirmPassword"
+                                   class="form-control rounded-3">
+                            <label for="confirmPassword">Подтвердите пароль</label>
+                        </div>
+                        <!--Phone number -->
+                        <div class="form-floating mb-3">
+                            <input type="tel" name="phone" class="form-control rounded-3" id="phone">
+                            <label for="phone">Номер телефона</label>
+                        </div>
+                        <!-- Button register -->
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-warning" type="submit"
+                                onclick="return validateForm()">Зарегистрироваться
+                        </button>
+                        <small class="text-muted">Нажимая "Зарегистрироваться", Вы соглашаетесь с условиями
+                            использования.</small>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="/layouts/partials/footer :: footer"></div>
+<script th:inline="javascript">
+    function validateForm() {
+        let password = document.getElementById("password").value;
+        let confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+            alert("Пароли не совпадают.");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>
