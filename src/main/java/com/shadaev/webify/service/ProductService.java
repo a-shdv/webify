@@ -2,7 +2,6 @@ package com.shadaev.webify.service;
 
 import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +16,11 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAllProducts() {
+    public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    public Product findProductById(Long id) {
+    public Product getProductById(Long id) {
         return productRepository.getById(id);
     }
 

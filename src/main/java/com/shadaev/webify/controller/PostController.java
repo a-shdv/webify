@@ -4,7 +4,6 @@ import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.PostService;
 import com.shadaev.webify.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,7 @@ public class PostController {
     @GetMapping("/user/posts")
     public String getUserInfoPosts(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
-        List<Post> postList = postService.findPostList();
+        List<Post> postList = postService.getPosts();
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("postList", postList);

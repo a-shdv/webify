@@ -15,8 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "\"order\"")
 @Data
-@EqualsAndHashCode(exclude = {"user", "orderInfoList"})
-@ToString(exclude = {"user", "orderInfoList"})
+@EqualsAndHashCode(exclude = {"user"})
+@ToString(exclude = {"user"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,9 +60,6 @@ public class Order {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "order")
-    private List<OrderInfo> orderInfoList;
 
     @PrePersist
     public void prePersist() {

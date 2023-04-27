@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public User findUser(User userSession) {
+    public User getUser(User userSession) {
         User userFromDb;
         if (userSession != null) {
             userFromDb = findUserByUsername(userSession.getUsername());
@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
-    public User findUserById(Long id) {
+    public User getUserById(Long id) {
         return userRepository.getById(id);
     }
 

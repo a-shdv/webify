@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,4 +36,7 @@ public class Product {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<CartProduct> cartProducts = new ArrayList<>();
 }
