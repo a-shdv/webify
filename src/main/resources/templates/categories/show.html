@@ -38,7 +38,7 @@
                         </ul>
 
                         <!-- "Add Product" Form -->
-                        <form th:action="@{/cart/{product}(product=${product.id})}" method="post">
+                        <form th:action="@{/cart/create/{product}(product=${product.id})}" method="post">
                             <!-- Container -->
                             <div class="row">
                                 <!-- Product Quantity -->

@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/cart")
 public class CartController {
@@ -43,39 +41,43 @@ public class CartController {
         return "carts/cart";
     }
 
-    @PostMapping("/{product}")
-    public String addProduct(@PathVariable(value = "product") Product product,
-                             @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity,
-                             @AuthenticationPrincipal User userSession) {
+    @PostMapping("/create/{product}")
+    public String createCartProduct(@PathVariable(value = "product") Product product,
+                                    @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity,
+                                    @AuthenticationPrincipal User userSession) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
         Cart cart = userFromDb.getCart();
 
-        cartService.createProduct(cart, product, quantity, product.getPrice() * quantity);
+        cartService.createCartProduct(cart, product, quantity, product.getPrice() * quantity);
 
         return "redirect:/categories/" + product.getCategory().getId();
     }
 
 
-//    @PostMapping(value = "/user/cart/update/{product}", params = "action=update")
-//    public String updateCartItemInCart(@PathVariable(value = "product") Long productId,
-//                                       @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
-//                                       @AuthenticationPrincipal User userSession, Model model) {
-//        User userFromDb = userService.findUserByUsername(userSession.getUsername());
-//        Product product = productService.findProductById(productId);
-//        Cart updatedCart = cartService.updateCartItemInCart(product, quantity, userFromDb.getCart());
-//
-//        model.addAttribute("cart", updatedCart);
-//        return "redirect:/user/cart";
-//    }
+    @PostMapping(value="/update/{product}", params="action=update")
+    public String updateCartProduct(@PathVariable(value = "product") Long productId,
+                                    @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity,
+                                    @AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        Cart cart = cartService.getCartById(userFromDb.getCart().getId());
+        CartProduct cartProduct = cartService.getCartProduct(cart.getCartProducts(), productId);
 
-//    @PostMapping(value = "/user/cart/update/{product}", params = "action=delete")
-//    public String deleteCartItemFromCart(@PathVariable(value = "product") Long productId,
-//                                         @AuthenticationPrincipal User userSession, Model model) {
-//        User userFromDb = userService.findUserByUsername(userSession.getUsername());
-//        Product product = productService.findProductById(productId);
-//        Cart cartWithDeletedItem = cartService.deleteCartItemFromCart(product, userFromDb.getCart());
-//
-//        model.addAttribute("cart", cartWithDeletedItem);
-//        return "redirect:/user/cart";
-//    }
+        cartService.updateCartProductQuantity(cartProduct, quantity, cartProduct.getProduct().getPrice() * quantity);
+
+        model.addAttribute("cart", cart);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/delete/{product}")
+    public String deleteCartProduct(@PathVariable(value = "product") Long productId,
+                                    @AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        Cart cart = cartService.getCartById(userFromDb.getCart().getId());
+        CartProduct cartProduct = cartService.getCartProduct(cart.getCartProducts(), productId);
+
+        cartService.deleteCartProduct(cart, cartProduct);
+
+        model.addAttribute("cart", cart);
+        return "redirect:/cart";
+    }
 }

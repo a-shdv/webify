@@ -5,7 +5,6 @@ import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.CategoryService;
 import com.shadaev.webify.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public String findAllCategories(@AuthenticationPrincipal User userSession, Model model) {
-        List<Category> categories = categoryService.findAllCategories();
+        List<Category> categories = categoryService.getAllCategories();
 
         if (userSession != null) {
             User userFromDb = userService.findUserByUsername(userSession.getUsername());
@@ -42,7 +41,7 @@ public class CategoryController {
     @GetMapping("/categories/{id}")
     public String findCategoryById(@PathVariable(value = "id") Long id,
                                    @AuthenticationPrincipal User userSession, Model model) {
-        List<Product> products = categoryService.findCategoryById(id);
+        List<Product> products = categoryService.getCategoryById(id);
 
         if (userSession != null) {
             User userFromDb = userService.findUserByUsername(userSession.getUsername());

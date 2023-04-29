@@ -27,11 +27,11 @@ public class CartService {
         return cart;
     }
 
-    public void createProduct(Cart cart, Product product, int quantity, double price) {
+    public void createCartProduct(Cart cart, Product product, int quantity, double price) {
         CartProduct cartProduct = getCartProduct( cart.getCartProducts(), product.getId());
-        if (cartProduct == null) {
+        if (cartProduct == null) { // create
             cartProduct = new CartProduct(cart, product, quantity, price);
-        } else {
+        } else { // update
             cartProduct.setQuantity(cartProduct.getQuantity() + quantity);
             cartProduct.setPrice(cartProduct.getPrice() + price);
         }
@@ -39,23 +39,19 @@ public class CartService {
         updateTotalPrice(cart);
     }
 
-    //
-//    public Cart updateCartItemInCart(Product product, Integer quantity, Cart cart) {
-//        List<CartItem> cartItemList = cart.getCartItemList();
-//
-//        CartItem cartItem = findCartItem(cartItemList, product.getId());
-//
-//        cartItem.setQuantity(quantity);
-//        cartItem.setTotalPrice(quantity * product.getPrice());
-//
-//        cartItemRepository.save(cartItem);
-//
-//        double totalPrice = getTotalPrice(cartItemList);
-//
-//        cart.setTotalPrice(totalPrice);
-//
-//        return cartRepository.save(cart);
-//    }
+
+    public void updateCartProductQuantity(CartProduct cartProduct, int quantity, double price) {
+        cartProduct.setQuantity(quantity);
+        cartProduct.setPrice(price);
+        cartProductRepository.save(cartProduct);
+    }
+
+    public void deleteCartProduct(Cart cart,CartProduct cartProduct) {
+        cart.getCartProducts().remove(cartProduct);
+        updateTotalPrice(cart);
+        cartProductRepository.delete(cartProduct);
+        cartRepository.save(cart);
+    }
 //
 //    public Cart deleteCartItemFromCart(Product product, Cart cart) {
 //        List<CartItem> cartItemList = cart.getCartItemList();
@@ -81,7 +77,7 @@ public class CartService {
 //    }
 //
 
-    private CartProduct getCartProduct(List<CartProduct> cartProducts, Long productId) {
+    public CartProduct getCartProduct(List<CartProduct> cartProducts, Long productId) {
         for (CartProduct cp : cartProducts) {
             if (cp.getProduct().getId().equals(productId)) {
                 return cp;
