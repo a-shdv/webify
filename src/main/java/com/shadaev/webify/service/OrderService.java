@@ -1,11 +1,10 @@
 package com.shadaev.webify.service;
 
+import com.shadaev.webify.entity.Cart;
 import com.shadaev.webify.entity.CartProduct;
 import com.shadaev.webify.entity.Order;
 import com.shadaev.webify.entity.OrderProduct;
-import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.OrderRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -23,11 +22,16 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order parseOrderData(MultiValueMap<String, String> orderData) {
+    public Order createOrder(MultiValueMap<String, String> orderData, Cart cart) {
+        Order order = parseOrderData(orderData);
+        order.setUser(cart.getUser());
+        addProductsToOrder(order, cart.getCartProducts());
+        orderRepository.save(order);
+        return order;
+    }
+
+    private Order parseOrderData(MultiValueMap<String, String> orderData) {
         return new Order(
-                orderData.getFirst("name"),
-                orderData.getFirst("email"),
-                orderData.getFirst("phone"),
                 orderData.getFirst("shippingAddress"),
                 orderData.getFirst("comment"),
                 Integer.parseInt(Objects.requireNonNull(orderData.getFirst("entranceNumber"))),
@@ -36,30 +40,17 @@ public class OrderService {
                 Integer.parseInt(Objects.requireNonNull(orderData.getFirst("apartmentNumber"))));
     }
 
-
-//    private List<Product> getProductsFromCartProducts(List<CartProduct> cartProducts) {
-//        List<Product> products = new ArrayList<>();
-//        for (CartProduct cp : cartProducts) {
-//            products.add(cp.getProduct());
-//        }
-//        return products;
-//    }
-
-    public void addProductsToOrder(Order order, List<CartProduct> cartProducts)
-    {
-        List<OrderProduct> orderProducts = new ArrayList<>();
+    private void addProductsToOrder(Order order, List<CartProduct> cartProducts) {
         int quantity;
         double price;
+        List<OrderProduct> orderProducts = new ArrayList<>();
+
         for (CartProduct cp : cartProducts) {
             quantity = cp.getQuantity();
             price = cp.getPrice() * quantity;
             orderProducts.add(new OrderProduct(order, cp.getProduct(), quantity, price));
         }
         order.setOrderProducts(orderProducts);
-    }
-
-    public void saveOrder(Order order) {
-        orderRepository.save(order);
     }
 //
 //    public ByteArrayOutputStream generatePdf() throws Exception {

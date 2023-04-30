@@ -51,18 +51,12 @@ public class OrderController {
             @AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
         Cart cart =userFromDb.getCart();
-        List<CartProduct> cartProducts = cartService.getCartById(userFromDb.getCart().getId()).getCartProducts();
-        Order order = orderService.parseOrderData(orderData);
-
-        order.setUser(userFromDb);
-        orderService.addProductsToOrder(order, cartProducts);
-        orderService.saveOrder(order);
-
-        cartService.deleteCartProducts(cart);
+        Order order = orderService.createOrder(orderData, cart);
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("order", order);
 
+        cartService.deleteCartProducts(cart);
         return "orders/show";
     }
 //

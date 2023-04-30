@@ -4,13 +4,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,15 +22,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "phone")
-    private String phone;
 
     @Column(name = "shipping_address")
     private String shippingAddress;
@@ -68,12 +57,8 @@ public class Order {
         this.createdDate = LocalDateTime.now();
     }
 
-    public Order(String name, String email, String phone,
-                 String shippingAddress, @Nullable String comment, int entranceNumber,
-                 int doorPassword, int floor, int apartmentNumber) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
+    public Order(String shippingAddress, @Nullable String comment,
+                 int entranceNumber, int doorPassword, int floor, int apartmentNumber) {
         this.shippingAddress = shippingAddress;
         this.comment = comment;
         this.entranceNumber = entranceNumber;

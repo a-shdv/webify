@@ -13,7 +13,7 @@
     <p>Благодарим за заказ!</p>
     <p th:text="'Номер Вашего заказа: №' + ${order.id} + '.'"></p>
     <p th:text="'Заказ будет доставлен по адресу: ' + ${order.shippingAddress} + '.'"></p>
-    <p th:text="'Детали заказа будут отправлены на Вашу электронную почту: ' + ${order.email} + '.'"></p></div>
+    <p th:text="'Детали заказа будут отправлены на Вашу электронную почту: ' + ${order.user.email} + '.'"></p></div>
 <section>
     <div class="cart-box-main">
         <div class="container mt-5">

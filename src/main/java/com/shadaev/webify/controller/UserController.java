@@ -1,6 +1,7 @@
 package com.shadaev.webify.controller;
 
 import com.shadaev.webify.entity.Cart;
+import com.shadaev.webify.entity.Order;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -36,6 +39,16 @@ public class UserController {
         return "users/registration";
     }
 
+    @GetMapping("/user/orders")
+    public String getOrders(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        List<Order> orders = userFromDb.getOrders();
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("orders", orders);
+
+        return "users/ordersList";
+    }
 //    @GetMapping("/user/{id}")
 //    public String findUserById(@PathVariable(value = "id") Long id,
 //                               @AuthenticationPrincipal User userSession, Model model) {
