@@ -64,7 +64,6 @@
             </div>
         </div>
 
-
         <div sec:authorize="!isAuthenticated()">
             <div class="px-3 py-2 border-bottom mb-3">
                 <div class="container d-flex flex-wrap justify-content-center">
@@ -81,6 +80,19 @@
                 </div>
             </div>
         </div>
-
     </header>
+    <style>
+        .navbar-nav .dropdown-menu .dropdown-item:hover,
+        .navbar-nav .dropdown-menu .dropdown-item:active {
+            color: #212529;
+            background-color: #ffc107;
+        }
+        .navbar-nav .dropdown-menu .dropdown-item:focus {
+            color: #424649;
+            background-color: #ffca2c;
+        }
+        li > a:hover {
+            background-color: #424649;
+        }
+    </style>
 </div>
