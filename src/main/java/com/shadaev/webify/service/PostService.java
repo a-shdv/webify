@@ -3,7 +3,6 @@ package com.shadaev.webify.service;
 import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +22,13 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<Post> findPostByHeader(String header) {
+    public List<Post> getPostByHeader(String header) {
         if (header != null)
             return postRepository.findByHeader(header);
         return postRepository.findAll();
     }
 
-    public List<Post> findPostList() {
+    public List<Post> getPosts() {
         return postRepository.findAll();
     }
 

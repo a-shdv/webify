@@ -23,14 +23,21 @@
                 </a>
             </div>
             <div class="modal-body p-5 pt-0">
-                <form th:action="@{/login}" method="post" class="">
+                <form th:action="@{/login}" method="post" class="needs-validation" novalidate>
                     <div class="form-floating mb-3">
-                        <input type="text" name="username" class="form-control rounded-3" id="floatingInput">
+                        <input type="text" name="username" class="form-control rounded-3" id="floatingInput" required>
                         <label for="floatingInput">Имя пользователя</label>
+                        <div class="invalid-feedback">
+                            Пожалуйста, введите Ваше имя пользователя.
+                        </div>
+
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" name="password" class="form-control rounded-3" id="floatingPassword">
+                        <input type="password" name="password" class="form-control rounded-3" id="floatingPassword" required>
                         <label for="floatingPassword">Пароль</label>
+                        <div class="invalid-feedback">
+                            Пожалуйста, введите Ваш пароль.
+                        </div>
                     </div>
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-dark" type="submit">Войти</button>
                 </form>
@@ -39,5 +46,25 @@
     </div>
 </div>
 <div th:replace="/layouts/partials/footer :: footer"></div>
+
+<script th:inline="javascript">
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            let forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            let validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 </body>
 </html>

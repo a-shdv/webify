@@ -4,22 +4,20 @@ import com.shadaev.webify.entity.*;
 import com.shadaev.webify.service.CartService;
 import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @Controller
+@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -27,64 +25,49 @@ public class OrderController {
     private final UserService userService;
 
     @Autowired
-    public OrderController(OrderService orderService, CartService cartService, UserService userService) {
+    public OrderController(OrderService orderService,
+                           CartService cartService,
+                           UserService userService) {
         this.orderService = orderService;
         this.cartService = cartService;
         this.userService = userService;
     }
 
-    @GetMapping("/user/cart/order")
-    public String getOrder(@AuthenticationPrincipal User userSession, Model model) {
+    @GetMapping("/create")
+    public String createOrderForm(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
-        Cart cart = userFromDb.getCart();
-        List<CartItem> cartItemList = cart.getCartItemList();
+        Cart cart = cartService.getCartById(userFromDb.getCart().getId());
+        List<CartProduct> cartProducts = cart.getCartProducts();
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("cart", cart);
-        model.addAttribute("cartItemList", cartItemList);
+        model.addAttribute("cartProducts", cartProducts);
+
         return "orders/create";
     }
 
-    @GetMapping("/user/orders")
-    public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
+    @PostMapping("/create")
+    public String createOrder(@RequestBody MultiValueMap<String, String> orderData,
+            @AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
-        List<Order> orderList = userFromDb.getOrderList();
-
-        model.addAttribute("user", userFromDb);
-        model.addAttribute("orderList", orderList);
-        return "users/ordersList";
-    }
-
-    @PostMapping("/user/cart/order/create")
-    public String createOrder(@AuthenticationPrincipal User userSession, Order order, Model model) {
-        User userFromDb = userService.findUserByUsername(userSession.getUsername());
-        Cart cart = userFromDb.getCart();
-        List<CartItem> cartItemList = cart.getCartItemList();
-        List<OrderInfo> orderInfoList = orderService.cartItemListToOrderInfoList(cartItemList, order);
-
-        cartService.deleteCartItemListFromCart(cart);
-
-        order.setOrderInfoList(orderInfoList);
-        order.setUser(userFromDb);
-        orderService.saveOrder(order);
-
-        orderService.saveOrderInfoList(orderInfoList);
+        Cart cart =userFromDb.getCart();
+        Order order = orderService.createOrder(orderData, cart);
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("order", order);
-        model.addAttribute("orderInfoList", orderInfoList);
 
+        cartService.deleteCartProducts(cart);
         return "orders/show";
     }
-
-    @GetMapping("/user/orders/pdf")
-    public ResponseEntity<byte[]> downloadPdf() throws Exception {
-        ByteArrayOutputStream outputStream = orderService.generatePdf();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "order.pdf");
-
-        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
-    }
+//
+//    @GetMapping("/user/orders")
+//    public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
+//        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+//        List<Order> orderList = userFromDb.getOrderList();
+//
+//        model.addAttribute("user", userFromDb);
+//        model.addAttribute("orderList", orderList);
+//        return "users/ordersList";
+//    }
+//
 }

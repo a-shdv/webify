@@ -1,132 +1,81 @@
 package com.shadaev.webify.service;
 
 import com.shadaev.webify.entity.Cart;
-import com.shadaev.webify.entity.CartItem;
+import com.shadaev.webify.entity.CartProduct;
 import com.shadaev.webify.entity.Product;
-import com.shadaev.webify.entity.User;
-import com.shadaev.webify.repository.CartItemRepository;
+import com.shadaev.webify.repository.CartProductRepository;
 import com.shadaev.webify.repository.CartRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CartService {
     private final CartRepository cartRepository;
-    private final CartItemRepository cartItemRepository;
+    private final CartProductRepository cartProductRepository;
 
     @Autowired
-    public CartService(CartRepository cartRepository, CartItemRepository cartItemRepository) {
+    public CartService(CartRepository cartRepository, CartProductRepository cartProductRepository) {
         this.cartRepository = cartRepository;
-        this.cartItemRepository = cartItemRepository;
+        this.cartProductRepository = cartProductRepository;
     }
 
-    public void saveCartItemToCart(Product product, Integer quantity, User user) {
-        Cart cart = user.getCart();
+    public Cart getCartById(Long id) {
+        Cart cart = cartRepository.getById(id);
+        updateTotalPrice(cart);
+        return cart;
+    }
 
-        if (cart == null) {
-            cart = new Cart();
-        }
-
-        List<CartItem> cartItemList = cart.getCartItemList();
-        CartItem cartItem = findCartItem(cartItemList, product.getId());
-        if (cartItemList == null) {
-            cartItemList = new ArrayList<>();
-            saveCartItem(product, quantity, cart, cartItemList);
-        } else {
-            if (cartItem == null) {
-                saveCartItem(product, quantity, cart, cartItemList);
-            } else {
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                cartItem.setTotalPrice(cartItem.getTotalPrice() + (quantity * product.getPrice()));
-                cartItemRepository.save(cartItem);
+    public CartProduct getCartProduct(List<CartProduct> cartProducts, Long productId) {
+        for (CartProduct cp : cartProducts) {
+            if (cp.getProduct().getId().equals(productId)) {
+                return cp;
             }
         }
-        cart.setCartItemList(cartItemList);
+        return null;
+    }
 
-        double totalPrice = getTotalPrice(cart.getCartItemList());
+    public void createCartProduct(Cart cart, Product product, int quantity, double price) {
+        CartProduct cartProduct = getCartProduct(cart.getCartProducts(), product.getId());
+        if (cartProduct == null) { // create
+            cartProduct = new CartProduct(cart, product, quantity, price);
+        } else { // update
+            cartProduct.setQuantity(cartProduct.getQuantity() + quantity);
+            cartProduct.setPrice(cartProduct.getPrice() + price);
+        }
+        cartProductRepository.save(cartProduct);
+        updateTotalPrice(cart);
+    }
 
-        cart.setTotalPrice(totalPrice);
-        cart.setUser(user);
 
+    public void updateCartProduct(CartProduct cartProduct, int quantity, double price) {
+        cartProduct.setQuantity(quantity);
+        cartProduct.setPrice(price);
+        cartProductRepository.save(cartProduct);
+    }
+
+    public void deleteCartProduct(Cart cart, CartProduct cartProduct) {
+        cart.getCartProducts().remove(cartProduct);
+        updateTotalPrice(cart);
+        cartProductRepository.delete(cartProduct);
         cartRepository.save(cart);
     }
 
-    private void saveCartItem(Product product, Integer quantity, Cart cart, List<CartItem> cartItemList) {
-        CartItem cartItem;
-        cartItem = new CartItem();
-        cartItem.setProduct(product);
-        cartItem.setTotalPrice(quantity * product.getPrice());
-        cartItem.setQuantity(quantity);
-        cartItem.setCart(cart);
-        cartItemList.add(cartItem);
-        cartItemRepository.save(cartItem);
+    public void deleteCartProducts(Cart cart) {
+        cart.getCartProducts().clear();
+        List<CartProduct> cartProducts = cartProductRepository.findByCart(cart);
+        cartProductRepository.deleteAll(cartProducts);
     }
 
-    private CartItem findCartItem(List<CartItem> cartItemList, Long productId) {
-        if (cartItemList == null) {
-            return null;
+    private void updateTotalPrice(Cart cart) {
+        List<CartProduct> cartProducts = cart.getCartProducts();
+        double newTotalPrice = 0.0;
+
+        for (CartProduct cartProduct : cartProducts) {
+            newTotalPrice += cartProduct.getPrice();
         }
-        CartItem cartItem = null;
-
-        for (CartItem item : cartItemList) {
-            if (item.getProduct().getId().equals(productId)) {
-                cartItem = item;
-            }
-        }
-        return cartItem;
-    }
-
-    public Cart updateCartItemInCart(Product product, Integer quantity, Cart cart) {
-        List<CartItem> cartItemList = cart.getCartItemList();
-
-        CartItem cartItem = findCartItem(cartItemList, product.getId());
-
-        cartItem.setQuantity(quantity);
-        cartItem.setTotalPrice(quantity * product.getPrice());
-
-        cartItemRepository.save(cartItem);
-
-        double totalPrice = getTotalPrice(cartItemList);
-
-        cart.setTotalPrice(totalPrice);
-
-        return cartRepository.save(cart);
-    }
-
-    public Cart deleteCartItemFromCart(Product product, Cart cart) {
-        List<CartItem> cartItemList = cart.getCartItemList();
-
-        CartItem cartItem = findCartItem(cartItemList, product.getId());
-
-        cartItemList.remove(cartItem);
-
-        cartItemRepository.delete(cartItem);
-
-        double totalPrice = getTotalPrice(cartItemList);
-
-        cart.setCartItemList(cartItemList);
-        cart.setTotalPrice(totalPrice);
-
-        return cartRepository.save(cart);
-    }
-
-    public void deleteCartItemListFromCart(Cart cart) {
-        cart.getCartItemList().clear();
-        List<CartItem> cartItemList = cartItemRepository.findByCart(cart);
-        cartItemRepository.deleteAll(cartItemList);
-    }
-
-    public double getTotalPrice(List<CartItem> cartItemList) {
-        double totalPrice = 0.0;
-
-        for (CartItem cartItem : cartItemList) {
-            totalPrice += cartItem.getTotalPrice();
-        }
-
-        return totalPrice;
+        cart.setTotalPrice(newTotalPrice);
+        cartRepository.save(cart);
     }
 }

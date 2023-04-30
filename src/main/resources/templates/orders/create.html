@@ -6,7 +6,7 @@
 <div th:replace="/layouts/partials/navbar :: navbar"></div>
 
 <div class="container">
-    <form th:action="@{/user/cart/order/create}" method="post" class="needs-validation" novalidate>
+    <form th:action="@{/orders/create}" method="post" class="needs-validation" novalidate>
         <!--Order placing header-->
         <div class="text-center mt-5 mb-5"><h1>Оформление заказа</h1></div>
 
@@ -66,8 +66,8 @@
             <div class="row justify-content-center">
                 <!-- Entrance -->
                 <div class="col-md-1 mb-3">
-                    <label for="validationCustomEntrance">Подъезд</label>
-                    <input type="text" name="entrance" class="form-control" id="validationCustomEntrance"
+                    <label for="validationCustomEntranceNumber">Подъезд</label>
+                    <input type="text" name="entranceNumber" class="form-control" id="validationCustomEntranceNumber"
                            placeholder="1" value="1" required>
                     <div class="invalid-feedback">
                         Пожалуйста, введите номер подъезда.
@@ -93,8 +93,8 @@
                 </div>
                 <!-- Apartment -->
                 <div class="col-md-1 mb-3">
-                    <label for="validationCustomApartment">Квартира</label>
-                    <input type="text" name="apartment" class="form-control" id="validationCustomApartment"
+                    <label for="validationCustomApartmentNumber">Квартира</label>
+                    <input type="text" name="apartmentNumber" class="form-control" id="validationCustomApartmentNumber"
                            placeholder="15" value="15" required>
                     <div class="invalid-feedback">
                         Пожалуйста, введите номер квартиры.
@@ -114,11 +114,10 @@
         <div class="row justify-content-center">
             <div class="col-md-4 mb-5 mt-4">
                 <h5>Заказы</h5>
-                <div th:each="item: ${cartItemList}">
-                    <input type="hidden" name="products[]" value="{{$product}}">
+                <div th:each="cartProduct: ${cartProducts}">
                     <ul class="list-group">
-                        <input type="hidden" name="product_id" th:value="${item.product.id}">
-                        <li class="list-group-item" th:text="${item.product.name} + ' (' + ${item.quantity} + ' шт.)' "></li>
+                        <li class="list-group-item" th:text="${cartProduct.product.name} +
+                         ' (' + ${cartProduct.quantity} + ' шт.)' "></li>
                     </ul>
                 </div>
             </div>
@@ -135,7 +134,6 @@
 <div th:replace="/layouts/partials/footer :: footer"/>
 
 <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
         'use strict';
         window.addEventListener('load', function () {

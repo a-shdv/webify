@@ -8,13 +8,14 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
 @Table(name = "cart")
-@EqualsAndHashCode(exclude = {"cartItemList", "user"})
-@ToString(exclude = {"cartItemList", "user"})
+@Data
+@EqualsAndHashCode(exclude = {"user"})
+@ToString(exclude = {"user"})
 public class Cart {
     @Id
     @Column(name = "id")
@@ -28,6 +29,5 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
-    private List<CartItem> cartItemList;
+    private List<CartProduct> cartProducts = new ArrayList<>();
 }

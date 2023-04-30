@@ -4,7 +4,6 @@ import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.ProductService;
 import com.shadaev.webify.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,7 +28,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public String findAllProducts(@AuthenticationPrincipal User userSession, Model model) {
-        List<Product> products = productService.findAllProducts();
+        List<Product> products = productService.getAllProducts();
 
         if (userSession != null) {
             User userFromDb = userService.findUserByUsername(userSession.getUsername());
@@ -47,7 +46,7 @@ public class ProductController {
             User userFromDb = userService.findUserByUsername(userSession.getUsername());
             model.addAttribute("user", userFromDb);
         }
-        Product product = productService.findProductById(id);
+        Product product = productService.getProductById(id);
 
         model.addAttribute("product", product);
         return "products/show";
@@ -79,7 +78,7 @@ public class ProductController {
         if (filter != null && !filter.isEmpty()) {
             productList = productService.filterProductsByName(filter.trim());
         } else {
-            productList = productService.findAllProducts();
+            productList = productService.getAllProducts();
         }
 
         model.addAttribute("products", productList);

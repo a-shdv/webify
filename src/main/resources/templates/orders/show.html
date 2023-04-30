@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Head -->
 <head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
+<!-- Navbar -->
 <div th:replace="/layouts/partials/navbar :: navbar"/>
+
+<!-- Order Is Purchased -->
 <div class="text-center mt-5">
     <h1>Ваш заказ оформлен!</h1> <br>
-    <p th:text="'Спасибо за покупку, ' + ${user.username} + '!'"></p>
+    <p>Благодарим за заказ!</p>
     <p th:text="'Номер Вашего заказа: №' + ${order.id} + '.'"></p>
-    <p th:text="'по адресу: ' + ${order.shippingAddress} + '.'"></p>
-<!--    <p th:text="'Детали заказа будут отправлены на Вашу электроную почту: ' + ${order.email} + '.'"></p></div>-->
-
+    <p th:text="'Заказ будет доставлен по адресу: ' + ${order.shippingAddress} + '.'"></p>
+    <p th:text="'Детали заказа будут отправлены на Вашу электронную почту: ' + ${order.user.email} + '.'"></p></div>
 <section>
     <div class="cart-box-main">
         <div class="container mt-5">
@@ -24,28 +27,22 @@
                                 <th>Дата заказа</th>
                                 <th>Название товара</th>
                                 <th>Количество</th>
-                                <th>Статус заказа</th>
                                 <th>Способ оплаты</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <div th:each="orderInfo : ${orderInfoList}">
+                            <div th:each="orderProduct : ${order.orderProducts}">
                                 <tr>
                                     <!--Дата заказа-->
-                                    <td th:utext="${#temporals.format(orderInfo.order.createdDate, 'dd.MM.yyyy')}"></td>
+                                    <td th:utext="${#temporals.format(order.createdDate, 'dd.MM.yyyy')}"></td>
                                     <td>
                                         <!-- Название товара-->
-                                        <a th:text="${orderInfo.product.name}" th:href="@{/products/{product}(product=${orderInfo.product.id})}">
+                                        <a th:text="${orderProduct.product.name}"
+                                           th:href="@{/products/{product}(product=${orderProduct.id})}">
                                         </a>
                                     </td>
                                     <!--Количество-->
-                                    <td th:text="${orderInfo.quantity}"></td>
-                                    <td>
-                                    <!-- Статус заказа-->
-                                     <p th:if="${order.status}">
-                                         Обрабатывается
-                                     </p>
-                                    </td>
+                                    <td th:text="${orderProduct.quantity}"></td>
                                     <td style="color: black">
                                         <!-- Способ оплаты-->
                                         <span>Наличными</span>

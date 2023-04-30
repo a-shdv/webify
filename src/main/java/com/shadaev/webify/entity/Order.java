@@ -4,33 +4,24 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "\"order\"")
 @Data
-@EqualsAndHashCode(exclude = {"user", "orderInfoList"})
-@ToString(exclude = {"user", "orderInfoList"})
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"user"})
+@ToString(exclude = {"user"})
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "phone")
-    private String phone;
 
     @Column(name = "shipping_address")
     private String shippingAddress;
@@ -38,9 +29,6 @@ public class Order {
     @Nullable
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
-
-    @Column(name = "status")
-    private OrderStatus status;
 
     @Column(name = "entrance_number")
     private int entranceNumber;
@@ -61,11 +49,22 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "order")
-    private List<OrderInfo> orderInfoList;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
     }
+
+    public Order(String shippingAddress, @Nullable String comment,
+                 int entranceNumber, int doorPassword, int floor, int apartmentNumber) {
+        this.shippingAddress = shippingAddress;
+        this.comment = comment;
+        this.entranceNumber = entranceNumber;
+        this.doorPassword = doorPassword;
+        this.floor = floor;
+        this.apartmentNumber = apartmentNumber;
+    }
+
 }

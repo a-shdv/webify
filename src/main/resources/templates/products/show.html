@@ -25,7 +25,7 @@
             <a class="btn btn-outline-secondary btn-lg px-4" href="javascript:history.back()">Назад</a>
             <!-- Button "Add To Cart" -->
             <div sec:authorize="isAuthenticated()">
-                <form th:action="@{/user/cart/add/{product}(product=${product.id})}" method="post">
+                <form th:action="@{/cart/{product}(product=${product.id})}" method="post">
                     <a style="text-decoration:none"><button type="submit" class="w-100 btn btn-lg btn-warning">Добавить в корзину</button></a>
                 </form>
             </div>

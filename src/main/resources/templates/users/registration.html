@@ -26,34 +26,49 @@
                 <!-- Body -->
                 <div class="modal-body p-5 pt-0">
                     <!-- Form registration -->
-                    <form th:action="@{/registration}" method="post" class="">
+                    <form th:action="@{/registration}" method="post" class="needs-validation" novalidate>
                         <!--Email-->
                         <div class="form-floating mb-3">
                             <input id="email" type="email"
-                                   class="form-control rounded-3" name="email" required autocomplete="email">
+                                   class="form-control rounded-3" name="email" autocomplete="email" required>
                             <label for="email">Email</label>
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите Ваш Email.
+                            </div>
 
                         </div>
                         <!-- Username -->
                         <div class="form-floating mb-3">
-                            <input id="username" type="text" name="username" class="form-control rounded-3">
+                            <input id="username" type="text" name="username" class="form-control rounded-3" required>
                             <label for="username">Имя пользователя</label>
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите Ваше имя пользователя.
+                            </div>
+                        </div>
+                        <!--Phone number -->
+                        <div class="form-floating mb-3">
+                            <input type="tel" name="phone" class="form-control rounded-3" id="phone" required>
+                            <label for="phone">Номер телефона</label>
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите Ваш номер телефона.
+                            </div>
                         </div>
                         <!-- Password -->
                         <div class="form-floating mb-3">
-                            <input id="password" type="password" name="password" class="form-control rounded-3">
+                            <input id="password" type="password" name="password" class="form-control rounded-3" required>
                             <label for="password">Пароль</label>
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите Ваш пароль.
+                            </div>
                         </div>
                         <!-- Confirm password -->
                         <div class="form-floating mb-3">
                             <input id="confirmPassword" type="password" name="confirmPassword"
-                                   class="form-control rounded-3">
+                                   class="form-control rounded-3" required>
                             <label for="confirmPassword">Подтвердите пароль</label>
-                        </div>
-                        <!--Phone number -->
-                        <div class="form-floating mb-3">
-                            <input type="tel" name="phone" class="form-control rounded-3" id="phone">
-                            <label for="phone">Номер телефона</label>
+                            <div class="invalid-feedback">
+                                Пожалуйста, подтвердите Ваш пароль.
+                            </div>
                         </div>
                         <!-- Button register -->
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-warning" type="submit"
@@ -69,7 +84,28 @@
 </div>
 <div th:replace="/layouts/partials/footer :: footer"></div>
 <script th:inline="javascript">
+
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+
     function validateForm() {
+
         let password = document.getElementById("password").value;
         let confirmPassword = document.getElementById("confirmPassword").value;
 

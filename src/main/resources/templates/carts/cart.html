@@ -5,90 +5,91 @@
 <body>
 <div th:replace="/layouts/partials/navbar :: navbar"/>
 
-<!-- Start Cart  -->
-<div class="cart-box-main mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+<!-- Cart  -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 mt-5">
+            <!-- Cart is empty -->
+            <div th:if="${#lists.isEmpty(cartProducts)}">
+                <p class="alert alert-warning">В вашей корзине нет товаров.</p>
+            </div>
 
-                <div class="table-main table-responsive">
-                    <table class="table">
-                        <div th:if="${#lists.isEmpty(cart.getCartItemList)}">
-                            <p class="alert alert-warning">В вашей корзине нет товаров.</p>
-                        </div>
+            <!-- Cart is not empty -->
+            <div th:if="${!#lists.isEmpty(cartProducts)}">
+                <table class="table">
+                    <!-- Table header -->
+                    <thead class="table-dark">
+                    <!-- Columns -->
+                    <tr>
+                        <th>Изображение</th>
+                        <th>Название товара</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Итого</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <!-- Table body -->
+                    <tbody>
+                    <tr th:each="cartProduct : ${cartProducts}">
+                        <!-- Product Image -->
+                        <td>
+                            <img style="max-height: 100px" th:src="${cartProduct.product.image}"
+                                 alt="Не удалось загрузить изображение"/>
+                        </td>
+                        <!-- Product Name -->
+                        <td>
+                            <p th:text="${cartProduct.product.name}"></p>
+                        </td>
+                        <!-- Price Per Product -->
+                        <td>
+                            <p th:text="${#numbers.formatDecimal(cartProduct.getProduct().getPrice(), 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>
+                        </td>
+                        <!-- Update action -->
+                        <td>
+                            <form th:action="@{/cart/update/{product}(product=${cartProduct.getProduct().getId()})}" method="post">
+                                <input type="hidden" name="id" th:value="${cartProduct.getId()}">
+                                <input type="number" size="4"
+                                       th:value="${cartProduct.getQuantity()}"
+                                       name="quantity" min="1" step="1">
+                                <button type="submit" name="action" value="update" class="btn btn-warning">Обновить</button>
+                            </form>
+                        </td>
+                        <!-- Product total price -->
+                        <td>
+                            <p th:text="${#numbers.formatDecimal(cartProduct.price, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>
+                        </td>
+                        <!-- Delete Action -->
+                        <td>
+                            <form th:action="@{/cart/delete/{product}(product=${cartProduct.getProduct().getId()})}" method="post">
+                                <input type="hidden" name="id" th:value="${cartProduct.getId()}">
+                                <button type="submit" name="action" value="delete" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
-                        <div th:if="${!#lists.isEmpty(cart.getCartItemList)}">
-                            <thead>
-                            <tr>
-                                <th>Изображение</th>
-                                <th>Название товара</th>
-                                <th>Цена</th>
-                                <th>Количество</th>
-                                <th>Итого</th>
-                                <th>Действие</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-
-                            <tr th:each="cartItem : ${cart.getCartItemList}">
-                                <td class="thumbnail-img">
-                                    <img style="max-height: 100px" th:src="${cartItem.product.image}"
-                                         alt="Не удалось загрузить изображение"/>
-                                </td>
-                                <td class="name-pr">
-                                    <p th:text="${cartItem.product.name}"></p>
-                                </td>
-                                <td class="price-pr">
-                                <p th:text="${#numbers.formatDecimal(cartItem.product.price, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>
-                                </td>
-                                <form th:action="@{/user/cart/update/{product}(product=${cartItem.product.id})}"
-                                      method="post">
-                                    <input type="hidden" name="id" th:value="${cartItem.product.id}">
-                                    <td class="quantity-box"><input type="number" size="4"
-                                                                    th:value="${cartItem.getQuantity}"
-                                                                    name="quantity" min="0" step="1"
-                                                                    class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p th:text="${#numbers.formatDecimal(cartItem.totalPrice, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>
-                                    </td>
-
-                                    <td class="update-pr">
-
-                                        <button type="submit" name="action" value="update" title="Update"
-                                                class="btn btn-warning">Обновить
-                                        </button>
-
-                                        <button type="submit" name="action" value="delete" title="Delete"
-                                                class="btn btn-danger">Удалить
-                                        </button>
-                                    </td>
-                                </form>
-                            </tr>
-                            </tbody>
-
-                        </div>
-                    </table>
-                    <div class="d-flex justify-content-between mb-5" th:if="${!#lists.isEmpty(cart.getCartItemList)}">
-                        <b><h5 class="text-uppercase">К оплате:</h5></b>
-                        <b>
-                            <h5><p th:text="${#numbers.formatDecimal(cart.totalPrice, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p></h5>
-                        </b>
-                    </div>
-                </div>
+            </div>
+            <div class="d-flex justify-content-between mb-5" th:if="${!#lists.isEmpty(cartProducts)}">
+                <b><h5 class="text-uppercase">К оплате:</h5></b>
+                <b>
+                    <h5>
+                        <p th:text="${#numbers.formatDecimal(cart.getTotalPrice(), 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>
+                    </h5>
+                </b>
             </div>
         </div>
-
-        <div th:if="${!#lists.isEmpty(cart.getCartItemList)}">
-            <div class="row">
-                <div class="text-center"><a href="/user/cart/order"
-                                            class="ml-auto btn btn-lg btn-warning">Оформить заказ</a></div>
-            </div>
-        </div>
-
     </div>
+
+    <div th:if="${!#lists.isEmpty(cartProducts)}">
+        <div class="row">
+            <div class="text-center"><a th:href="@{/orders/create}"
+                                        class="ml-auto btn btn-lg btn-warning">Оформить заказ</a></div>
+        </div>
+    </div>
+
 </div>
-<!-- End Cart -->
 
 <div th:replace="/layouts/partials/footer :: footer"></div>
 </body>

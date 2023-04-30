@@ -4,7 +4,6 @@ import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.PostService;
 import com.shadaev.webify.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -41,9 +40,9 @@ public class HomeController {
         List<Post> postList;
 
         if (filter != null && !filter.isEmpty()) {
-            postList = postService.findPostByHeader(filter.trim());
+            postList = postService.getPostByHeader(filter.trim());
         } else {
-            postList = postService.findPostList();
+            postList = postService.getPosts();
         }
 
         model.addAttribute("postList", postList);
