@@ -1,53 +1,66 @@
 package com.shadaev.webify.service;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.*;
+import com.shadaev.webify.entity.CartProduct;
 import com.shadaev.webify.entity.Order;
-import com.shadaev.webify.entity.OrderStatus;
+import com.shadaev.webify.entity.OrderProduct;
+import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.repository.OrderRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 
-import java.io.ByteArrayOutputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OrderService {
-//    private final OrderRepository orderRepository;
-//    private final OrderInfoRepository orderInfoRepository;
-//
-//    @Autowired
-//    public OrderService(OrderRepository orderRepository, OrderInfoRepository orderInfoRepository) {
-//        this.orderRepository = orderRepository;
-//        this.orderInfoRepository = orderInfoRepository;
-//    }
-//
-//    public void saveOrder(Order order) {
-//        order.setStatus(OrderStatus.IN_PROGRESS);
-//        orderRepository.save(order);
-//    }
-//
-//    public void saveOrderInfoList(List<OrderInfo> orderInfoList) {
-//        orderInfoRepository.saveAll(orderInfoList);
-//    }
-//
-//    public List<OrderInfo> cartItemListToOrderInfoList(List<CartItem> cartItemList, Order order) {
-//        List<OrderInfo> orderInfoList = new ArrayList<>();
-//        OrderInfo orderInfo;
-//        for (CartItem cartItem : cartItemList) {
-//            orderInfo = new OrderInfo(
-//                    cartItem.getTotalPrice(),
-//                    cartItem.getQuantity(),
-//                    cartItem.getProduct(),
-//                    order
-//            );
-//            orderInfoList.add(orderInfo);
+    private final OrderRepository orderRepository;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
+    public Order parseOrderData(MultiValueMap<String, String> orderData) {
+        return new Order(
+                orderData.getFirst("name"),
+                orderData.getFirst("email"),
+                orderData.getFirst("phone"),
+                orderData.getFirst("shippingAddress"),
+                orderData.getFirst("comment"),
+                Integer.parseInt(Objects.requireNonNull(orderData.getFirst("entranceNumber"))),
+                Integer.parseInt(Objects.requireNonNull(orderData.getFirst("doorPassword"))),
+                Integer.parseInt(Objects.requireNonNull(orderData.getFirst("floor"))),
+                Integer.parseInt(Objects.requireNonNull(orderData.getFirst("apartmentNumber"))));
+    }
+
+
+//    private List<Product> getProductsFromCartProducts(List<CartProduct> cartProducts) {
+//        List<Product> products = new ArrayList<>();
+//        for (CartProduct cp : cartProducts) {
+//            products.add(cp.getProduct());
 //        }
-//        return orderInfoList;
+//        return products;
 //    }
+
+    public void addProductsToOrder(Order order, List<CartProduct> cartProducts)
+    {
+        List<OrderProduct> orderProducts = new ArrayList<>();
+        int quantity;
+        double price;
+        for (CartProduct cp : cartProducts) {
+            quantity = cp.getQuantity();
+            price = cp.getPrice() * quantity;
+            orderProducts.add(new OrderProduct(order, cp.getProduct(), quantity, price));
+        }
+        order.setOrderProducts(orderProducts);
+    }
+
+    public void saveOrder(Order order) {
+        orderRepository.save(order);
+    }
 //
 //    public ByteArrayOutputStream generatePdf() throws Exception {
 //        List<OrderInfo> orderInfoList = orderInfoRepository.findAll();

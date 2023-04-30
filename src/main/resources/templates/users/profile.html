@@ -7,7 +7,9 @@
 <div class="text-center">
     <h1 th:text="${user.username}"></h1>
     <hr>
+    <h4 th:text="'Email: ' + ${user.email}"></h4>
     <h4 th:text="'Логин: ' + ${user.username}"></h4>
+    <h4 th:text="'Номер телефона: ' + ${user.phone}"></h4>
     <a type="password"><h4 th:text="'Пароль: ' + ${user.password}"></h4></a>
     <h4 th:text="'Количество заказов: ' + ${user.getOrderList.size()}"></h4>
     <h4 th:text="'Количество постов: ' + ${user.getPostList.size()}"></h4>

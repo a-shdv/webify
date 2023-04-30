@@ -66,28 +66,6 @@
                                 <button type="submit" name="action" value="delete" class="btn btn-danger">Удалить</button>
                             </form>
                         </td>
-<!--                        <form th:action="@{/user/cart/update/{product}(product=${cartProduct.product.id})}"-->
-<!--                              method="post">-->
-<!--                            <input type="hidden" name="id" th:value="${cartProduct.product.id}">-->
-<!--                            <td class="quantity-box"><input type="number" size="4"-->
-<!--                                                            th:value="${cartProduct.quantity}"-->
-<!--                                                            name="quantity" min="0" step="1"-->
-<!--                                                            class="c-input-text qty text"></td>-->
-<!--                            <td class="total-pr">-->
-<!--                                <p th:text="${#numbers.formatDecimal(cartProduct.product.price, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></p>-->
-<!--                            </td>-->
-
-<!--                            <td class="update-pr">-->
-
-<!--                                <button type="submit" name="action" value="update" title="Update"-->
-<!--                                        class="btn btn-warning">Обновить-->
-<!--                                </button>-->
-
-<!--                                <button type="submit" name="action" value="delete" title="Delete"-->
-<!--                                        class="btn btn-danger">Удалить-->
-<!--                                </button>-->
-<!--                            </td>-->
-<!--                        </form>-->
                     </tr>
                     </tbody>
                 </table>
@@ -106,7 +84,7 @@
 
     <div th:if="${!#lists.isEmpty(cartProducts)}">
         <div class="row">
-            <div class="text-center"><a href="/user/cart/order"
+            <div class="text-center"><a th:href="@{/orders/create}"
                                         class="ml-auto btn btn-lg btn-warning">Оформить заказ</a></div>
         </div>
     </div>

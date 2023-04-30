@@ -27,8 +27,17 @@ public class CartService {
         return cart;
     }
 
+    public CartProduct getCartProduct(List<CartProduct> cartProducts, Long productId) {
+        for (CartProduct cp : cartProducts) {
+            if (cp.getProduct().getId().equals(productId)) {
+                return cp;
+            }
+        }
+        return null;
+    }
+
     public void createCartProduct(Cart cart, Product product, int quantity, double price) {
-        CartProduct cartProduct = getCartProduct( cart.getCartProducts(), product.getId());
+        CartProduct cartProduct = getCartProduct(cart.getCartProducts(), product.getId());
         if (cartProduct == null) { // create
             cartProduct = new CartProduct(cart, product, quantity, price);
         } else { // update
@@ -40,57 +49,30 @@ public class CartService {
     }
 
 
-    public void updateCartProductQuantity(CartProduct cartProduct, int quantity, double price) {
+    public void updateCartProduct(CartProduct cartProduct, int quantity, double price) {
         cartProduct.setQuantity(quantity);
         cartProduct.setPrice(price);
         cartProductRepository.save(cartProduct);
     }
 
-    public void deleteCartProduct(Cart cart,CartProduct cartProduct) {
+    public void deleteCartProduct(Cart cart, CartProduct cartProduct) {
         cart.getCartProducts().remove(cartProduct);
         updateTotalPrice(cart);
         cartProductRepository.delete(cartProduct);
         cartRepository.save(cart);
     }
-//
-//    public Cart deleteCartItemFromCart(Product product, Cart cart) {
-//        List<CartItem> cartItemList = cart.getCartItemList();
-//
-//        CartItem cartItem = findCartItem(cartItemList, product.getId());
-//
-//        cartItemList.remove(cartItem);
-//
-//        cartItemRepository.delete(cartItem);
-//
-//        double totalPrice = getTotalPrice(cartItemList);
-//
-//        cart.setCartItemList(cartItemList);
-//        cart.setTotalPrice(totalPrice);
-//
-//        return cartRepository.save(cart);
-//    }
-//
-//    public void deleteCartItemListFromCart(Cart cart) {
-//        cart.getCartItemList().clear();
-//        List<CartItem> cartItemList = cartItemRepository.findByCart(cart);
-//        cartItemRepository.deleteAll(cartItemList);
-//    }
-//
 
-    public CartProduct getCartProduct(List<CartProduct> cartProducts, Long productId) {
-        for (CartProduct cp : cartProducts) {
-            if (cp.getProduct().getId().equals(productId)) {
-                return cp;
-            }
-        }
-        return null;
+    public void deleteCartProducts(Cart cart) {
+        cart.getCartProducts().clear();
+        List<CartProduct> cartProducts = cartProductRepository.findByCart(cart);
+        cartProductRepository.deleteAll(cartProducts);
     }
 
     private void updateTotalPrice(Cart cart) {
         List<CartProduct> cartProducts = cart.getCartProducts();
         double newTotalPrice = 0.0;
 
-        for(CartProduct cartProduct : cartProducts) {
+        for (CartProduct cartProduct : cartProducts) {
             newTotalPrice += cartProduct.getPrice();
         }
         cart.setTotalPrice(newTotalPrice);

@@ -17,18 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
-    private final ProductService productService;
     private final UserService userService;
 
     @Autowired
     public CartController(CartService cartService,
-                          ProductService productService,
                           UserService userService) {
         this.cartService = cartService;
-        this.productService = productService;
         this.userService = userService;
     }
-
 
     @GetMapping
     public String getCart(@AuthenticationPrincipal User userSession, Model model) {
@@ -62,7 +58,7 @@ public class CartController {
         Cart cart = cartService.getCartById(userFromDb.getCart().getId());
         CartProduct cartProduct = cartService.getCartProduct(cart.getCartProducts(), productId);
 
-        cartService.updateCartProductQuantity(cartProduct, quantity, cartProduct.getProduct().getPrice() * quantity);
+        cartService.updateCartProduct(cartProduct, quantity, cartProduct.getProduct().getPrice() * quantity);
 
         model.addAttribute("cart", cart);
         return "redirect:/cart";

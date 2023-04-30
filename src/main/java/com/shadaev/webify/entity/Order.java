@@ -9,12 +9,14 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "\"order\"")
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"user"})
 @ToString(exclude = {"user"})
 public class Order {
@@ -39,9 +41,6 @@ public class Order {
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
-    @Column(name = "status")
-    private OrderStatus status;
-
     @Column(name = "entrance_number")
     private int entranceNumber;
 
@@ -61,8 +60,26 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts = new ArrayList<>();
+
     @PrePersist
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
     }
+
+    public Order(String name, String email, String phone,
+                 String shippingAddress, @Nullable String comment, int entranceNumber,
+                 int doorPassword, int floor, int apartmentNumber) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.shippingAddress = shippingAddress;
+        this.comment = comment;
+        this.entranceNumber = entranceNumber;
+        this.doorPassword = doorPassword;
+        this.floor = floor;
+        this.apartmentNumber = apartmentNumber;
+    }
+
 }
