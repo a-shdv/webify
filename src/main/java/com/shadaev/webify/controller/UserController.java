@@ -3,19 +3,26 @@ package com.shadaev.webify.controller;
 import com.shadaev.webify.entity.Cart;
 import com.shadaev.webify.entity.Order;
 import com.shadaev.webify.entity.User;
+import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @Controller
 public class UserController {
     private final UserService userService;
+
 
     @Autowired
     public UserController(UserService userService) {
@@ -75,5 +82,14 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/user/orders/pdf")
+    public ResponseEntity<byte[]> downloadPdf() throws Exception {
+        ByteArrayOutputStream outputStream = userService.generatePdf();
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "order.pdf");
+
+        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+    }
 }

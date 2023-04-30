@@ -70,14 +70,4 @@ public class OrderController {
 //        return "users/ordersList";
 //    }
 //
-//    @GetMapping("/user/orders/pdf")
-//    public ResponseEntity<byte[]> downloadPdf() throws Exception {
-//        ByteArrayOutputStream outputStream = orderService.generatePdf();
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_PDF);
-//        headers.setContentDispositionFormData("attachment", "order.pdf");
-//
-//        return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
-//    }
 }
