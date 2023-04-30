@@ -5,69 +5,34 @@
 <body>
 <div th:replace="/layouts/partials/navbar :: navbar"></div>
 <div th:replace="/layouts/partials/posts-filter :: posts-filter"></div>
-
-
-<div class="text-center">
-
     <div class="text-center mt-5">
         <h1>Мои посты</h1>
     </div>
-    <main class="album py-5 bg-body-tertiary">
-        <div class="container">
 
-            <div class="row row-cols-1 rw-cols-sm-2 row-cols-md-3 g-3">
+    <div th:fragment="posts" class="card mt-5" style="max-width: 25rem; margin: 0 auto; float: none;" th:each="post : ${posts}">
+        <!-- Post User -->
+        <a class="text-decoration-none" th:href="@{/user/{id}(id=${post.user.id})}">
+            <div class="card-header bg-dark text-center text-white" th:text="${post.username}"></div>
+        </a>
 
-                <tr th:each="post: ${posts}">
-
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <!--header-->
-                            <div class="card-header py-3 text-bg-dark text-center">
-                                <h4 class="my-0 fw-normal"><p th:text="${post.header}"></p></h4>
-                            </div>
-
-                            <!--img-->
-                            <svg class="bd-placeholder-img" width="100%" height="225"
-                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                            </svg>
-
-
-                            <div class="card-body">
-                                <p class="card-text" th:text="${post.description}"></p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <a class="text-body-secondary" th:href="@{/user/{id}(id=${post.user.id})}"
-                                       th:text="${post.username}">
-                                    </a>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-dark">Подробнее
-                                        </button>
-                                        <!--                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!--                    <td th:text="'Заголовок: ' + ${post.header}"></td>-->
-                    <!--                    <br>-->
-                    <!--                    <td th:text="'Описание: ' + ${post.description}"></td>-->
-                    <!--                    <br>-->
-                    <!--                    <td th:text="'Автор: ' + ${post.getUsername()}"></td>-->
-                    <!--                    <br> <br>-->
-
-
-                </tr>
-
-
-            </div>
+        <!--Post Image -->
+        <svg class="bd-placeholder-img" width="100%" height="225"
+             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#55595c"></rect>
+        </svg>
+        <!-- Post -->
+        <div class="card-body">
+            <!-- Post Title -->
+            <h5 class="card-title text-center" th:text="${post.title}"></h5>
+            <!-- Post Description -->
+            <p class="card-text text-center" th:text="${post.description}"></p>
+            <!-- Post Details -->
+            <a href="#" style="text-decoration: none; position:absolute; bottom:0; right:0;">Читать</a>
         </div>
-    </main>
-</div>
-
-
+        <div class="card-footer text-muted"  th:utext="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}">
+        </div>
+    </div>
 <div th:replace="/layouts/partials/footer :: footer"></div>
 </body>
 </html>

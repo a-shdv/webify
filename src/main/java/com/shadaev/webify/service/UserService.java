@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
 
     public void createUser(User user) {
         user.setActive(true);
-        user.setUserRoleSet(Collections.singleton(UserRole.USER));
+        user.setUserRoles(Collections.singleton(UserRole.USER));
         userRepository.save(user);
     }
 

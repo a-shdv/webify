@@ -1,5 +1,6 @@
 package com.shadaev.webify.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,11 @@ public class OrderProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @NotNull
     @Column(name = "quantity")
     private int quantity;
 
+    @NotNull
     @Column(name = "price")
     private double price;
 

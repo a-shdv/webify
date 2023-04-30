@@ -1,9 +1,7 @@
 package com.shadaev.webify.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.sun.istack.NotNull;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -14,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "\"order\"")
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"user"})
 @ToString(exclude = {"user"})
 public class Order {
@@ -23,6 +20,7 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
+    @NotNull
     @Column(name = "shipping_address")
     private String shippingAddress;
 
@@ -30,20 +28,25 @@ public class Order {
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
+    @NotNull
     @Column(name = "entrance_number")
     private int entranceNumber;
 
+    @NotNull
     @Column(name = "door_password")
     private int doorPassword;
 
+    @NotNull
     @Column(name = "floor")
     private int floor;
 
+    @NotNull
     @Column(name = "apartment_number")
     private int apartmentNumber;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    @NotNull
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -54,7 +57,10 @@ public class Order {
 
     @PrePersist
     public void prePersist() {
-        this.createdDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public Order() {
     }
 
     public Order(String shippingAddress, @Nullable String comment,

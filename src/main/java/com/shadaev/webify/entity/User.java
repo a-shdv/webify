@@ -1,5 +1,6 @@
 package com.shadaev.webify.entity;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -12,9 +13,8 @@ import java.util.*;
 @Entity
 @Table(name = "\"user\"")
 @Data
-@EqualsAndHashCode(exclude = {"userRoleSet", "cart", "orderList", "postList"})
-@ToString(exclude = {"userRoleSet", "cart", "orderList", "postList"})
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"userRoles", "cart", "orders", "posts"})
+@ToString(exclude = {"userRoles", "cart", "orders", "posts"})
 @AllArgsConstructor
 public class User implements UserDetails {
     @Id
@@ -22,15 +22,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "email")
     private String email;
 
+    @NotNull
     @Column(name = "username")
     private String username;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 
+    @NotNull
     @Column(name = "phone")
     private String phone;
 
@@ -40,7 +44,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-    private Set<UserRole> userRoleSet = new HashSet<>();
+    private Set<UserRole> userRoles = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
@@ -54,9 +58,12 @@ public class User implements UserDetails {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Post> posts = new ArrayList<>();
 
+    public User() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getUserRoleSet();
+        return getUserRoles();
     }
 
     @Override

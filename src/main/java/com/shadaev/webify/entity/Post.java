@@ -1,11 +1,12 @@
 package com.shadaev.webify.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "post")
@@ -18,18 +19,31 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "header")
-    private String header;
+    @NotNull
+    @Column(name = "title")
+    private String title;
 
+    @NotNull
     @Column(name = "description")
     private String description;
+
+    @NotNull
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Post() {
+    }
+
     public String getUsername() {
         return user != null ? user.getUsername() : "<none>";
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

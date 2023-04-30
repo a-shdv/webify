@@ -23,7 +23,7 @@
             <tr th:each="orderProduct, j: ${order.orderProducts}">
                 <th scope="row" th:if="${j.first}" th:text="${order.id}"></th>
                 <th scope="row" th:unless="${j.first}" th:text="' '"></th>
-                <td th:utext="${#temporals.format(orderProduct.order.createdDate, 'dd.MM.yyyy')}"></td>
+                <td th:utext="${#temporals.format(orderProduct.order.getCreatedAt, 'dd.MM.yyyy')}"></td>
                 <td th:text="${orderProduct.product.name}"></td>
                 <td th:text="${#numbers.formatDecimal(orderProduct.price, 2, 'WHITESPACE', 2, 'COMMA')} + ' ₽'"></td>
                 <td th:text="${orderProduct.quantity}"></td>

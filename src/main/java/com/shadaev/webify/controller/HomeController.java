@@ -42,7 +42,7 @@ public class HomeController {
         List<Post> postList;
 
         if (filter != null && !filter.isEmpty()) {
-            postList = postService.getPostByHeader(filter.trim());
+            postList = postService.getPostByTitle(filter.trim());
         } else {
             postList = postService.getAllPosts();
         }

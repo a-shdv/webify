@@ -22,9 +22,9 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<Post> getPostByHeader(String header) {
-        if (header != null)
-            return postRepository.findByHeader(header);
+    public List<Post> getPostByTitle(String title) {
+        if (title != null)
+            return postRepository.findByTitle(title);
         return postRepository.findAll();
     }
 

@@ -71,7 +71,7 @@ public class PdfGenerator {
 
     private void addOrderProductsToTable(PdfPTable table, List<OrderProduct> orderProducts) {
         for (OrderProduct op : orderProducts) {
-            LocalDateTime orderCreationDate = LocalDateTime.parse(op.getOrder().getCreatedDate().toString(),
+            LocalDateTime orderCreationDate = LocalDateTime.parse(op.getOrder().getCreatedAt().toString(),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"));
 
             String orderId = op.getOrder().getId().toString();

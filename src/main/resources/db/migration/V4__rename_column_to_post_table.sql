@@ -1,0 +1,2 @@
+ALTER TABLE post
+RENAME COLUMN header TO title
