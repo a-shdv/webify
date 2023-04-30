@@ -8,11 +8,6 @@
 
 
 <div class="text-center">
-    <form th:action="@{/templates/profiles/posts/post/create}" method="post"><br> <br>
-        Название поста: <input type="text" name="header"><br> <br>
-        Описание поста: <input type="text" name="description"> <br> <br>
-        <input type="submit" value="Добавить пост">
-    </form>
 
     <div class="text-center mt-5">
         <h1>Мои посты</h1>
@@ -22,7 +17,7 @@
 
             <div class="row row-cols-1 rw-cols-sm-2 row-cols-md-3 g-3">
 
-                <tr th:each="post: ${profile.posts}">
+                <tr th:each="post: ${posts}">
 
                     <div class="col">
                         <div class="card shadow-sm">
@@ -42,7 +37,7 @@
                             <div class="card-body">
                                 <p class="card-text" th:text="${post.description}"></p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a class="text-body-secondary" th:href="@{/templates/profiles/{profile}(profile=${post.profile.id})}"
+                                    <a class="text-body-secondary" th:href="@{/user/{id}(id=${post.user.id})}"
                                        th:text="${post.username}">
                                     </a>
                                     <div class="btn-group">

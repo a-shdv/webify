@@ -29,12 +29,6 @@
                 <td th:text="${orderProduct.quantity}"></td>
                 <td th:text="${#numbers.formatDecimal(orderProduct.price, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></td>
             </tr>
-            <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
         </table>
         <form th:action="@{/user/orders/pdf}" method="get">
             <button type="submit" class="btn btn-warning" style="position:absolute; bottom:5; right:0;">Сформировать отчет</button>

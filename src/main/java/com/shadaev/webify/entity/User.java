@@ -52,7 +52,7 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

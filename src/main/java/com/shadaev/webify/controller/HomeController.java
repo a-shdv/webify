@@ -26,7 +26,9 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home() {
+    public String home(Model model) {
+        List<Post> posts = postService.getAllPosts();
+        model.addAttribute("posts", posts);
         return "home";
     }
 
@@ -42,7 +44,7 @@ public class HomeController {
         if (filter != null && !filter.isEmpty()) {
             postList = postService.getPostByHeader(filter.trim());
         } else {
-            postList = postService.getPosts();
+            postList = postService.getAllPosts();
         }
 
         model.addAttribute("postList", postList);

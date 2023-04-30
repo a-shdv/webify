@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
     private final UserService userService;
@@ -24,22 +26,13 @@ public class PostController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/posts")
-    public String getUserInfoPosts(@AuthenticationPrincipal User userSession, Model model) {
-        User userFromDb = userService.findUserByUsername(userSession.getUsername());
-        List<Post> postList = postService.getPosts();
-
-        model.addAttribute("user", userFromDb);
-        model.addAttribute("postList", postList);
-        return "users/postsList";
-    }
-
-    @PostMapping("/user/posts/post/create")
+    @PostMapping("/create")
     public String createPost(Post post, @AuthenticationPrincipal User userSession) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
 
-        postService.savePost(post, userFromDb);
-
-        return "redirect:/user/posts";
+        if (userFromDb != null) {
+            postService.savePost(post, userFromDb);
+        }
+        return "redirect:/";
     }
 }

@@ -66,12 +66,12 @@ public class UserService implements UserDetailsService {
         List<OrderProduct> orderProducts = orderProductRepository.findAll();
         Font font = pdfGenerator.createFont();
         PdfPCell[] pdfPCells = {
-                new PdfPCell(new Phrase("Номер заказа", font)),
-                new PdfPCell(new Phrase("Дата заказа", font)),
-                new PdfPCell(new Phrase("Название товара", font)),
-                new PdfPCell(new Phrase("Цена", font)),
-                new PdfPCell(new Phrase("Количество", font)),
-                new PdfPCell(new Phrase("Итого", font))
+                new PdfPCell(new Phrase("Order ID", font)),
+                new PdfPCell(new Phrase("Date created", font)),
+                new PdfPCell(new Phrase("Product name", font)),
+                new PdfPCell(new Phrase("Price per product", font)),
+                new PdfPCell(new Phrase("Quantity", font)),
+                new PdfPCell(new Phrase("Total price", font))
         };
         pdfGenerator.generatePdf(outputStream, orderProducts, pdfPCells);
         return outputStream;

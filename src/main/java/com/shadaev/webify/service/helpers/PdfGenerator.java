@@ -38,14 +38,14 @@ public class PdfGenerator {
     }
 
     private Paragraph createDocumentHeader(Font font) {
-        Paragraph documentHeader = new Paragraph("Заказ-наряд", font);
+        Paragraph documentHeader = new Paragraph("Order", font);
         documentHeader.setSpacingAfter(15);
         documentHeader.setAlignment(Element.ALIGN_CENTER);
         return documentHeader;
     }
 
     public Font createFont() throws DocumentException, IOException {
-        BaseFont baseFont = BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont baseFont = BaseFont.createFont();
         return new Font(baseFont, 12, Font.BOLD);
     }
 
