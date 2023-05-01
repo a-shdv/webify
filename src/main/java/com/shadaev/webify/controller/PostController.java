@@ -26,6 +26,9 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
 
+    @Value("${upload.path}")
+    private String uploadPath;
+
     @Autowired
     public PostController(PostService postService,
                           UserService userService) {
@@ -39,7 +42,6 @@ public class PostController {
                              @RequestParam("file") MultipartFile file) throws IOException {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
 
-        String uploadPath = System.getProperty("user.dir") + "/src/main/resources/static/images/user";
         if (!file.isEmpty() && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {

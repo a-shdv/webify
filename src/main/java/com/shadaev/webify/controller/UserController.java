@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -61,6 +62,7 @@ public class UserController {
     public String getPosts(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
         List<Post> posts = userFromDb.getPosts();
+        posts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("posts", posts);
