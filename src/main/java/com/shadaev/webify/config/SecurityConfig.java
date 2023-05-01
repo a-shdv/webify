@@ -33,7 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/products",
                                 "/products/**",
                                 "/registration",
-                                "/images/**").permitAll()
+                                "/images/**",
+                                "/uploads/**",
+                                "/user/**")
+                        .permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
