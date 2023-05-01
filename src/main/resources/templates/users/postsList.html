@@ -20,7 +20,7 @@
         <!-- Post -->
         <div class="card-body">
             <!-- Post Description -->
-            <h5 class="card-text text-center" th:text="${post.description}"></h5>
+            <h5 class="card-text text-center" th:text="${post.shortDescription} + '...'"></h5>
             <!-- Post Details -->
             <a href="#" style="text-decoration: none; position:absolute; bottom:0; right:0;">Читать</a>
         </div>

@@ -25,8 +25,11 @@ public class Post {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name= "short_description", nullable = false)
+    private String shortDescription;
+
+    @Column(name = "long_description", nullable = false)
+    private String longDescription;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
