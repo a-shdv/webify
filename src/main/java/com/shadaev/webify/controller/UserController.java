@@ -4,7 +4,6 @@ import com.shadaev.webify.entity.Cart;
 import com.shadaev.webify.entity.Order;
 import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.User;
-import com.shadaev.webify.service.PostService;
 import com.shadaev.webify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,13 +23,10 @@ import java.util.List;
 @Controller
 public class UserController {
     private final UserService userService;
-    private final PostService postService;
-
 
     @Autowired
-    public UserController(UserService userService, PostService postService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.postService = postService;
     }
 
     @GetMapping("/profile")
@@ -62,9 +58,9 @@ public class UserController {
     }
 
     @GetMapping("/user/posts")
-    public String getUserPosts(@AuthenticationPrincipal User userSession, Model model) {
+    public String getPosts(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
-        List<Post> posts = userSession.getPosts();
+        List<Post> posts = userFromDb.getPosts();
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("posts", posts);

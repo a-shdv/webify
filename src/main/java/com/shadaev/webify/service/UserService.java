@@ -8,7 +8,6 @@ import com.shadaev.webify.entity.User;
 import com.shadaev.webify.entity.UserRole;
 import com.shadaev.webify.repository.OrderProductRepository;
 import com.shadaev.webify.repository.UserRepository;
-import com.shadaev.webify.service.helpers.PdfGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,10 +60,10 @@ public class UserService implements UserDetailsService {
     }
 
     public ByteArrayOutputStream generatePdf() throws Exception {
-        PdfGenerator pdfGenerator = new PdfGenerator();
+        PdfService pdfService = new PdfService();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         List<OrderProduct> orderProducts = orderProductRepository.findAll();
-        Font font = pdfGenerator.createFont();
+        Font font = pdfService.createFont();
         PdfPCell[] pdfPCells = {
                 new PdfPCell(new Phrase("Order ID", font)),
                 new PdfPCell(new Phrase("Date created", font)),
@@ -73,7 +72,7 @@ public class UserService implements UserDetailsService {
                 new PdfPCell(new Phrase("Quantity", font)),
                 new PdfPCell(new Phrase("Total price", font))
         };
-        pdfGenerator.generatePdf(outputStream, orderProducts, pdfPCells);
+        pdfService.generatePdf(outputStream, orderProducts, pdfPCells);
         return outputStream;
     }
 }

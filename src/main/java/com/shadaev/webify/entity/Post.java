@@ -4,8 +4,10 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.swing.plaf.multi.MultiPanelUI;
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,6 +36,7 @@ public class Post {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+    private String filename;
 
     public Post() {
     }

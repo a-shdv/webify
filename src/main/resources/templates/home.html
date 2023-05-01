@@ -1,47 +1,53 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
 
 <div th:replace="/layouts/partials/navbar :: navbar"></div>
 <div class="text-center mt-5">
-    <h1>Webify</h1>
+    <h1>Новости</h1>
 </div>
 
 <div class="container">
-    <div class="row mt-5">
-        <!-- Create Post Form -->
-        <h3 class="mb-3">Добавить пост</h3>
-        <form th:action="@{/posts/create}" method="post" class="needs-validation" novalidate>
-            <!-- Post Title -->
-            <div class="form-group mb-3">
-                Название поста: <input id="title" class="form-control" type="text" name="title" required>
-                <label for="title"></label>
-                <div class="invalid-feedback">
-                    Пожалуйста, введите название поста.
+    <div sec:authorize="isAuthenticated">
+        <div class="row mt-5">
+            <!-- Create Post Form -->
+            <h3 class="mb-3">Добавить пост</h3>
+            <form th:action="@{/posts/create}" method="post"
+                  class="needs-validation" enctype="multipart/form-data" novalidate>
+                <!-- Post Title -->
+                <div class="form-group mb-3">
+                    Название поста: <input id="title" class="form-control" type="text" name="title" required>
+                    <label for="title"></label>
+                    <div class="invalid-feedback">
+                        Пожалуйста, введите название поста.
+                    </div>
                 </div>
-            </div>
-            <!-- Post Description -->
-            <div class="form-group mb-3">
-                Описание поста: <textarea id="description" class="form-control" rows="9" name="description"
-                                          required></textarea>
-                <label for="description"></label>
-                <div class="invalid-feedback">
-                    Пожалуйста, опишите пост.
+                <!-- Post Description -->
+                <div class="form-group mb-3">
+                    Описание поста: <textarea id="description" class="form-control" rows="9" name="description"
+                                              required></textarea>
+                    <label for="description"></label>
+                    <div class="invalid-feedback">
+                        Пожалуйста, опишите пост.
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="image">Выберите изображение:</label> <br>
-                <input type="file" class="form-control-file" id="image">
-            </div>
-            <!-- Button "Add Post" -->
-            <div class="row justify-content-center">
-                <button class="btn btn-warning btn-lg mt-5 mb-5" type="submit" style="max-width: 25rem;">Добавить пост</button>
-            </div>
-        </form>
+                <!-- Upload Image -->
+                <div class="form-group">
+                    <label for="file">Выберите изображение:</label> <br>
+                    <input type="file" name="file" class="form-control-file" id="file">
+                </div>
+                <!-- Button "Add Post" -->
+                <div class="row justify-content-center">
+                    <button class="btn btn-warning btn-lg mt-5 mb-5" type="submit" style="max-width: 25rem;">Добавить
+                        пост
+                    </button>
+                </div>
+            </form>
+        </div>
+        <hr>
     </div>
-    <hr>
     <!-- Posts -->
     <div th:replace="/users/postsList :: posts"></div>
 </div>
