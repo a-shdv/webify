@@ -26,7 +26,7 @@
                 </div>
                 <!-- Post Description -->
                 <div class="form-group mb-3">
-                    Описание поста: <textarea id="description" class="form-control" rows="9" name="description"
+                    Описание поста: <textarea id="description" class="form-control" rows="6" name="description"
                                               required></textarea>
                     <label for="description"></label>
                     <div class="invalid-feedback">
@@ -50,6 +50,7 @@
     </div>
     <!-- Posts -->
     <div th:replace="/users/postsList :: posts"></div>
+
 </div>
 <div th:replace="/layouts/partials/footer :: footer"></div>
 <script>

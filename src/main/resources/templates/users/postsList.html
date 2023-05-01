@@ -10,24 +10,17 @@
     </div>
 
     <div th:fragment="posts" class="card mt-5" style="max-width: 25rem; margin: 0 auto; float: none;" th:each="post : ${posts}">
-        <!-- Post User -->
-        <a class="text-decoration-none" th:href="@{/user/{id}(id=${post.user.id})}">
-            <div class="card-header bg-dark text-center text-white" th:text="${post.username}"></div>
-        </a>
+
+        <!-- Post Title -->
+        <div class="card-header bg-dark text-center text-white" th:text="${post.title}"></div>
 
         <!--Post Image -->
         <img th:src="@{/uploads/__${post.filename}__}" alt="" width="100%" height="100%">
-<!--        <svg class="bd-placeholder-img" width="100%" height="225"-->
-<!--             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"-->
-<!--             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>-->
-<!--            <rect width="100%" height="100%" fill="#55595c"></rect>-->
-<!--        </svg>-->
+
         <!-- Post -->
         <div class="card-body">
-            <!-- Post Title -->
-            <h5 class="card-title text-center" th:text="${post.title}"></h5>
             <!-- Post Description -->
-            <p class="card-text text-center" th:text="${post.description}"></p>
+            <h5 class="card-text text-center" th:text="${post.description}"></h5>
             <!-- Post Details -->
             <a href="#" style="text-decoration: none; position:absolute; bottom:0; right:0;">Читать</a>
         </div>

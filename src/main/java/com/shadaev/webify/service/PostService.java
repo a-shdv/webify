@@ -17,9 +17,8 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public void savePost(Post post, User user) {
-        post.setUser(user);
-        postRepository.save(post);
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
     }
 
     public List<Post> getPostByTitle(String title) {
@@ -28,9 +27,11 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+    public void savePost(Post post, User user) {
+        post.setUser(user);
+        postRepository.save(post);
     }
+
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);

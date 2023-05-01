@@ -20,32 +20,25 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
-    @Column(name = "shipping_address")
+    @Column(name = "shipping_address", nullable = false)
     private String shippingAddress;
 
-    @Nullable
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
-    @NotNull
-    @Column(name = "entrance_number")
+    @Column(name = "entrance_number", nullable = false)
     private int entranceNumber;
 
-    @NotNull
-    @Column(name = "door_password")
+    @Column(name = "door_password", nullable = false)
     private int doorPassword;
 
-    @NotNull
-    @Column(name = "floor")
+    @Column(name = "floor", nullable = false)
     private int floor;
 
-    @NotNull
-    @Column(name = "apartment_number")
+    @Column(name = "apartment_number", nullable = false)
     private int apartmentNumber;
 
-    @NotNull
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -63,7 +56,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(String shippingAddress, @Nullable String comment,
+    public Order(String shippingAddress, String comment,
                  int entranceNumber, int doorPassword, int floor, int apartmentNumber) {
         this.shippingAddress = shippingAddress;
         this.comment = comment;

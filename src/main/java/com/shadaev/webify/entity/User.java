@@ -22,20 +22,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @NotNull
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @NotNull
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @Column(name = "active")

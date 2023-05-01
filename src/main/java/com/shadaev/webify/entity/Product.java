@@ -22,20 +22,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "description", columnDefinition = "text")
+    @Column(name = "description", columnDefinition = "text", nullable = false)
     private String description;
 
-    @NotNull
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private double price;
 
-    @Nullable
-    @Column(name = "image")
+    @Column(name = "image", nullable = false)
     private String image;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

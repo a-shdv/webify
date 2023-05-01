@@ -28,12 +28,10 @@ public class OrderProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @NotNull
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @NotNull
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private double price;
 
     public OrderProduct(Order order, Product product, int quantity, double price) {

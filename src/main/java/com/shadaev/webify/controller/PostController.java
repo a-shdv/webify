@@ -1,6 +1,5 @@
 package com.shadaev.webify.controller;
 
-import com.shadaev.webify.WebifyApplication;
 import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.PostService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -41,7 +38,6 @@ public class PostController {
                              @AuthenticationPrincipal User userSession,
                              @RequestParam("file") MultipartFile file) throws IOException {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
-
         if (!file.isEmpty() && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -59,13 +55,4 @@ public class PostController {
         postService.savePost(post, userFromDb);
         return "redirect:/";
     }
-
-//    @PostMapping("/upload")
-//    public String uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-//        Image image = new Image();
-//        image.setData(file.getBytes());
-//        image.setName(file.getOriginalFilename());
-//        imageService.uploadImage(image);
-//        return "redirect:/";
-//    }
 }
