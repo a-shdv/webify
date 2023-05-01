@@ -24,7 +24,10 @@
             <!-- Post Details -->
             <a href="#" style="text-decoration: none; position:absolute; bottom:0; right:0;">Читать</a>
         </div>
-        <div class="card-footer text-muted"  th:utext="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}">
+        <a th:href="@{/user/{id}(id=${post.user.id})}">
+            <div class="card-footer"  th:text="${post.user.username}"></div>
+        </a>
+<!--        <div class="card-footer text-muted"  th:utext="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}">-->
         </div>
     </div>
 <div th:replace="/layouts/partials/footer :: footer"></div>
