@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -26,7 +27,10 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String home() {
+    public String home(Model model) {
+        List<Post> posts = postService.getAllPosts();
+        posts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
+        model.addAttribute("posts", posts);
         return "home";
     }
 
@@ -40,9 +44,9 @@ public class HomeController {
         List<Post> postList;
 
         if (filter != null && !filter.isEmpty()) {
-            postList = postService.getPostByHeader(filter.trim());
+            postList = postService.getPostByTitle(filter.trim());
         } else {
-            postList = postService.getPosts();
+            postList = postService.getAllPosts();
         }
 
         model.addAttribute("postList", postList);

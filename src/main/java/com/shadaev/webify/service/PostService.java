@@ -17,20 +17,24 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
+    public List<Post> getPostByTitle(String title) {
+        if (title != null)
+            return postRepository.findByTitle(title);
+        return postRepository.findAll();
+    }
+
     public void savePost(Post post, User user) {
         post.setUser(user);
+        String longDescription = post.getLongDescription();
+        String shortDescription = longDescription.substring(0, Math.min(longDescription.length(), 249));
+        post.setShortDescription(shortDescription);
         postRepository.save(post);
     }
 
-    public List<Post> getPostByHeader(String header) {
-        if (header != null)
-            return postRepository.findByHeader(header);
-        return postRepository.findAll();
-    }
-
-    public List<Post> getPosts() {
-        return postRepository.findAll();
-    }
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);

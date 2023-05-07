@@ -7,9 +7,10 @@
 
 <div class="container">
     <form th:action="@{/orders/create}" method="post" class="needs-validation" novalidate>
-        <!--Order placing header-->
+        <!--Order Placing Title -->
         <div class="text-center mt-5 mb-5"><h1>Оформление заказа</h1></div>
 
+        <h5 class="text-center">Личные данные</h5>
         <!-- User id-->
         <input type="hidden" name="id" th:value="${user.id}">
         <!-- Name, Phone number and Email row -->
@@ -53,8 +54,9 @@
 
         <!-- Shipping address, entrance, door's password, floor, apartment -->
         <div class="row justify-content-center">
+            <h5 class="text-center  mb-3 mt-4">Адрес доставки</h5>
             <!-- Shipping Address -->
-            <div class="col-md-4 mb-3 mt-4">
+            <div class="col-md-4">
                 <label for="validationCustomShippingAddress">Адрес доставки</label>
                 <input type="text" name="shippingAddress" class="form-control" id="validationCustomShippingAddress"
                        placeholder="г. Москва, ул. Маломосковская, д. 7, корп. 1" value="г. Москва, ул. Маломосковская, д. 7, корп. 1" required>
@@ -75,7 +77,7 @@
                 </div>
                 <!-- Door password -->
                 <div class="col-md-1 mb-3">
-                    <label for="validationCustomDoorPassword">Код двери</label>
+                    <label for="validationCustomDoorPassword">Код</label>
                     <input type="text" name="doorPassword" class="form-control" id="validationCustomDoorPassword"
                            placeholder="15" value="15" required>
                     <div class="invalid-feedback">
@@ -113,7 +115,7 @@
         <!-- Orders -->
         <div class="row justify-content-center">
             <div class="col-md-4 mb-5 mt-4">
-                <h5>Заказы</h5>
+                <h5 class="text-center">Заказы</h5>
                 <div th:each="cartProduct: ${cartProducts}">
                     <ul class="list-group">
                         <li class="list-group-item" th:text="${cartProduct.product.name} +
@@ -138,9 +140,9 @@
         'use strict';
         window.addEventListener('load', function () {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
+            let forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
+            let validation = Array.prototype.filter.call(forms, function (form) {
                 form.addEventListener('submit', function (event) {
                     if (form.checkValidity() === false) {
                         event.preventDefault();

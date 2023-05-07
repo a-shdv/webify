@@ -33,7 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/products",
                                 "/products/**",
                                 "/registration",
-                                "/images/**").permitAll()
+                                "/images/**",
+                                "/uploads/**",
+                                "/user/**")
+                        .permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -49,4 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
+
+
 }

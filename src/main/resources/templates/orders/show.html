@@ -34,7 +34,7 @@
                             <div th:each="orderProduct : ${order.orderProducts}">
                                 <tr>
                                     <!--Дата заказа-->
-                                    <td th:utext="${#temporals.format(order.createdDate, 'dd.MM.yyyy')}"></td>
+                                    <td th:utext="${#temporals.format(order.getCreatedAt, 'dd.MM.yyyy')}"></td>
                                     <td>
                                         <!-- Название товара-->
                                         <a th:text="${orderProduct.product.name}"

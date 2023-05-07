@@ -1,5 +1,6 @@
 package com.shadaev.webify.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cart_product")
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"cart", "product"})
 @ToString(exclude = {"cart", "product"})
 public class CartProduct {
@@ -27,11 +27,15 @@ public class CartProduct {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private double price;
+
+    public CartProduct(){
+
+    }
 
     public CartProduct(Cart cart, Product product, int quantity, double price) {
         this.cart = cart;

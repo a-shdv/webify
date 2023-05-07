@@ -1,9 +1,7 @@
 package com.shadaev.webify.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.sun.istack.NotNull;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -14,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "\"order\"")
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"user"})
 @ToString(exclude = {"user"})
 public class Order {
@@ -23,27 +20,26 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "shipping_address")
+    @Column(name = "shipping_address", nullable = false)
     private String shippingAddress;
 
-    @Nullable
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
-    @Column(name = "entrance_number")
+    @Column(name = "entrance_number", nullable = false)
     private int entranceNumber;
 
-    @Column(name = "door_password")
+    @Column(name = "door_password", nullable = false)
     private int doorPassword;
 
-    @Column(name = "floor")
+    @Column(name = "floor", nullable = false)
     private int floor;
 
-    @Column(name = "apartment_number")
+    @Column(name = "apartment_number", nullable = false)
     private int apartmentNumber;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -54,10 +50,13 @@ public class Order {
 
     @PrePersist
     public void prePersist() {
-        this.createdDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
-    public Order(String shippingAddress, @Nullable String comment,
+    public Order() {
+    }
+
+    public Order(String shippingAddress, String comment,
                  int entranceNumber, int doorPassword, int floor, int apartmentNumber) {
         this.shippingAddress = shippingAddress;
         this.comment = comment;

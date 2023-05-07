@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class PdfGenerator {
+public class PdfHelper {
 
     public void generatePdf(ByteArrayOutputStream outputStream, List<OrderProduct> orderProducts, PdfPCell[] pdfPCells) throws Exception {
         Font font = createFont();
@@ -38,14 +38,14 @@ public class PdfGenerator {
     }
 
     private Paragraph createDocumentHeader(Font font) {
-        Paragraph documentHeader = new Paragraph("Заказ-наряд", font);
+        Paragraph documentHeader = new Paragraph("Order", font);
         documentHeader.setSpacingAfter(15);
         documentHeader.setAlignment(Element.ALIGN_CENTER);
         return documentHeader;
     }
 
     public Font createFont() throws DocumentException, IOException {
-        BaseFont baseFont = BaseFont.createFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont baseFont = BaseFont.createFont();
         return new Font(baseFont, 12, Font.BOLD);
     }
 
@@ -71,7 +71,7 @@ public class PdfGenerator {
 
     private void addOrderProductsToTable(PdfPTable table, List<OrderProduct> orderProducts) {
         for (OrderProduct op : orderProducts) {
-            LocalDateTime orderCreationDate = LocalDateTime.parse(op.getOrder().getCreatedDate().toString(),
+            LocalDateTime orderCreationDate = LocalDateTime.parse(op.getOrder().getCreatedAt().toString(),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"));
 
             String orderId = op.getOrder().getId().toString();

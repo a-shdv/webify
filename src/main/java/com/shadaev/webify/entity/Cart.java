@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Cart {
     private Long id;
 
     @Column(name = "total_price")
-    private double totalPrice = 0.0;
+    private double totalPrice;
 
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private User user;

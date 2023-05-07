@@ -1,5 +1,6 @@
 package com.shadaev.webify.entity;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -12,9 +13,8 @@ import java.util.*;
 @Entity
 @Table(name = "\"user\"")
 @Data
-@EqualsAndHashCode(exclude = {"userRoleSet", "cart", "orderList", "postList"})
-@ToString(exclude = {"userRoleSet", "cart", "orderList", "postList"})
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"userRoles", "cart", "orders", "posts"})
+@ToString(exclude = {"userRoles", "cart", "orders", "posts"})
 @AllArgsConstructor
 public class User implements UserDetails {
     @Id
@@ -22,16 +22,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
 
     @Column(name = "active")
@@ -40,7 +40,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-    private Set<UserRole> userRoleSet = new HashSet<>();
+    private Set<UserRole> userRoles = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
@@ -52,11 +52,14 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
+
+    public User() {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getUserRoleSet();
+        return getUserRoles();
     }
 
     @Override

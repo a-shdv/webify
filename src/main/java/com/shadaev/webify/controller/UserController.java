@@ -2,8 +2,8 @@ package com.shadaev.webify.controller;
 
 import com.shadaev.webify.entity.Cart;
 import com.shadaev.webify.entity.Order;
+import com.shadaev.webify.entity.Post;
 import com.shadaev.webify.entity.User;
-import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,15 +14,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
 public class UserController {
     private final UserService userService;
-
 
     @Autowired
     public UserController(UserService userService) {
@@ -56,16 +57,29 @@ public class UserController {
 
         return "users/ordersList";
     }
-//    @GetMapping("/user/{id}")
-//    public String findUserById(@PathVariable(value = "id") Long id,
-//                               @AuthenticationPrincipal User userSession, Model model) {
-//        User currentUser = userService.findUser(userSession);
-//        User anotherUser = userService.findUserById(id);
-//
-//        model.addAttribute("currentUser", currentUser);
-//        model.addAttribute("anotherUser", anotherUser);
-//        return "another-user-info";
-//    }
+
+    @GetMapping("/user/posts")
+    public String getPosts(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        List<Post> posts = userFromDb.getPosts();
+        posts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("posts", posts);
+
+        return "users/postsList";
+    }
+
+    @GetMapping("/user/{id}")
+    public String getUserById(@PathVariable(value = "id") Long id,
+                              @AuthenticationPrincipal User userSession, Model model) {
+        User currentUser = userService.getUser(userSession);
+        User anotherUser = userService.getUserById(id);
+
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("anotherUser", anotherUser);
+        return "/users/user";
+    }
 
     @PostMapping("/registration")
     public String createUser(User user, Model model) {

@@ -1,5 +1,5 @@
-insert into category (name, image)
-values ('ПК и ноутбуки', '/images/categories/computers.png'),
+INSERT INTO category (name, image)
+VALUES ('ПК и ноутбуки', '/images/categories/computers.png'),
        ('Мобильные телефоны', '/images/categories/phones.png'),
        ('Программное обеспечение', '/images/categories/programs.png'),
        ('Комплектующие', '/images/categories/components.png'),

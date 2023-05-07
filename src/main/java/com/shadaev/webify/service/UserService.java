@@ -8,7 +8,7 @@ import com.shadaev.webify.entity.User;
 import com.shadaev.webify.entity.UserRole;
 import com.shadaev.webify.repository.OrderProductRepository;
 import com.shadaev.webify.repository.UserRepository;
-import com.shadaev.webify.service.helpers.PdfGenerator;
+import com.shadaev.webify.service.helpers.PdfHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
 
     public void createUser(User user) {
         user.setActive(true);
-        user.setUserRoleSet(Collections.singleton(UserRole.USER));
+        user.setUserRoles(Collections.singleton(UserRole.USER));
         userRepository.save(user);
     }
 
@@ -61,19 +61,19 @@ public class UserService implements UserDetailsService {
     }
 
     public ByteArrayOutputStream generatePdf() throws Exception {
-        PdfGenerator pdfGenerator = new PdfGenerator();
+        PdfHelper pdfHelper = new PdfHelper();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         List<OrderProduct> orderProducts = orderProductRepository.findAll();
-        Font font = pdfGenerator.createFont();
+        Font font = pdfHelper.createFont();
         PdfPCell[] pdfPCells = {
-                new PdfPCell(new Phrase("Номер заказа", font)),
-                new PdfPCell(new Phrase("Дата заказа", font)),
-                new PdfPCell(new Phrase("Название товара", font)),
-                new PdfPCell(new Phrase("Цена", font)),
-                new PdfPCell(new Phrase("Количество", font)),
-                new PdfPCell(new Phrase("Итого", font))
+                new PdfPCell(new Phrase("Order ID", font)),
+                new PdfPCell(new Phrase("Date created", font)),
+                new PdfPCell(new Phrase("Product name", font)),
+                new PdfPCell(new Phrase("Price per product", font)),
+                new PdfPCell(new Phrase("Quantity", font)),
+                new PdfPCell(new Phrase("Total price", font))
         };
-        pdfGenerator.generatePdf(outputStream, orderProducts, pdfPCells);
+        pdfHelper.generatePdf(outputStream, orderProducts, pdfPCells);
         return outputStream;
     }
 }
