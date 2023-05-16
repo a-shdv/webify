@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Controller
@@ -23,9 +24,6 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
 
-    @Value("${upload.path}")
-    private String uploadPath;
-
     @Autowired
     public PostController(PostService postService,
                           UserService userService) {
@@ -33,26 +31,37 @@ public class PostController {
         this.userService = userService;
     }
 
+    @GetMapping("/{post}")
+    public String getById(@PathVariable(value = "post") Post post, Model model) {
+        model.addAttribute("post", post);
+
+        return "posts/show";
+    }
+
     @PostMapping("/create")
-    public String createPost(Post post,
-                             @AuthenticationPrincipal User userSession,
-                             @RequestParam("file") MultipartFile file) throws IOException {
+    public String create(Post post,
+                         @AuthenticationPrincipal User userSession,
+                         @RequestParam(value = "file",required = false) MultipartFile file) throws IOException {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
-        if (!file.isEmpty() && !file.getOriginalFilename().isEmpty()) {
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath + "/" + resultFilename));
-
-            post.setFilename(resultFilename);
-        }
-
+        postService.uploadImage(post, file);
         postService.savePost(post, userFromDb);
+        return "redirect:/";
+    }
+
+    @GetMapping("/edit/{post}")
+    public String editForm(@PathVariable(value = "post") Post post, Model model) {
+        model.addAttribute("post", post);
+        return "posts/edit";
+    }
+
+    @PostMapping("/edit/{post}")
+    public String edit(@PathVariable("post") Post post,
+                       @RequestParam("title") String title,
+                       @RequestParam("description") String description,
+                       @RequestParam(value = "file",required = false) MultipartFile file,
+                       Model model) throws IOException {
+        postService.editPost(post, title, description, file);
+        model.addAttribute("post", post);
         return "redirect:/";
     }
 }

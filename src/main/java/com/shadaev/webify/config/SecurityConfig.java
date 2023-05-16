@@ -27,10 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests((requests) -> requests
-                        .antMatchers("/categories",
-                                "/categories/**",
-                                "/products",
-                                "/products/**",
+                        .antMatchers("/", "/home",
+                                "/posts", "/posts/**",
+                                "/categories", "/categories/**",
+                                "/products", "/products/**",
                                 "/registration",
                                 "/images/**",
                                 "/uploads/**",
@@ -45,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll);
-
     }
 
 //    @Override

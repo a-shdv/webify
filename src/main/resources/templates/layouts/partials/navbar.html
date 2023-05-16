@@ -47,12 +47,13 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="/profile">Моя
                                             страница</a>
-                                        <a class="dropdown-item" href="/user/posts">Мои
-                                            посты</a>
+                                        <div sec:authorize="hasAuthority('ADMIN')">
+                                            <a class="dropdown-item" href="/user/posts">Мои
+                                                посты</a>
+                                        </div>
                                         <a class="dropdown-item" href="/user/orders">Мои
                                             заказы</a>
                                         <a class="dropdown-item" href="/chat">Чат</a>
-                                        
                                         <hr class="dropdown-divider">
                                         <form th:action="@{/logout}" method="post">
                                             <button type="submit" class="btn">Выйти</button>
@@ -90,6 +91,7 @@
             color: #212529;
             background-color: #ffc107;
         }
+
         .navbar-nav .dropdown-menu .dropdown-item:focus {
             color: #424649;
             background-color: #ffca2c;

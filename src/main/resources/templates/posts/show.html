@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Head -->
+<div th:replace="/layouts/partials/head :: head"></div>
+<body>
+<!-- Navbar-->
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+
+<!-- Container -->
+<main class="mt-5 text-center">
+    <div class="col-lg-6 mx-auto">
+        <!-- Post Name -->
+        <h1 class="display-4 fw-bold" th:text="${post.title}"></h1>
+
+        <!-- Post Image -->
+        <div th:if="${!#strings.isEmpty(post.filename)}">
+            <img th:src="@{/uploads/__${post.filename}__}" class="img-fluid border rounded-3 shadow-lg mb-4"
+                 alt="Не удалось загрузить изображение." loading="lazy" width="700" height="500">
+        </div>
+
+
+        <!-- Post Description -->
+        <div th:text="${post.description}" style="word-wrap: break-word">
+        </div>
+
+        <!-- Button "Back" -->
+        <a class="btn btn-outline-secondary px-4" href="javascript:history.back()">Назад</a>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="/layouts/partials/footer :: footer"></div>
+</body>
+</html>

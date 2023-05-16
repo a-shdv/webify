@@ -17,7 +17,8 @@
              alt="Не удалось загрузить изображение." loading="lazy" width="700" height="500">
 
         <!-- Product Description -->
-        <div th:text="${product.description}"></div>
+        <div th:text="${product.description}" style="word-wrap: break-word">
+        </div>
 
         <!-- Buttons -->
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-5">
