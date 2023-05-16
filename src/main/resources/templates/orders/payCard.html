@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="/layouts/partials/head :: head">
+</head>
+<body>
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+<div class="container">
+    <div class="row justify-content-center text-center mt-5">
+        <form action="https://paymo.ru/rest/v2/module/settings/" method="post">
+        </form>
+    </div>
+</div>
+<!--<div class="container">-->
+<!--    <div class="row justify-content-center text-center mt-5">-->
+<!--        <form action="https://checkout.paymo.ru/uniform/" method="POST">-->
+<!--            <input type="hidden" name="api_key" value="e5ebc0d4-f90b-409b-874c-c729987001da">-->
+<!--            <input type="hidden" name="tx_id" th:value="${order.id}">-->
+<!--            <input type="hidden" name="amount" th:value="${amount}">-->
+<!--            <input type="hidden" name="signature" value="0cm9ri03f303ed09mf3">-->
+<!--            <input type="hidden" name="email" th:value="${user.email}">-->
+<!--            <input type="hidden" name="phone" th:value="${user.phone}">-->
+
+<!--            <input type="submit" value="Оплатить">-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+<div th:replace="/layouts/partials/footer :: footer"/>
+</body>
+</html>

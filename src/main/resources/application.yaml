@@ -14,3 +14,7 @@ spring:
     baseline-on-migrate: true
 upload:
   path: "C:/Users/Tony/IdeaProjects/uploads"
+vaadin:
+  urlMapping: /chat/*
+
+
