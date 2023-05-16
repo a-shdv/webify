@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,6 +33,18 @@ public class HomeController {
         posts.sort(Comparator.comparing(Post::getCreatedAt).reversed());
         model.addAttribute("posts", posts);
         return "home";
+    }
+
+    @PostMapping("/posts/delete/{post}")
+    public String deletePost(@PathVariable(value = "post") Post post,
+                             @AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        List<Post> posts = postService.getAllPosts();
+
+        postService.deletePost(post, userFromDb);
+
+        model.addAttribute("posts", posts);
+        return "redirect:/";
     }
 
     @PostMapping("/filter")

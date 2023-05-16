@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="/layouts/partials/head :: head">
+</head>
+<body>
+<div th:replace="/layouts/partials/navbar :: navbar"></div>
+<div th:replace="/layouts/partials/posts-filter :: posts-filter"></div>
+<div class="text-center mt-5">
+    <h1>Мои посты</h1>
+</div>
+
+<div th:fragment="posts" class="card mt-5" style="max-width: 25rem; margin: 0 auto; float: none;"
+     th:each="post : ${posts}">
+
+    <!-- Post Title -->
+    <div class="card-header bg-dark text-center text-white" th:text="${post.title}"></div>
+
+    <!--Post Image -->
+    <img th:src="@{/uploads/__${post.filename}__}" alt="" width="100%" height="100%">
+
+
+    <!-- Post -->
+    <div class="card-body">
+        <!-- Post Description -->
+        <div class="card-text text-center">
+            <h5 class="card-text text-center" th:text="${post.shortDescription}"></h5>
+            <a th:href="@{/posts/{post}(post=${post.id})}">
+                Читать
+            </a>
+            <!--            <a th:href="@{/posts/{post}(post=${post.getId()})}">Читать</a>-->
+        </div>
+    </div>
+    <!-- Delete Post -->
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <form th:action="@{/posts/delete/{post}(post=${post.getId()})}" method="post">
+            <div class="card-footer">
+                <button class="btn btn-danger" type="submit">Удалить</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:replace="/layouts/partials/footer :: footer"></div>
+</body>
+</html>

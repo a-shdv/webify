@@ -59,15 +59,4 @@ public class OrderController {
         cartService.deleteCartProducts(cart);
         return "orders/show";
     }
-//
-//    @GetMapping("/user/orders")
-//    public String getUserInfoOrders(@AuthenticationPrincipal User userSession, Model model) {
-//        User userFromDb = userService.findUserByUsername(userSession.getUsername());
-//        List<Order> orderList = userFromDb.getOrderList();
-//
-//        model.addAttribute("user", userFromDb);
-//        model.addAttribute("orderList", orderList);
-//        return "users/ordersList";
-//    }
-//
 }

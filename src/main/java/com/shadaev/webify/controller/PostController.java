@@ -1,6 +1,7 @@
 package com.shadaev.webify.controller;
 
 import com.shadaev.webify.entity.Post;
+import com.shadaev.webify.entity.Product;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.service.PostService;
 import com.shadaev.webify.service.UserService;
@@ -8,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -33,6 +33,13 @@ public class PostController {
         this.userService = userService;
     }
 
+    @GetMapping("/{post}")
+    public String getPostById(@PathVariable(value = "post") Post post, Model model) {
+        model.addAttribute("post", post);
+
+        return "posts/show";
+    }
+
     @PostMapping("/create")
     public String createPost(Post post,
                              @AuthenticationPrincipal User userSession,
@@ -53,6 +60,15 @@ public class PostController {
         }
 
         postService.savePost(post, userFromDb);
+
         return "redirect:/";
+    }
+
+    @PutMapping("/edit/{post}")
+    public String editPost(@PathVariable(value = "post") Post post,
+                           @AuthenticationPrincipal User user, Model model) {
+
+
+        return "";
     }
 }
