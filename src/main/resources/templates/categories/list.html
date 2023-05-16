@@ -12,31 +12,39 @@
     <h1 class="display-4 fw-normal">Каталог товаров</h1>
     <p class="fs-5 text-muted">Здесь вы найдете нужные товары по самым привлекательным ценам!</p>
 </div>
+
 <main class="container py-3">
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        <tr th:each="category: ${categories}">
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-header py-3 text-bg-dark">
-                        <h4 class="my-0 fw-normal"><p th:text="${category.name}"></p></h4>
-                    </div>
-                    <div class="card-body">
-                        <img th:src="@{${category.image}}" alt="Не удалось загрузить изображение." width="200"
-                             height="200">
-                        <ul class="list-unstyled mt-5 mb-4">
-                        </ul>
+        <table>
+            <tr th:each="category: ${categories}">
 
-                        <div th:if="${category.name != 'Все товары'}">
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header bg-dark text-center text-white">
                             <a th:href="@{/categories/{category}(category=${category.id})}"
-                               class="w-100 btn btn-lg btn-warning">Перейти</a>
+                               class="w-100 btn btn-lg btn-dark">
+                                <h4 class="my-0 fw-normal" th:text="${category.name}"></h4>
+                            </a>
                         </div>
-                        <div th:if="${category.name == 'Все товары'}">
-                            <a href="/products" class="w-100 btn btn-lg btn-warning">Перейти</a>
+
+                        <div class="card-body">
+                            <img th:src="@{${category.image}}" alt="Не удалось загрузить изображение." width="200"
+                                 height="200">
+                            <ul class="list-unstyled mt-5 mb-4">
+                            </ul>
+
+                            <div th:if="${category.name != 'Все товары'}">
+                                <a th:href="@{/categories/{category}(category=${category.id})}"
+                                   class="w-100 btn btn-lg btn-warning">Перейти</a>
+                            </div>
+                            <div th:if="${category.name == 'Все товары'}">
+                                <a href="/products" class="w-100 btn btn-lg btn-warning">Перейти</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </tr>
+            </tr>
+        </table>
     </div>
 </main>
 

@@ -32,9 +32,6 @@ public class PostService {
 
     public void savePost(Post post, User user) {
         post.setUser(user);
-        String longDescription = post.getLongDescription();
-        String shortDescription = longDescription.substring(0, Math.min(longDescription.length(), 249));
-        post.setShortDescription(shortDescription);
         postRepository.save(post);
     }
 
