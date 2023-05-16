@@ -143,7 +143,7 @@
                 </executions>
             </plugin>
 
-            <!-- Flyway -->
+          <!-- Flyway -->
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
@@ -154,7 +154,6 @@
                     <password>postgres</password>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

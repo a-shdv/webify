@@ -47,6 +47,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout(LogoutConfigurer::permitAll);
     }
 
+//    @Override
+//    public void configure (WebSecurity web) {
+//        web
+//                .ignoring()
+//                .antMatchers(
+//                        "/VAADIN/**",
+//                        "/vaadinServlet/**",
+//                        "/vaadinServlet/UIDL/**",
+//                        "/vaadinServlet/HEARTBEAT/**",
+//                        "/favicon.ico",
+//                        "/robots.txt",
+//                        "/manifest.webmanifest",
+//                        "/sw.js",
+//                        "/offline.html",
+//                        "/icons/**",
+//                        "/images/**",
+//                        "/styles/**",
+//                        "/h2-console/**");
+//    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
