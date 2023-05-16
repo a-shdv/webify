@@ -6,7 +6,7 @@
 <div th:replace="/layouts/partials/navbar :: navbar"></div>
 
 <div class="container">
-    <div sec:authorize="isAuthenticated">
+    <div sec:authorize="isAuthenticated()">
         <div class="row mt-5">
             <!-- Create Post -->
             <div sec:authorize="hasAuthority('ADMIN')">

@@ -34,7 +34,7 @@
             </a>
         </div>
     </div>
-    <!-- Delete Post -->
+    <!-- Delete & Edit Post -->
     <div sec:authorize="hasAuthority('ADMIN')">
         <div class="card-footer">
             <!-- Delete Post -->
@@ -45,6 +45,11 @@
             <form class="mt-3" th:action="@{/posts/edit/{post}(post=${post.id})}" method="get">
                 <button class="btn btn-warning" type="submit">Редактировать</button>
             </form>
+        </div>
+    </div>
+    <div sec:authorize="hasAuthority('USER') or !isAuthenticated()">
+        <div class="card-footer">
+            <div th:utext="${#temporals.format(post.getCreatedAt, 'dd.MM.yyyy')}"></div>
         </div>
     </div>
 </div>
