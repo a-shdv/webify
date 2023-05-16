@@ -26,7 +26,7 @@ public class HomeController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping(value = {"/", "/home", "/posts"})
     public String home(Model model) {
         List<Post> posts = postService.getAllPosts();
         posts.sort(Comparator.comparing(Post::getCreatedAt).reversed());

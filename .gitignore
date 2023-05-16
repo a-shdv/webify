@@ -1,3 +1,4 @@
+node_modules
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -15,7 +16,6 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-.mvn
 *.iws
 *.iml
 *.ipr
@@ -32,6 +32,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-.gradle
-gradle/wrapper

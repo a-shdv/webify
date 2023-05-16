@@ -39,7 +39,9 @@
                         </td>
                         <!-- Product Name -->
                         <td>
-                            <p th:text="${cartProduct.product.name}"></p>
+                            <a th:href="@{/products/{id}(id=${cartProduct.product.id})}">
+                                <p th:text="${cartProduct.product.name}"></p>
+                            </a>
                         </td>
                         <!-- Price Per Product -->
                         <td>
