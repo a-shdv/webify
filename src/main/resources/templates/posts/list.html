@@ -36,11 +36,16 @@
     </div>
     <!-- Delete Post -->
     <div sec:authorize="hasAuthority('ADMIN')">
-        <form th:action="@{/posts/delete/{post}(post=${post.getId()})}" method="post">
-            <div class="card-footer">
+        <div class="card-footer">
+            <!-- Delete Post -->
+            <form th:action="@{/posts/delete/{post}(post=${post.id})}" method="post">
                 <button class="btn btn-danger" type="submit">Удалить</button>
-            </div>
-        </form>
+            </form>
+            <!-- Edit Post -->
+            <form class="mt-3" th:action="@{/posts/edit/{post}(post=${post.id})}" method="get">
+                <button class="btn btn-warning" type="submit">Редактировать</button>
+            </form>
+        </div>
     </div>
 </div>
 

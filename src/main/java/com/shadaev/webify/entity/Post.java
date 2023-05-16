@@ -37,6 +37,11 @@ public class Post {
     public Post() {
     }
 
+    public Post(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
     public String getUsername() {
         return user != null ? user.getUsername() : "<none>";
     }

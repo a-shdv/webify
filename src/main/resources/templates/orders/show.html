@@ -38,7 +38,7 @@
                                     <td>
                                         <!-- Название товара-->
                                         <a th:text="${orderProduct.product.name}"
-                                           th:href="@{/products/{product}(product=${orderProduct.id})}">
+                                           th:href="@{/products/{product}(product=${orderProduct.product.id})}">
                                         </a>
                                     </td>
                                     <!--Количество-->

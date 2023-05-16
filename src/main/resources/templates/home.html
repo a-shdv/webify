@@ -3,12 +3,13 @@
 <head th:replace="/layouts/partials/head :: head">
 </head>
 <body>
-
 <div th:replace="/layouts/partials/navbar :: navbar"></div>
+
 <div class="text-center mt-5">
     <h1>Новости</h1>
 </div>
 
+<!-- Add New Post -->
 <div class="container">
     <div sec:authorize="isAuthenticated">
         <div class="row mt-5">
@@ -48,7 +49,6 @@
                 </form>
             </div>
         </div>
-        <hr>
     </div>
 
     <!-- Posts -->
