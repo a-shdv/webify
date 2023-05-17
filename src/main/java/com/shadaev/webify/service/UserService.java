@@ -3,12 +3,13 @@ package com.shadaev.webify.service;
 import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
+import com.shadaev.webify.entity.Order;
 import com.shadaev.webify.entity.OrderProduct;
 import com.shadaev.webify.entity.User;
 import com.shadaev.webify.entity.UserRole;
 import com.shadaev.webify.repository.OrderProductRepository;
+import com.shadaev.webify.repository.OrderRepository;
 import com.shadaev.webify.repository.UserRepository;
-import com.shadaev.webify.service.helpers.PdfHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,12 +25,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
+    private OrderRepository orderRepository;
     private OrderProductRepository orderProductRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, OrderProductRepository orderProductRepository) {
+    public UserService(UserRepository userRepository, OrderRepository orderRepository, OrderProductRepository orderProductRepository) {
         this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 
     public User getUser(User userSession) {
@@ -61,10 +68,10 @@ public class UserService implements UserDetailsService {
     }
 
     public ByteArrayOutputStream generatePdf() throws Exception {
-        PdfHelper pdfHelper = new PdfHelper();
+        PdfService pdfService = new PdfService();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         List<OrderProduct> orderProducts = orderProductRepository.findAll();
-        Font font = pdfHelper.createFont();
+        Font font = pdfService.createFont();
         PdfPCell[] pdfPCells = {
                 new PdfPCell(new Phrase("Order ID", font)),
                 new PdfPCell(new Phrase("Date created", font)),
@@ -73,7 +80,7 @@ public class UserService implements UserDetailsService {
                 new PdfPCell(new Phrase("Quantity", font)),
                 new PdfPCell(new Phrase("Total price", font))
         };
-        pdfHelper.generatePdf(outputStream, orderProducts, pdfPCells);
+        pdfService.generatePdf(outputStream, orderProducts, pdfPCells);
         return outputStream;
     }
 }

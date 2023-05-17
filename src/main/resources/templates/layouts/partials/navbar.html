@@ -53,6 +53,9 @@
                                         </div>
                                         <a class="dropdown-item" href="/user/orders">Мои
                                             заказы</a>
+                                        <div sec:authorize="hasAuthority('ADMIN')">
+                                            <a class="dropdown-item" href="/orders">Все заказы</a>
+                                        </div>
                                         <a class="dropdown-item" href="/chat">Чат</a>
                                         <hr class="dropdown-divider">
                                         <form th:action="@{/logout}" method="post">

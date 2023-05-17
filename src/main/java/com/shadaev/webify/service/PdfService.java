@@ -1,4 +1,4 @@
-package com.shadaev.webify.service.helpers;
+package com.shadaev.webify.service;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.BaseFont;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class PdfHelper {
+public class PdfService {
 
     public void generatePdf(ByteArrayOutputStream outputStream, List<OrderProduct> orderProducts, PdfPCell[] pdfPCells) throws Exception {
         Font font = createFont();
