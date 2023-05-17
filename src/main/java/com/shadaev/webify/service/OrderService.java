@@ -1,9 +1,6 @@
 package com.shadaev.webify.service;
 
-import com.shadaev.webify.entity.Cart;
-import com.shadaev.webify.entity.CartProduct;
-import com.shadaev.webify.entity.Order;
-import com.shadaev.webify.entity.OrderProduct;
+import com.shadaev.webify.entity.*;
 import com.shadaev.webify.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +27,18 @@ public class OrderService {
         return order;
     }
 
+    public void changeOrderStatus(Order order) {
+        OrderStatus[] statuses = OrderStatus.values();
+        for (OrderStatus status : statuses) {
+            if (status.getValue() <= order.getStatus().getValue()) {
+                continue;
+            }
+            order.setStatus(status);
+            break;
+        }
+        orderRepository.save(order);
+    }
+
     private Order parseOrderData(MultiValueMap<String, String> orderData) {
         return new Order(
                 orderData.getFirst("shippingAddress"),
@@ -51,6 +60,7 @@ public class OrderService {
             orderProducts.add(new OrderProduct(order, cp.getProduct(), quantity, price));
         }
         order.setOrderProducts(orderProducts);
+        order.setStatus(OrderStatus.PROCESSING);
     }
 
 }

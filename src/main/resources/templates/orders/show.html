@@ -27,6 +27,7 @@
                                 <th>Дата заказа</th>
                                 <th>Название товара</th>
                                 <th>Количество</th>
+                                <th>Статус заказа</th>
                                 <th>Способ оплаты</th>
                             </tr>
                             </thead>
@@ -43,6 +44,21 @@
                                     </td>
                                     <!--Количество-->
                                     <td th:text="${orderProduct.quantity}"></td>
+                                    <!-- Статус заказа -->
+                                    <div>
+                                        <div th:if="${orderProduct.order.status == T(com.shadaev.webify.entity.OrderStatus).PROCESSING}">
+                                            <td>Обрабатывается</td>
+                                        </div>
+                                        <div th:if="${orderProduct.order.status == T(com.shadaev.webify.entity.OrderStatus).IN_DELIVERY}">
+                                            <td>Передано в доставку</td>
+                                        </div>
+                                        <div th:if="${orderProduct.order.status  == T(com.shadaev.webify.entity.OrderStatus).AWAITING}">
+                                            <td>Ожидает получения</td>
+                                        </div>
+                                        <div th:if="${orderProduct.order.status  == T(com.shadaev.webify.entity.OrderStatus).DONE}">
+                                            <td>Получен</td>
+                                        </div>
+                                    </div>
                                     <td style="color: black">
                                         <!-- Способ оплаты-->
                                         <span>Наличными</span>

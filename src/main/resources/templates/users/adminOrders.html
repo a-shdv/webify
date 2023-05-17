@@ -4,19 +4,20 @@
 </head>
 <body>
 <div th:replace="/layouts/partials/navbar :: navbar"></div>
-<div class="text-center"><h1>Мои заказы</h1></div>
+
+
+<div class="text-center"><h1>Все заказы</h1></div>
 <div class="row justify-content-center">
     <div class="col-md-6 mt-5" style="position: relative">
         <table class="table">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">Номер заказа</th>
-                <th scope="col">Дата заказа</th>
+                <th scope="col">Пользователь</th>
                 <th scope="col">Название товара</th>
-                <th scope="col">Цена</th>
-                <th scope="col">Количество</th>
-                <th scope="col">Итого</th>
+                <th scope="col">Сумма</th>
                 <th scope="col">Статус заказа</th>
+                <th scope="col">Действие</th>
             </tr>
             </thead>
             <tbody th:each="order, i: ${orders}">
@@ -24,11 +25,13 @@
             <tr th:each="orderProduct, j: ${order.orderProducts}">
                 <th scope="row" th:if="${j.first}" th:text="${order.id}"></th>
                 <th scope="row" th:unless="${j.first}" th:text="' '"></th>
-                <td th:utext="${#temporals.format(orderProduct.order.getCreatedAt, 'dd.MM.yyyy')}"></td>
                 <td>
-                    <a th:href="@{/products/{product}(product=${orderProduct.product.id})}" th:text="${orderProduct.product.name}"></a>
-                </td>                <td th:text="${#numbers.formatDecimal(orderProduct.product.price, 2, 'WHITESPACE', 2, 'COMMA')} + ' ₽'"></td>
-                <td th:text="${orderProduct.quantity}"></td>
+                    <a th:href="@{/user/{id}(id=${order.user.id})}" th:text="${order.user.username}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/products/{product}(product=${orderProduct.product.id})}"
+                       th:text="${orderProduct.product.name}"></a>
+                </td>
                 <td th:text="${#numbers.formatDecimal(orderProduct.product.price * orderProduct.quantity, 2, 'WHITESPACE', 2, 'COMMA') + ' ₽'}"></td>
 
                 <!-- Статус заказа -->
@@ -46,18 +49,29 @@
                         <td>Получен</td>
                     </div>
                 </div>
+
+                <!-- Change Status -->
+                <td th:if="${j.first}">
+                    <form th:action="@{/orders/{order}(order=${orderProduct.order.id})}" method="post">
+                        <button id="buttonChangeStatus" type="submit" name="action" class="btn btn-warning">Изменить
+                        </button>
+                    </form>
+                </td>
+                <td th:unless="${j.first}" th:text="' '"></td>
             </tr>
         </table>
-        <form th:action="@{/user/orders/pdf}" method="get">
-            <button type="submit" class="btn btn-warning" style="position:absolute; bottom:5; right:0;">Сформировать
-                отчет
-            </button>
-        </form>
     </div>
 
 </div>
 
 
 <div th:replace="/layouts/partials/footer :: footer"></div>
+
+<script>
+    let buttonChangeStatus = document.getElementById("buttonChangeStatus")
+    buttonChangeStatus.addEventListener("click", function() {
+        confirm("Вы уверены, что хотите изменить статус заказа?");
+    });
+</script>
 </body>
 </html>

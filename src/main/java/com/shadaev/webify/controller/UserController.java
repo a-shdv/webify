@@ -1,9 +1,7 @@
 package com.shadaev.webify.controller;
 
-import com.shadaev.webify.entity.Cart;
-import com.shadaev.webify.entity.Order;
-import com.shadaev.webify.entity.Post;
-import com.shadaev.webify.entity.User;
+import com.shadaev.webify.entity.*;
+import com.shadaev.webify.service.OrderService;
 import com.shadaev.webify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,10 +22,12 @@ import java.util.List;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final OrderService orderService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, OrderService orderService) {
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/profile")
@@ -51,11 +51,33 @@ public class UserController {
     public String getOrders(@AuthenticationPrincipal User userSession, Model model) {
         User userFromDb = userService.findUserByUsername(userSession.getUsername());
         List<Order> orders = userFromDb.getOrders();
+        orders.sort(Comparator.comparing(Order::getCreatedAt).reversed());
 
         model.addAttribute("user", userFromDb);
         model.addAttribute("orders", orders);
 
         return "users/ordersList";
+    }
+
+    @GetMapping("/orders")
+    public String getAllOrders(@AuthenticationPrincipal User userSession, Model model) {
+        User userFromDb = userService.findUserByUsername(userSession.getUsername());
+        List<Order> orders = userService.getAllOrders();
+        orders.sort(Comparator.comparing(Order::getCreatedAt).reversed());
+
+        model.addAttribute("user", userFromDb);
+        model.addAttribute("orders", orders);
+
+        return "users/adminOrders";
+    }
+
+    @PostMapping("/orders/{order}")
+    public String changeOrderStatus(@PathVariable("order") Order order, Model model) {
+        orderService.changeOrderStatus(order);
+
+        model.addAttribute("order", order);
+
+        return "redirect:/orders";
     }
 
     @GetMapping("/user/posts")
@@ -78,6 +100,7 @@ public class UserController {
 
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("anotherUser", anotherUser);
+
         return "/users/user";
     }
 
