@@ -1,4 +1,4 @@
-package com.shadaev.webify.chat;
+package com.shadaev.webify.service;
 
 import com.github.rjeschke.txtmark.Processor;
 import com.shadaev.webify.entity.User;

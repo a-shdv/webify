@@ -1,7 +1,8 @@
-package com.shadaev.webify.chat;
+package com.shadaev.webify;
 
 import com.github.rjeschke.txtmark.Processor;
 import com.shadaev.webify.entity.User;
+import com.shadaev.webify.service.ChatService;
 import com.shadaev.webify.service.UserService;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
