@@ -55,6 +55,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Spring Boot devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
         <!-- Vaadin Spring Boot Starter -->
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -154,6 +160,8 @@
                     <password>postgres</password>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 
